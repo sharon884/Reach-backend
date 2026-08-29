@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  SUSPENDED
+}
+
+enum OtpPurpose {
+  EMAIL_VERIFICATION
+}
+
+model User {
+  id              String     @id @default(uuid())
+  fullName        String
+  email           String     @unique
+  passwordHash    String
+  role            UserRole   @default(USER)
+  status          UserStatus @default(ACTIVE)
+  isEmailVerified Boolean    @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  otpVerifications OtpVerification[]
+
+  @@index([status])
+  @@index([role])
+}
+
+model OtpVerification {
+  id         String     @id @default(uuid())
+  userId     String
+  codeHash   String
+  purpose    OtpPurpose
+  expiresAt  DateTime
+  attempts   Int        @default(0)
+  verifiedAt DateTime?
+  createdAt  DateTime   @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
