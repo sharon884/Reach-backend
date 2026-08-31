@@ -14,6 +14,9 @@ import { GenerateOtpUseCase } from "../../application/use-cases/generate-otp.use
 import { VerifyOtpUseCase } from "../../application/use-cases/verify-otp.use-case.js";
 import { VerifyOtpController } from "../../presentation/controllers/auth/verify-otp.controller.js";
 
+import { ResendOtpUseCase } from "../../application/use-cases/resend-otp.use-case.js";
+import { ResendOtpController } from "../../presentation/controllers/auth/resend-otp.controller.js";
+
 import { SignupController } from "../../presentation/controllers/auth/signup.controller.js";
 
 import { NodemailerEmailSender } from "../services/nodemailer-email-sender.js";
@@ -48,6 +51,11 @@ const generateOtpUseCase = new GenerateOtpUseCase(
   emailSender,
 );
 
+const resendOtpUseCase = new ResendOtpUseCase(
+  userRepository,
+  generateOtpUseCase,
+);
+
 
 const verifyOtpUseCase = new VerifyOtpUseCase(
   userRepository,
@@ -67,4 +75,8 @@ export const signupController = new SignupController(
 
 export const verifyOtpController = new VerifyOtpController(
   verifyOtpUseCase,
+);
+
+export const resendOtpController = new ResendOtpController(
+  resendOtpUseCase,
 );
