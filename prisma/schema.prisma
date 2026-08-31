@@ -20,6 +20,8 @@ enum UserStatus {
 
 enum OtpPurpose {
   EMAIL_VERIFICATION
+  EMAIL_CHANGE
+  PASSWORD_RESET
 }
 
 model User {
@@ -41,17 +43,18 @@ model User {
 }
 
 model OtpVerification {
-  id         String     @id @default(uuid())
-  userId     String
-  codeHash   String
-  purpose    OtpPurpose
-  expiresAt  DateTime
-  attempts   Int        @default(0)
-  verifiedAt DateTime?
-  createdAt  DateTime   @default(now())
+  id          String     @id @default(uuid())
+  userId      String
+  codeHash    String
+  purpose     OtpPurpose
+  expiresAt   DateTime
+  attempts    Int        @default(0)
+  resendCount Int        @default(0)
+  verifiedAt  DateTime?
+  createdAt   DateTime   @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId])
+  @@index([userId, purpose])
   @@index([expiresAt])
 }
