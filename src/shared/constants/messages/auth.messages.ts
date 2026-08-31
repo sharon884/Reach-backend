@@ -3,6 +3,7 @@ export const AUTH_MESSAGES = {
   EMAIL_ALREADY_REGISTERED: "Email is already registered",
   INVALID_CREDENTIALS: "Invalid email or password",
   EMAIL_NOT_VERIFIED: "Email is not verified",
+  USER_NOT_FOUND: "User not found",
   OTP_INVALID: "Invalid OTP",
   OTP_EXPIRED: "OTP has expired",
   OTP_REQUIRED: "OTP is required",

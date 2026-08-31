@@ -36,4 +36,17 @@ export class PrismaUserRepository implements UserRepository {
             },
         });
     }
+
+
+    async updateEmailVerification(
+        id: string,
+        isEmailVerified: boolean,
+    ): Promise<void> {
+        await this.prisma.user.update({
+            where: { id },
+            data: {
+                isEmailVerified,
+            },
+        });
+    }
 }

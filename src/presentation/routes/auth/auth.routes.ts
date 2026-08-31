@@ -1,9 +1,18 @@
 import { Router } from "express";
-import { signupController } from "../../../infrastructure/container/auth.container.js";
+
+import {
+  signupController,
+  verifyOtpController,
+} from "../../../infrastructure/container/auth.container.js";
 
 export const authRouter = Router();
 
 authRouter.post(
   "/signup",
   signupController.handle.bind(signupController),
+);
+
+authRouter.post(
+  "/verify-otp",
+  verifyOtpController.handle.bind(verifyOtpController),
 );
