@@ -3,7 +3,7 @@ import { UserRepository } from "../../domain/repositories/user.repository.js";
 import { User } from "../../domain/entities/user.entity.js";
 
 export class PrismaUserRepository implements UserRepository {
-    constructor(private readonly prisma: PrismaClient) { }
+    constructor(private readonly prisma: PrismaClient) {}
 
     async create(user: User): Promise<User> {
         return this.prisma.user.create({
@@ -37,7 +37,6 @@ export class PrismaUserRepository implements UserRepository {
         });
     }
 
-
     async updateEmailVerification(
         id: string,
         isEmailVerified: boolean,
@@ -47,6 +46,12 @@ export class PrismaUserRepository implements UserRepository {
             data: {
                 isEmailVerified,
             },
+        });
+    }
+
+    async delete(id: string): Promise<void> {
+        await this.prisma.user.delete({
+            where: { id },
         });
     }
 }
