@@ -1,6 +1,5 @@
-import { boolean } from "zod";
-import type { User } from "../../../generated/prisma/client";
-import type { SignupResponseDto } from "../../dto/auth/signup-response.dto";
+import type { User } from "../../../domain/entities/user.entity.js";
+import type { SignupResponseDto } from "../../dto/auth/signup-response.dto.js";
 
 
 export function mapSignupToResponse(user : User ) : SignupResponseDto {

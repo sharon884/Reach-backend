@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { ZodError } from "zod";
 import { AppError } from "../../shared/errors/app.error.js";
@@ -9,7 +9,6 @@ export const errorMiddleware = (
   error: unknown,
   _req: Request,
   res: Response,
-  _next: NextFunction,
 ): void => {
   if (error instanceof AppError) {
     const response: ErrorResponse = {

@@ -1,4 +1,4 @@
-import type { SignupDto } from "../../dto/auth/signup.dto";
+import type { SignupDto } from "../../dto/auth/signup.dto.js";
 
 export interface CreateUserData {
       fullName : string , 
