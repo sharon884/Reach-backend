@@ -5,6 +5,7 @@ import { User } from "../../domain/entities/user.entity.js";
 import { UserRepository } from "../../domain/repositories/user.repository.js";
 import { PasswordHasher } from "../services/password-hasher.js";
 import { GenerateOtpUseCase } from "./generate-otp.use-case.js";
+import { mapSignupToUserData  } from "../mappers/auth/signup.mapper.js";
 
 import { AUTH_MESSAGES } from "../../shared/constants/messages/auth.messages.js";
 import { ConflictError } from "../../shared/errors/conflict.error.js";
@@ -17,6 +18,7 @@ export class SignupUseCase {
     ) {}
 
     async execute(data: SignupDto): Promise<User> {
+
         const existingUser = await this.userRepository.findByEmail(data.email);
 
         if (existingUser) {
@@ -27,13 +29,13 @@ export class SignupUseCase {
 
         const passwordHash = await this.passwordHasher.hash(data.password);
 
+        const userData = mapSignupToUserData(data, passwordHash);
+
         const now = new Date();
 
         const user: User = {
             id: randomUUID(),
-            fullName: data.fullName,
-            email: data.email,
-            passwordHash,
+           ...userData,
             role: "USER",
             status: "ACTIVE",
             isEmailVerified: false,
