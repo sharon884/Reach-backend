@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { signupSchema } from "../../../application/dto/auth/signup.dto.js";
+
 import { SignupUseCase } from "../../../application/use-cases/signup.use-case.js";
 import { AUTH_MESSAGES } from "../../../shared/constants/messages/auth.messages.js";
 
@@ -16,7 +16,7 @@ export class SignupController {
         next: NextFunction,
     ): Promise<void> {
         try {
-            const data = signupSchema.parse(req.body);
+            const data = req.body
 
             const user = await this.signupUseCase.execute(data);
 
