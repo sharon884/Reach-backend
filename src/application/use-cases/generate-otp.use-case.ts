@@ -53,6 +53,8 @@ export class GenerateOtpUseCase {
 
         await this.otpRepository.create(otpVerification);
 
+        console.log(otp)
+
         await this.emailSender.sendOtp(
             user.email,
             otp,

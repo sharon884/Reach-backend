@@ -23,6 +23,14 @@ import { NodemailerEmailSender } from "../services/nodemailer-email-sender.js";
 
 import { env } from "../../config/env.js";
 
+import { PrismaUserSessionRepository } from "../repositories/prisma-user-session.repository.js";
+import { JwtTokenService } from "../services/jwt-token.service.js";
+import { BcryptRefreshTokenHasher } from "../services/bcrypt-refresh-token-hasher.js";
+
+import { LoginUseCase } from "../../application/use-cases/login.use-case.js";
+import { LoginController } from "../../presentation/controllers/auth/login.controller.js";
+
+
 const adapter = new PrismaPg({
   connectionString: env.DATABASE_URL,
 });
@@ -42,6 +50,13 @@ const otpGenerator = new RandomOtpGenerator();
 const otpHasher = new BcryptOtpHasher();
 
 const emailSender = new NodemailerEmailSender();
+
+const userSessionRepository = new PrismaUserSessionRepository(prisma);
+
+const tokenService = new JwtTokenService();
+
+const refreshTokenHasher = new BcryptRefreshTokenHasher();
+
 
 const generateOtpUseCase = new GenerateOtpUseCase(
   userRepository,
@@ -69,6 +84,14 @@ const signupUseCase = new SignupUseCase(
   generateOtpUseCase,
 );
 
+const loginUseCase = new LoginUseCase(
+    userRepository,
+    passwordHasher,
+    tokenService,
+    userSessionRepository,
+    refreshTokenHasher,
+);
+
 export const signupController = new SignupController(
   signupUseCase,
 );
@@ -80,3 +103,5 @@ export const verifyOtpController = new VerifyOtpController(
 export const resendOtpController = new ResendOtpController(
   resendOtpUseCase,
 );
+
+export const loginController = new LoginController(loginUseCase);
