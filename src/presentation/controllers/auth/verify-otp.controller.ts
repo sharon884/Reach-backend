@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import { VerifyOtpUseCase } from "../../../application/use-cases/verify-otp.use-case.js";
 import { AUTH_MESSAGES } from "../../../shared/constants/messages/auth.messages.js";
 import { StatusCodes } from "http-status-codes";
+import { ApiResponse } from "../../../shared/types/api-response.js";
+
 
 export class VerifyOtpController {
   constructor(
@@ -22,10 +24,13 @@ export class VerifyOtpController {
         "EMAIL_VERIFICATION",
       );
 
-      res.status(StatusCodes.OK).json({
-        success: true,
-        message: AUTH_MESSAGES.OTP_VERIFICATION_SUCCESS,
-      });
+
+
+      const response : ApiResponse = {
+            success : true, 
+            message : AUTH_MESSAGES.OTP_VERIFICATION_SUCCESS
+      }
+      res.status(StatusCodes.OK).json(response);
     } catch (error) {
       next(error);
     }
