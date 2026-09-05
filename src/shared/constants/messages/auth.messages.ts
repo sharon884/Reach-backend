@@ -8,6 +8,7 @@ export const AUTH_MESSAGES = {
   USER_NOT_FOUND: "User not found",
   ACCOUNT_NOT_ACTIVE : "Account not active",
   LOGIN_SUCCESS : "Success! Logged in successfully. Welcome back to your community.",
+  UNAUTHORIZED: "Unauthorized access",
 
   OTP_INVALID: "Invalid OTP",
   OTP_EXPIRED: "OTP has expired",
