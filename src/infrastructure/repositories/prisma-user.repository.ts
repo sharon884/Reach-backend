@@ -1,6 +1,7 @@
 import { PrismaClient } from "../../generated/prisma/client.js";
 import { UserRepository } from "../../domain/repositories/user.repository.js";
 import { User } from "../../domain/entities/user.entity.js";
+import type { PaginatedUsers } from "../../domain/repositories/user.repository.js";
 
 export class PrismaUserRepository implements UserRepository {
     constructor(private readonly prisma: PrismaClient) {}
@@ -54,4 +55,29 @@ export class PrismaUserRepository implements UserRepository {
             where: { id },
         });
     }
+
+
+    async getUsers(
+    page: number,
+    limit: number,
+): Promise<PaginatedUsers> {
+    const skip = (page - 1) * limit;
+
+    const [users, total] = await Promise.all([
+        this.prisma.user.findMany({
+            skip,
+            take: limit,
+            orderBy: {
+                createdAt: "desc",
+            },
+        }),
+
+        this.prisma.user.count(),
+    ]);
+
+    return {
+        users,
+        total,
+    };
+}
 }
