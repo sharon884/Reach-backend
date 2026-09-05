@@ -1,6 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-
-import { resendOtpSchema } from "../../../application/dto/auth/resend-otp.dto.js";
 import { ResendOtpUseCase } from "../../../application/use-cases/resend-otp.use-case.js";
 import { AUTH_MESSAGES } from "../../../shared/constants/messages/auth.messages.js";
 import { StatusCodes } from "http-status-codes";
@@ -16,7 +14,7 @@ export class ResendOtpController {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const data = resendOtpSchema.parse(req.body);
+      const data = req.body
 
       await this.resendOtpUseCase.execute(data.userId);
 

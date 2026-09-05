@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { verifyOtpSchema } from "../../../application/dto/auth/verify-otp.dto.js";
 import { VerifyOtpUseCase } from "../../../application/use-cases/verify-otp.use-case.js";
 import { AUTH_MESSAGES } from "../../../shared/constants/messages/auth.messages.js";
 import { StatusCodes } from "http-status-codes";
@@ -15,7 +14,7 @@ export class VerifyOtpController {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const data = verifyOtpSchema.parse(req.body);
+      const data = req.body
 
       await this.verifyOtpUseCase.execute(
         data.userId,
