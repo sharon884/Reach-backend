@@ -31,6 +31,9 @@ import { LoginUseCase } from "../../application/use-cases/login.use-case.js";
 import { LoginController } from "../../presentation/controllers/auth/login.controller.js";
 
 
+import { AdminLoginUseCase } from "../../application/use-cases/admin-login.use-case.js";
+import { AdminLoginController } from "../../presentation/controllers/admin/admin-login.controller.js";
+
 const adapter = new PrismaPg({
   connectionString: env.DATABASE_URL,
 });
@@ -92,6 +95,17 @@ const loginUseCase = new LoginUseCase(
     refreshTokenHasher,
 );
 
+
+const adminLoginUseCase = new AdminLoginUseCase(
+    userRepository,
+    passwordHasher,
+    tokenService,
+    userSessionRepository,
+    refreshTokenHasher,
+);
+
+
+
 export const signupController = new SignupController(
   signupUseCase,
 );
@@ -105,3 +119,8 @@ export const resendOtpController = new ResendOtpController(
 );
 
 export const loginController = new LoginController(loginUseCase);
+
+
+export const adminLoginController = new AdminLoginController(
+    adminLoginUseCase,
+);
