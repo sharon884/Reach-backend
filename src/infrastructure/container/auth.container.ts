@@ -41,6 +41,9 @@ import { GetUsersUseCase } from "../../application/use-cases/admin/get-users.use
 import { UpdateUserStatusUseCase } from "../../application/use-cases/admin/update-user-status.use-case.js";
 import { UpdateUserStatusController } from "../../presentation/controllers/admin/update-user-status.controller.js";
 
+import { AdminLogoutUseCase } from "../../application/use-cases/admin/admin-logout.use-case.js";
+import { AdminLogoutController } from "../../presentation/controllers/admin/admin-logout.controller.js";
+
 const adapter = new PrismaPg({
   connectionString: env.DATABASE_URL,
 });
@@ -151,7 +154,15 @@ export const updateUserStatusUseCase = new UpdateUserStatusUseCase(
 );
 
 
-export const updateUserStatusController =
-    new UpdateUserStatusController(
+export const updateUserStatusController = new UpdateUserStatusController(
         updateUserStatusUseCase,
-    );
+);
+
+export const adminLogoutUseCase = new AdminLogoutUseCase(
+    userSessionRepository,
+);
+
+export const adminLogoutController = new AdminLogoutController(
+    adminLogoutUseCase,
+    tokenService,
+);

@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import {
     adminLoginController,
+    adminLogoutController,
     adminAuthMiddleware,
     getUsersController,
     updateUserStatusController,
@@ -41,5 +42,10 @@ adminRouter.patch(
     updateUserStatusController.handle.bind(updateUserStatusController),
 );
 
+
+adminRouter.post(
+    "/logout",
+    adminLogoutController.handle.bind(adminLogoutController),
+);
 
 export { adminRouter };
