@@ -45,6 +45,7 @@ export class AdminLoginController {
 
             res.status(StatusCodes.OK).json(response);
         } catch (error) {
+            console.log("Admin login error ", error)
             next(error);
         }
     }

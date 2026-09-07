@@ -13,8 +13,8 @@ export class GetUsersUseCase {
     ): Promise<GetUsersResultDto> {
         const { page, limit } = data;
 
-        const { users, total } =
-            await this.userRepository.getUsers(page, limit);
+       const { users, total } =
+    await this.userRepository.getUsers(data);
 
         const totalPages = Math.ceil(total / limit);
 

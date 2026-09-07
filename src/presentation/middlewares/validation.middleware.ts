@@ -19,6 +19,7 @@ export function validationMiddleware(
 
             next();
         } catch (error) {
+            console.log("zod error ", error)
             next(error);
         }
     };

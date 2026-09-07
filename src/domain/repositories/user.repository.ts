@@ -1,9 +1,17 @@
-import { User } from "../entities/user.entity.js";
+import { User, UserStatus } from "../entities/user.entity.js";
 import { BaseRepository } from "./base.repository.js";
 
 export interface PaginatedUsers {
     users: User[];
     total: number;
+}
+
+export interface GetUsersQuery {
+    page: number;
+    limit: number;
+    search?: string;
+    sortBy: "fullName" | "email" | "role" | "status" | "createdAt";
+    sortOrder: "asc" | "desc";
 }
 
 export interface UserRepository extends BaseRepository<User> {
@@ -15,7 +23,14 @@ export interface UserRepository extends BaseRepository<User> {
     ): Promise<void>;
 
     getUsers(
-        page: number,
-        limit: number,
+        query: GetUsersQuery,
     ): Promise<PaginatedUsers>;
+
+
+    updateStatus(
+    userId: string,
+    status: UserStatus,
+): Promise<User>;
+
+
 }

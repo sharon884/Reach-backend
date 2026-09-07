@@ -1,7 +1,10 @@
 import { PrismaClient } from "../../generated/prisma/client.js";
 import { UserRepository } from "../../domain/repositories/user.repository.js";
-import { User } from "../../domain/entities/user.entity.js";
-import type { PaginatedUsers } from "../../domain/repositories/user.repository.js";
+import { User, UserStatus } from "../../domain/entities/user.entity.js";
+import type { PaginatedUsers,  GetUsersQuery, } from "../../domain/repositories/user.repository.js";
+import type { Prisma } from "../../generated/prisma/client.js";
+
+
 
 export class PrismaUserRepository implements UserRepository {
     constructor(private readonly prisma: PrismaClient) {}
@@ -56,23 +59,54 @@ export class PrismaUserRepository implements UserRepository {
         });
     }
 
-
-    async getUsers(
-    page: number,
-    limit: number,
+async getUsers(
+    query: GetUsersQuery,
 ): Promise<PaginatedUsers> {
+
+    const {
+        page,
+        limit,
+        search,
+        sortBy,
+        sortOrder,
+    } = query;
+
     const skip = (page - 1) * limit;
+
+    const where: Prisma.UserWhereInput | undefined = search
+        ? {
+              OR: [
+                  {
+                      fullName: {
+                          contains: search,
+                          mode: "insensitive",
+                      },
+                  },
+                  {
+                      email: {
+                          contains: search,
+                          mode: "insensitive",
+                      },
+                  },
+              ],
+          }
+        : undefined;
+
+    const orderBy = {
+        [sortBy]: sortOrder,
+    };
 
     const [users, total] = await Promise.all([
         this.prisma.user.findMany({
+            where,
             skip,
             take: limit,
-            orderBy: {
-                createdAt: "desc",
-            },
+            orderBy,
         }),
 
-        this.prisma.user.count(),
+        this.prisma.user.count({
+            where,
+        }),
     ]);
 
     return {
@@ -80,4 +114,24 @@ export class PrismaUserRepository implements UserRepository {
         total,
     };
 }
+
+
+
+
+async updateStatus(
+    userId: string,
+    status: UserStatus,
+): Promise<User> {
+    return this.prisma.user.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            status,
+        },
+    });
+}
+
+
+
 }

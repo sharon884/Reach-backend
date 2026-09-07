@@ -38,6 +38,9 @@ import { AdminAuthMiddleware } from "../../presentation/middlewares/admin-auth.m
 import { GetUsersController } from "../../presentation/controllers/admin/get-users.controller.js";
 import { GetUsersUseCase } from "../../application/use-cases/admin/get-users.use-case.js";
 
+import { UpdateUserStatusUseCase } from "../../application/use-cases/admin/update-user-status.use-case.js";
+import { UpdateUserStatusController } from "../../presentation/controllers/admin/update-user-status.controller.js";
+
 const adapter = new PrismaPg({
   connectionString: env.DATABASE_URL,
 });
@@ -142,3 +145,13 @@ export const getUsersUseCase = new GetUsersUseCase(
 export const getUsersController = new GetUsersController(
     getUsersUseCase,
 );
+
+export const updateUserStatusUseCase = new UpdateUserStatusUseCase(
+    userRepository,
+);
+
+
+export const updateUserStatusController =
+    new UpdateUserStatusController(
+        updateUserStatusUseCase,
+    );

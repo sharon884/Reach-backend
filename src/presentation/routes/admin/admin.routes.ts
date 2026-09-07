@@ -4,6 +4,7 @@ import {
     adminLoginController,
     adminAuthMiddleware,
     getUsersController,
+    updateUserStatusController,
 } from "../../../infrastructure/container/auth.container.js";
 
 import {
@@ -13,6 +14,8 @@ import {
 import { getUsersSchema } from "../../../application/dto/admin/get-users.dto.js";
 
 import { validationMiddleware } from "../../middlewares/validation.middleware.js";
+import { updateUserStatusSchema } from "../../../application/dto/admin/update-user-status.dto.js";
+
 
 const adminRouter = Router();
 
@@ -28,5 +31,15 @@ adminRouter.get(
     validationMiddleware(getUsersSchema, "query"),
     getUsersController.handle.bind(getUsersController),
 );
+
+
+
+adminRouter.patch(
+    "/users/:userId/status",
+    adminAuthMiddleware.handle.bind(adminAuthMiddleware),
+    validationMiddleware(updateUserStatusSchema),
+    updateUserStatusController.handle.bind(updateUserStatusController),
+);
+
 
 export { adminRouter };
