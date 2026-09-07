@@ -44,6 +44,10 @@ import { UpdateUserStatusController } from "../../presentation/controllers/admin
 import { AdminLogoutUseCase } from "../../application/use-cases/admin/admin-logout.use-case.js";
 import { AdminLogoutController } from "../../presentation/controllers/admin/admin-logout.controller.js";
 
+import { LogoutUseCase } from "../../application/use-cases/logout.use-case.js";
+import { LogoutController } from "../../presentation/controllers/auth/logout.controller.js";
+
+
 const adapter = new PrismaPg({
   connectionString: env.DATABASE_URL,
 });
@@ -69,6 +73,8 @@ const userSessionRepository = new PrismaUserSessionRepository(prisma);
 const tokenService = new JwtTokenService();
 
 const refreshTokenHasher = new BcryptRefreshTokenHasher();
+
+const logoutUseCase = new LogoutUseCase(userSessionRepository);
 
 
 const generateOtpUseCase = new GenerateOtpUseCase(
@@ -113,7 +119,6 @@ const adminLoginUseCase = new AdminLoginUseCase(
     userSessionRepository,
     refreshTokenHasher,
 );
-
 
 
 
@@ -164,5 +169,11 @@ export const adminLogoutUseCase = new AdminLogoutUseCase(
 
 export const adminLogoutController = new AdminLogoutController(
     adminLogoutUseCase,
+    tokenService,
+);
+
+
+export const logoutController = new LogoutController(
+    logoutUseCase,
     tokenService,
 );

@@ -10,7 +10,7 @@ import { validationMiddleware } from "../../middlewares/validation.middleware.js
 import { signupSchema  } from "../../../application/dto/auth/signup.dto.js";
 import { verifyOtpSchema } from "../../../application/dto/auth/verify-otp.dto.js";
 import { resendOtpSchema } from "../../../application/dto/auth/resend-otp.dto.js";
-import { loginController } from "../../../infrastructure/container/auth.container.js";
+import { loginController, logoutController } from "../../../infrastructure/container/auth.container.js";
 import { loginSchema } from "../../../application/dto/auth/login.dto.js";
 
 
@@ -40,4 +40,10 @@ authRouter.post(
   "/resend-otp",
   validationMiddleware(resendOtpSchema),
   resendOtpController.handle.bind(resendOtpController),
+);
+
+
+authRouter.post(
+    "/logout",
+    logoutController.handle.bind(logoutController),
 );
