@@ -1,8 +1,13 @@
 import express from "express";
-import { authRouter } from "./presentation/routes/auth/auth.routes.js";
-import { adminRouter } from "./presentation/routes/admin/admin.routes.js";
-import { errorMiddleware } from "./presentation/middlewares/error.middleware.js";
+
+import { authRouter } from "@/presentation/routes/auth/auth.routes";
+
+import { adminRouter } from "@/presentation/routes/admin/admin.routes";
+
+import { errorMiddleware } from "@/presentation/middlewares/error.middleware";
+
 import cookieParser from "cookie-parser";
+
 import cors from "cors";
 
 const app = express();

@@ -1,9 +1,15 @@
-import { OtpPurpose } from "../../domain/entities/otp-verification.entity.js";
-import { OtpVerificationRepository } from "../../domain/repositories/otp-verification.repository.js";
-import { UserRepository } from "../../domain/repositories/user.repository.js";
-import { OtpHasher } from "../services/otp-hasher.js";
-import { AUTH_MESSAGES } from "../../shared/constants/messages/auth.messages.js";
-import { AppError } from "../../shared/errors/app.error.js";
+import { OtpPurpose } from "@/domain/entities/otp-verification.entity";
+
+import { OtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
+
+import { UserRepository } from "@/domain/repositories/user.repository";
+
+import { OtpHasher } from "@/application/services/otp-hasher";
+
+import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
+
+import { AppError } from "@/shared/errors/app.error";
+
 import { StatusCodes } from "http-status-codes";
 
 export class VerifyOtpUseCase {

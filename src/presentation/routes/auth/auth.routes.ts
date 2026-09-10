@@ -1,17 +1,22 @@
 import { Router } from "express";
 
 import {
-  signupController,
-  verifyOtpController,
-  resendOtpController,
-} from "../../../infrastructure/container/auth.container.js";
+    signupController,
+    verifyOtpController,
+    resendOtpController,
+    loginController,
+    logoutController,
+} from "@/infrastructure/container/auth.container";
 
-import { validationMiddleware } from "../../middlewares/validation.middleware.js";
-import { signupSchema  } from "../../../application/dto/auth/signup.dto.js";
-import { verifyOtpSchema } from "../../../application/dto/auth/verify-otp.dto.js";
-import { resendOtpSchema } from "../../../application/dto/auth/resend-otp.dto.js";
-import { loginController, logoutController } from "../../../infrastructure/container/auth.container.js";
-import { loginSchema } from "../../../application/dto/auth/login.dto.js";
+import { validationMiddleware } from "@/presentation/middlewares/validation.middleware";
+
+import { signupSchema } from "@/application/dto/auth/signup.dto";
+
+import { verifyOtpSchema } from "@/application/dto/auth/verify-otp.dto";
+
+import { resendOtpSchema } from "@/application/dto/auth/resend-otp.dto";
+
+import { loginSchema } from "@/application/dto/auth/login.dto";
 
 
 export const authRouter = Router();

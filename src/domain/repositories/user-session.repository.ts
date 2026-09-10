@@ -1,4 +1,4 @@
-import type { UserSession } from "../entities/user-session.entity.js";
+import type { UserSession } from "@/domain/entities/user-session.entity";
 
 export interface UserSessionRepository {
 

@@ -1,9 +1,11 @@
-import { PrismaClient } from "../../generated/prisma/client.js";
+import { PrismaClient } from "@/generated/prisma/client";
+
 import {
-  OtpPurpose,
-  OtpVerification,
-} from "../../domain/entities/otp-verification.entity.js";
-import { OtpVerificationRepository } from "../../domain/repositories/otp-verification.repository.js";
+    OtpPurpose,
+    OtpVerification,
+} from "@/domain/entities/otp-verification.entity";
+
+import { OtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
 
 export class PrismaOtpVerificationRepository
   implements OtpVerificationRepository

@@ -1,5 +1,6 @@
-import type { User } from "../../../domain/entities/user.entity.js";
-import type { AdminUserResponseDto } from "../../dto/admin/admin-user-response.dto.js";
+import type { User } from "@/domain/entities/user.entity";
+
+import type { AdminUserResponseDto } from "@/application/dto/admin/admin-user-response.dto";
 
 export function mapUserToAdminResponse(
     user: User,

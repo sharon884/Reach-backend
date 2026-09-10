@@ -1,14 +1,13 @@
 import { randomUUID } from "node:crypto";
 
-import { SignupDto } from "../dto/auth/signup.dto.js";
-import { User } from "../../domain/entities/user.entity.js";
-import { UserRepository } from "../../domain/repositories/user.repository.js";
-import { PasswordHasher } from "../services/password-hasher.js";
-import { GenerateOtpUseCase } from "./generate-otp.use-case.js";
-import { mapSignupToUserData } from "../mappers/auth/signup.mapper.js";
-
-import { AUTH_MESSAGES } from "../../shared/constants/messages/auth.messages.js";
-import { ConflictError } from "../../shared/errors/conflict.error.js";
+import { SignupDto } from "@/application/dto/auth/signup.dto";
+import { User } from "@/domain/entities/user.entity";
+import { UserRepository } from "@/domain/repositories/user.repository";
+import { PasswordHasher } from "@/application/services/password-hasher";
+import { GenerateOtpUseCase } from "@/application/use-cases/generate-otp.use-case";
+import { mapSignupToUserData } from "@/application/mappers/auth/signup.mapper";
+import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
+import { ConflictError } from "@/shared/errors/conflict.error";
 
 export class SignupUseCase {
     constructor(
@@ -62,3 +61,5 @@ export class SignupUseCase {
         return createdUser;
     }
 }
+
+

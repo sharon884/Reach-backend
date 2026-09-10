@@ -1,7 +1,11 @@
-import { UserRepository } from "../../domain/repositories/user.repository.js";
-import { GenerateOtpUseCase } from "./generate-otp.use-case.js";
-import { AppError } from "../../shared/errors/app.error.js";
-import { AUTH_MESSAGES } from "../../shared/constants/messages/auth.messages.js";
+import { UserRepository } from "@/domain/repositories/user.repository";
+
+import { GenerateOtpUseCase } from "@/application/use-cases/generate-otp.use-case";
+
+import { AppError } from "@/shared/errors/app.error";
+
+import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
+
 import { StatusCodes } from "http-status-codes";
 
 export class ResendOtpUseCase {

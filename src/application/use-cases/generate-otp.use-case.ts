@@ -1,15 +1,24 @@
 import { randomUUID } from "node:crypto";
+
 import {
     OtpPurpose,
     OtpVerification,
-} from "../../domain/entities/otp-verification.entity.js";
-import { OtpVerificationRepository } from "../../domain/repositories/otp-verification.repository.js";
-import { UserRepository } from "../../domain/repositories/user.repository.js";
-import { OtpGenerator } from "../services/otp-generator.js";
-import { OtpHasher } from "../services/otp-hasher.js";
-import { EmailSender } from "../services/email-sender.js";
-import { AppError } from "../../shared/errors/app.error.js";
-import { AUTH_MESSAGES } from "../../shared/constants/messages/auth.messages.js";
+} from "@/domain/entities/otp-verification.entity";
+
+import { OtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
+
+import { UserRepository } from "@/domain/repositories/user.repository";
+
+import { OtpGenerator } from "@/application/services/otp-generator";
+
+import { OtpHasher } from "@/application/services/otp-hasher";
+
+import { EmailSender } from "@/application/services/email-sender";
+
+import { AppError } from "@/shared/errors/app.error";
+
+import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
+
 import { StatusCodes } from "http-status-codes";
 
 export class GenerateOtpUseCase {

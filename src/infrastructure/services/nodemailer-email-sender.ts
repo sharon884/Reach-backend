@@ -1,7 +1,8 @@
 import nodemailer, { Transporter } from "nodemailer";
 
-import { EmailSender } from "../../application/services/email-sender.js";
-import { env } from "../../config/env.js";
+import { EmailSender } from "@/application/services/email-sender";
+
+import { env } from "@/config/env";
 
 export class NodemailerEmailSender implements EmailSender {
   private readonly transporter: Transporter;

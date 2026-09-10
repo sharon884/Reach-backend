@@ -1,9 +1,12 @@
 import { Request, Response, NextFunction } from "express";
+
 import { StatusCodes } from "http-status-codes";
 
-import { AdminLogoutUseCase } from "../../../application/use-cases/admin/admin-logout.use-case.js";
-import type { TokenService } from "../../../application/services/token-service.js";
-import type { ApiResponse } from "../../../shared/types/api-response.js";
+import { AdminLogoutUseCase } from "@/application/use-cases/admin/admin-logout.use-case";
+
+import type { TokenService } from "@/application/services/token-service";
+
+import type { ApiResponse } from "@/shared/types/api-response";
 
 export class AdminLogoutController {
 

@@ -1,8 +1,12 @@
 import { Request, Response, NextFunction } from "express";
-import { VerifyOtpUseCase } from "../../../application/use-cases/verify-otp.use-case.js";
-import { AUTH_MESSAGES } from "../../../shared/constants/messages/auth.messages.js";
+
+import { VerifyOtpUseCase } from "@/application/use-cases/verify-otp.use-case";
+
+import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
+
 import { StatusCodes } from "http-status-codes";
-import { ApiResponse } from "../../../shared/types/api-response.js";
+
+import { ApiResponse } from "@/shared/types/api-response";
 
 
 export class VerifyOtpController {

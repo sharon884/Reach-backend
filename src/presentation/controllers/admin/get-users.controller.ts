@@ -1,11 +1,16 @@
 import { Request, Response, NextFunction } from "express";
+
 import { StatusCodes } from "http-status-codes";
 
-import { GetUsersUseCase } from "../../../application/use-cases/admin/get-users.use-case.js";
-import type { GetUsersDto } from "../../../application/dto/admin/get-users.dto.js";
-import type { GetUsersResultDto } from "../../../application/dto/admin/get-users-result.dto.js";
-import type { ApiResponse } from "../../../shared/types/api-response.js";
-import { ADMIN_MESSAGES } from "../../../shared/constants/messages/admin.messages.js";
+import { GetUsersUseCase } from "@/application/use-cases/admin/get-users.use-case";
+
+import type { GetUsersDto } from "@/application/dto/admin/get-users.dto";
+
+import type { GetUsersResultDto } from "@/application/dto/admin/get-users-result.dto";
+
+import type { ApiResponse } from "@/shared/types/api-response";
+
+import { ADMIN_MESSAGES } from "@/shared/constants/messages/admin.messages";
 
 export class GetUsersController {
     constructor(

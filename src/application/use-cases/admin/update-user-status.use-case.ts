@@ -1,7 +1,11 @@
-import { UserRepository } from "../../../domain/repositories/user.repository.js";
-import { UpdateUserStatusDto } from "../../dto/admin/update-user-status.dto.js";
-import { AppError } from "../../../shared/errors/app.error.js";
-import { AUTH_MESSAGES } from "../../../shared/constants/messages/auth.messages.js";
+import { UserRepository } from "@/domain/repositories/user.repository";
+
+import { UpdateUserStatusDto } from "@/application/dto/admin/update-user-status.dto";
+
+import { AppError } from "@/shared/errors/app.error";
+
+import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
+
 import { StatusCodes } from "http-status-codes";
 
 export class UpdateUserStatusUseCase {

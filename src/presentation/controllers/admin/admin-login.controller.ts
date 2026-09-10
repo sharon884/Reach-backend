@@ -1,13 +1,18 @@
 import { Request, Response, NextFunction } from "express";
+
 import { StatusCodes } from "http-status-codes";
 
-import { AdminLoginUseCase } from "../../../application/use-cases/admin-login.use-case.js";
-import type { ApiResponse } from "../../../shared/types/api-response.js";
-import type { LoginResponseDto } from "../../../application/dto/auth/login-response.dto.js";
+import { AdminLoginUseCase } from "@/application/use-cases/admin-login.use-case";
 
-import { mapLoginToResponse } from "../../../application/mappers/auth/login-response.mapper.js";
-import { AUTH_MESSAGES } from "../../../shared/constants/messages/auth.messages.js";
-import { AUTH_COOKIES } from "../../cookies/auth.cookies.js";
+import type { ApiResponse } from "@/shared/types/api-response";
+
+import type { LoginResponseDto } from "@/application/dto/auth/login-response.dto";
+
+import { mapLoginToResponse } from "@/application/mappers/auth/login-response.mapper";
+
+import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
+
+import { AUTH_COOKIES } from "@/presentation/cookies/auth.cookies";
 
 export class AdminLoginController {
 

@@ -1,9 +1,14 @@
 import { Request, Response, NextFunction } from "express";
+
 import { StatusCodes } from "http-status-codes";
+
 import { ZodError } from "zod";
-import { AppError } from "../../shared/errors/app.error.js";
-import type { ErrorResponse } from "../../shared/types/error-response.js";
-import { logger } from "../../infrastructure/logger/logger.js";
+
+import { AppError } from "@/shared/errors/app.error";
+
+import type { ErrorResponse } from "@/shared/types/error-response";
+
+import { logger } from "@/infrastructure/logger/logger";
 
 export const errorMiddleware = (
   error: unknown,

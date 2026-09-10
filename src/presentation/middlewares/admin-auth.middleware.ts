@@ -1,9 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 
-import type { TokenService } from "../../application/services/token-service.js";
-import { AUTH_MESSAGES } from "../../shared/constants/messages/auth.messages.js";
+import type { TokenService } from "@/application/services/token-service";
+
+import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
+
 import { StatusCodes } from "http-status-codes";
-import { AppError } from "../../shared/errors/app.error.js";
+
+import { AppError } from "@/shared/errors/app.error";
 
 export class AdminAuthMiddleware {
 

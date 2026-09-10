@@ -1,17 +1,24 @@
 import { randomUUID } from "node:crypto";
 
-import type { UserRepository } from "../../domain/repositories/user.repository.js";
-import type { UserSessionRepository } from "../../domain/repositories/user-session.repository.js";
+import type { UserRepository } from "@/domain/repositories/user.repository";
 
-import type { LoginDto } from "../dto/auth/login.dto.js";
-import type { PasswordHasher } from "../services/password-hasher.js";
-import type { TokenService } from "../services/token-service.js";
-import type { RefreshTokenHasher } from "../services/refresh-token-hasher.js";
+import type { UserSessionRepository } from "@/domain/repositories/user-session.repository";
 
-import { AppError } from "../../shared/errors/app.error.js";
-import { AUTH_MESSAGES } from "../../shared/constants/messages/auth.messages.js";
+import type { LoginDto } from "@/application/dto/auth/login.dto";
+
+import type { PasswordHasher } from "@/application/services/password-hasher";
+
+import type { TokenService } from "@/application/services/token-service";
+
+import type { RefreshTokenHasher } from "@/application/services/refresh-token-hasher";
+
+import { AppError } from "@/shared/errors/app.error";
+
+import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
+
 import { StatusCodes } from "http-status-codes";
-import { LoginResult } from "../dto/auth/login-result.dto.js";
+
+import { LoginResult } from "@/application/dto/auth/login-result.dto";
 
 export class LoginUseCase {
 

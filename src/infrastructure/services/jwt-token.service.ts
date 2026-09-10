@@ -4,9 +4,9 @@ import type {
     AccessTokenPayload,
     RefreshTokenPayload,
     TokenService,
-} from "../../application/services/token-service.js";
+} from "@/application/services/token-service";
 
-import { env } from "../../config/env.js";
+import { env } from "@/config/env";
 
 export class JwtTokenService implements TokenService {
 

@@ -1,8 +1,15 @@
-import { PrismaClient } from "../../generated/prisma/client.js";
-import { UserRepository } from "../../domain/repositories/user.repository.js";
-import { User, UserStatus } from "../../domain/entities/user.entity.js";
-import type { PaginatedUsers,  GetUsersQuery, } from "../../domain/repositories/user.repository.js";
-import type { Prisma } from "../../generated/prisma/client.js";
+import { PrismaClient } from "@/generated/prisma/client";
+
+import { UserRepository } from "@/domain/repositories/user.repository";
+
+import { User, UserStatus } from "@/domain/entities/user.entity";
+
+import type {
+    PaginatedUsers,
+    GetUsersQuery,
+} from "@/domain/repositories/user.repository";
+
+import type { Prisma } from "@/generated/prisma/client";
 
 
 
@@ -135,3 +142,8 @@ async updateStatus(
 
 
 }
+
+
+
+
+

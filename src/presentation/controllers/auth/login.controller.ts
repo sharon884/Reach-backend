@@ -1,11 +1,18 @@
 import { Request, Response, NextFunction } from "express";
+
 import { StatusCodes } from "http-status-codes";
-import { LoginUseCase } from "../../../application/use-cases/login.use-case.js";
-import { ApiResponse } from "../../../shared/types/api-response.js";
-import { LoginResponseDto } from "../../../application/dto/auth/login-response.dto.js";
-import { mapLoginToResponse } from "../../../application/mappers/auth/login-response.mapper.js";
-import { AUTH_MESSAGES } from "../../../shared/constants/messages/auth.messages.js";
-import { AUTH_COOKIES } from "../../cookies/auth.cookies.js";
+
+import { LoginUseCase } from "@/application/use-cases/login.use-case";
+
+import { ApiResponse } from "@/shared/types/api-response";
+
+import { LoginResponseDto } from "@/application/dto/auth/login-response.dto";
+
+import { mapLoginToResponse } from "@/application/mappers/auth/login-response.mapper";
+
+import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
+
+import { AUTH_COOKIES } from "@/presentation/cookies/auth.cookies";
 
 
 export class LoginController {

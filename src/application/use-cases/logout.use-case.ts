@@ -1,5 +1,4 @@
-import type { UserSessionRepository } from "../../domain/repositories/user-session.repository.js";
-
+import type { UserSessionRepository } from "@/domain/repositories/user-session.repository"
 export class LogoutUseCase {
 
     constructor(

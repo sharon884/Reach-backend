@@ -1,7 +1,10 @@
-import type { UserRepository } from "../../../domain/repositories/user.repository.js";
-import type { GetUsersDto } from "../../dto/admin/get-users.dto.js";
-import type { GetUsersResultDto } from "../../dto/admin/get-users-result.dto.js";
-import { mapUserToAdminResponse } from "../../mappers/admin/admin-user-response.mapper.js";
+import type { UserRepository } from "@/domain/repositories/user.repository";
+
+import type { GetUsersDto } from "@/application/dto/admin/get-users.dto";
+
+import type { GetUsersResultDto } from "@/application/dto/admin/get-users-result.dto";
+
+import { mapUserToAdminResponse } from "@/application/mappers/admin/admin-user-response.mapper";
 
 export class GetUsersUseCase {
     constructor(

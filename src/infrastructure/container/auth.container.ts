@@ -1,51 +1,66 @@
-import { PrismaClient } from "../../generated/prisma/client.js";
+import { PrismaClient } from "@/generated/prisma/client";
+
 import { PrismaPg } from "@prisma/adapter-pg";
 
-import { PrismaUserRepository } from "../repositories/prisma-user.repository.js";
-import { PrismaOtpVerificationRepository } from "../repositories/prisma-otp-verification.repository.js";
+import { PrismaUserRepository } from "@/infrastructure/repositories/prisma-user.repository";
 
-import { BcryptPasswordHasher } from "../services/bcrypt-password-hasher.js";
-import { RandomOtpGenerator } from "../services/random-otp-generator.js";
-import { BcryptOtpHasher } from "../services/bcrypt-otp-hasher.js";
+import { PrismaOtpVerificationRepository } from "@/infrastructure/repositories/prisma-otp-verification.repository";
 
-import { SignupUseCase } from "../../application/use-cases/signup.use-case.js";
-import { GenerateOtpUseCase } from "../../application/use-cases/generate-otp.use-case.js";
+import { BcryptPasswordHasher } from "@/infrastructure/services/bcrypt-password-hasher";
 
-import { VerifyOtpUseCase } from "../../application/use-cases/verify-otp.use-case.js";
-import { VerifyOtpController } from "../../presentation/controllers/auth/verify-otp.controller.js";
+import { RandomOtpGenerator } from "@/infrastructure/services/random-otp-generator";
 
-import { ResendOtpUseCase } from "../../application/use-cases/resend-otp.use-case.js";
-import { ResendOtpController } from "../../presentation/controllers/auth/resend-otp.controller.js";
+import { BcryptOtpHasher } from "@/infrastructure/services/bcrypt-otp-hasher";
 
-import { SignupController } from "../../presentation/controllers/auth/signup.controller.js";
+import { SignupUseCase } from "@/application/use-cases/signup.use-case";
 
-import { NodemailerEmailSender } from "../services/nodemailer-email-sender.js";
+import { GenerateOtpUseCase } from "@/application/use-cases/generate-otp.use-case";
 
-import { env } from "../../config/env.js";
+import { VerifyOtpUseCase } from "@/application/use-cases/verify-otp.use-case";
 
-import { PrismaUserSessionRepository } from "../repositories/prisma-user-session.repository.js";
-import { JwtTokenService } from "../services/jwt-token.service.js";
-import { BcryptRefreshTokenHasher } from "../services/bcrypt-refresh-token-hasher.js";
+import { VerifyOtpController } from "@/presentation/controllers/auth/verify-otp.controller";
 
-import { LoginUseCase } from "../../application/use-cases/login.use-case.js";
-import { LoginController } from "../../presentation/controllers/auth/login.controller.js";
+import { ResendOtpUseCase } from "@/application/use-cases/resend-otp.use-case";
 
+import { ResendOtpController } from "@/presentation/controllers/auth/resend-otp.controller";
 
-import { AdminLoginUseCase } from "../../application/use-cases/admin-login.use-case.js";
-import { AdminLoginController } from "../../presentation/controllers/admin/admin-login.controller.js";
+import { SignupController } from "@/presentation/controllers/auth/signup.controller";
 
-import { AdminAuthMiddleware } from "../../presentation/middlewares/admin-auth.middleware.js";
-import { GetUsersController } from "../../presentation/controllers/admin/get-users.controller.js";
-import { GetUsersUseCase } from "../../application/use-cases/admin/get-users.use-case.js";
+import { NodemailerEmailSender } from "@/infrastructure/services/nodemailer-email-sender";
 
-import { UpdateUserStatusUseCase } from "../../application/use-cases/admin/update-user-status.use-case.js";
-import { UpdateUserStatusController } from "../../presentation/controllers/admin/update-user-status.controller.js";
+import { env } from "@/config/env";
 
-import { AdminLogoutUseCase } from "../../application/use-cases/admin/admin-logout.use-case.js";
-import { AdminLogoutController } from "../../presentation/controllers/admin/admin-logout.controller.js";
+import { PrismaUserSessionRepository } from "@/infrastructure/repositories/prisma-user-session.repository";
 
-import { LogoutUseCase } from "../../application/use-cases/logout.use-case.js";
-import { LogoutController } from "../../presentation/controllers/auth/logout.controller.js";
+import { JwtTokenService } from "@/infrastructure/services/jwt-token.service";
+
+import { BcryptRefreshTokenHasher } from "@/infrastructure/services/bcrypt-refresh-token-hasher";
+
+import { LoginUseCase } from "@/application/use-cases/login.use-case";
+
+import { LoginController } from "@/presentation/controllers/auth/login.controller";
+
+import { AdminLoginUseCase } from "@/application/use-cases/admin-login.use-case";
+
+import { AdminLoginController } from "@/presentation/controllers/admin/admin-login.controller";
+
+import { AdminAuthMiddleware } from "@/presentation/middlewares/admin-auth.middleware";
+
+import { GetUsersController } from "@/presentation/controllers/admin/get-users.controller";
+
+import { GetUsersUseCase } from "@/application/use-cases/admin/get-users.use-case";
+
+import { UpdateUserStatusUseCase } from "@/application/use-cases/admin/update-user-status.use-case";
+
+import { UpdateUserStatusController } from "@/presentation/controllers/admin/update-user-status.controller";
+
+import { AdminLogoutUseCase } from "@/application/use-cases/admin/admin-logout.use-case";
+
+import { AdminLogoutController } from "@/presentation/controllers/admin/admin-logout.controller";
+
+import { LogoutUseCase } from "@/application/use-cases/logout.use-case";
+
+import { LogoutController } from "@/presentation/controllers/auth/logout.controller";
 
 
 const adapter = new PrismaPg({

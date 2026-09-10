@@ -1,6 +1,8 @@
-import { PrismaClient } from "../../generated/prisma/client.js";
-import type { UserSessionRepository  } from "../../domain/repositories/user-session.repository.js";
-import type { UserSession } from "../../domain/entities/user-session.entity.js";
+import { PrismaClient } from "@/generated/prisma/client";
+
+import type { UserSessionRepository } from "@/domain/repositories/user-session.repository";
+
+import type { UserSession } from "@/domain/entities/user-session.entity";
 
 
 
