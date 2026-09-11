@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import { ResendOtpUseCase } from "@/application/use-cases/resend-otp.use-case";
+import type { IResendOtpUseCase } from "@/application/abstractions/use-cases/resend-otp.use-case";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
@@ -10,7 +10,7 @@ import { ApiResponse } from "@/shared/types/api-response";
 
 export class ResendOtpController {
   constructor(
-    private readonly resendOtpUseCase: ResendOtpUseCase,
+    private readonly _resendOtpUseCase: IResendOtpUseCase,
   ) { }
 
   async handle(
@@ -21,7 +21,7 @@ export class ResendOtpController {
     try {
       const data = req.body;
 
-      await this.resendOtpUseCase.execute(data.userId);
+      await this._resendOtpUseCase.execute(data.userId);
 
       const response: ApiResponse = {
         success: true,
