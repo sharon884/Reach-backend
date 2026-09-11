@@ -2,6 +2,9 @@ import { randomUUID } from "node:crypto";
 
 import { StatusCodes } from "http-status-codes";
 
+import type { IAdminLoginUseCase } from "@/application/abstractions/use-cases/admin/admin-login.use-case";
+
+
 import type { IUserRepository } from "@/domain/repositories/user.repository";
 
 import type { IUserSessionRepository } from "@/domain/repositories/user-session.repository";
@@ -20,7 +23,7 @@ import { AppError } from "@/shared/errors/app.error";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
-export class AdminLoginUseCase {
+export class AdminLoginUseCase implements IAdminLoginUseCase {
 
     constructor(
         private readonly _userRepository: IUserRepository,
