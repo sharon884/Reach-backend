@@ -1,6 +1,8 @@
 import type { IUserSessionRepository } from "@/domain/repositories/user-session.repository";
 
-export class AdminLogoutUseCase {
+import type { IAdminLogoutUseCase } from "@/application/abstractions/use-cases/admin/admin-logout.use-case";
+
+export class AdminLogoutUseCase implements IAdminLogoutUseCase {
      constructor(
          private readonly _userSessionRepository : IUserSessionRepository,
      ) {}
