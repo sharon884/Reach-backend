@@ -1,5 +1,7 @@
 import { OtpPurpose } from "@/domain/entities/otp-verification.entity";
 
+import type { IVerifyOtpUseCase } from "@/application/abstractions/use-cases/verify-otp.use-case";
+
 import { IOtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
 
 import { IUserRepository } from "@/domain/repositories/user.repository";
@@ -12,7 +14,7 @@ import { AppError } from "@/shared/errors/app.error";
 
 import { StatusCodes } from "http-status-codes";
 
-export class VerifyOtpUseCase {
+export class VerifyOtpUseCase implements IVerifyOtpUseCase {
   constructor(
     private readonly _userRepository: IUserRepository,
     private readonly _otpRepository: IOtpVerificationRepository,
