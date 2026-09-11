@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import { StatusCodes } from "http-status-codes";
 
-import { LogoutUseCase } from "@/application/use-cases/logout.use-case";
+import type { ILogoutUseCase } from "@/application/abstractions/use-cases/logout.use-case";
 
 import type { ITokenService } from "@/application/services/token-service";
 
@@ -11,7 +11,7 @@ import type { ApiResponse } from "@/shared/types/api-response";
 export class LogoutController {
 
     constructor(
-        private readonly logoutUseCase: LogoutUseCase,
+        private readonly _logoutUseCase: ILogoutUseCase,
         private readonly _tokenService: ITokenService,
     ) {}
 
@@ -27,7 +27,7 @@ export class LogoutController {
                 const payload =
                     this._tokenService.verifyRefreshToken(refreshToken);
 
-                await this.logoutUseCase.execute(
+                await this._logoutUseCase.execute(
                     payload.sessionId,
                 );
             }
