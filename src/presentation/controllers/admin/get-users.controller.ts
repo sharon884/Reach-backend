@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import { StatusCodes } from "http-status-codes";
 
-import { GetUsersUseCase } from "@/application/use-cases/admin/get-users.use-case";
+import type { IGetUsersUseCase } from "@/application/abstractions/use-cases/admin/get-users.use-case";
 
 import type { GetUsersDto } from "@/application/dto/admin/get-users.dto";
 
@@ -14,7 +14,7 @@ import { ADMIN_MESSAGES } from "@/shared/constants/messages/admin.messages";
 
 export class GetUsersController {
     constructor(
-        private readonly getUsersUseCase: GetUsersUseCase,
+        private readonly _getUsersUseCase: IGetUsersUseCase,
     ) {}
 
     async handle(
@@ -25,7 +25,7 @@ export class GetUsersController {
         try {
             const data = res.locals.validatedData as GetUsersDto;
 
-            const result = await this.getUsersUseCase.execute(data);
+            const result = await this._getUsersUseCase.execute(data);
 
             const response: ApiResponse<GetUsersResultDto> = {
                 success: true,
