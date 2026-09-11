@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import { UpdateUserStatusUseCase } from "@/application/use-cases/admin/update-user-status.use-case";
+import type { IUpdateUserStatusUseCase } from "@/application/abstractions/use-cases/admin/update-user-status.use-case";
 
 import { UpdateUserStatusDto } from "@/application/dto/admin/update-user-status.dto";
 
@@ -10,7 +10,7 @@ import { mapUserToAdminResponse } from "@/application/mappers/admin/admin-user-r
 
 export class UpdateUserStatusController {
     constructor(
-        private readonly updateUserStatusUseCase: UpdateUserStatusUseCase,
+        private readonly _updateUserStatusUseCase: IUpdateUserStatusUseCase,
     ) {}
 
     async handle(
@@ -23,7 +23,7 @@ export class UpdateUserStatusController {
             
             const data: UpdateUserStatusDto = req.body;
 
-            const result = await this.updateUserStatusUseCase.execute(
+            const result = await this._updateUserStatusUseCase.execute(
                 userId,
                 data,
             );
