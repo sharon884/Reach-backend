@@ -1,10 +1,10 @@
 import { OtpPurpose } from "@/domain/entities/otp-verification.entity";
 
-import { OtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
+import { IOtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
 
 import { IUserRepository } from "@/domain/repositories/user.repository";
 
-import { OtpHasher } from "@/application/services/otp-hasher";
+import { IOtpHasher } from "@/application/services/otp-hasher";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
@@ -15,8 +15,8 @@ import { StatusCodes } from "http-status-codes";
 export class VerifyOtpUseCase {
   constructor(
     private readonly _userRepository: IUserRepository,
-    private readonly otpRepository: OtpVerificationRepository,
-    private readonly otpHasher: OtpHasher,
+    private readonly _otpRepository: IOtpVerificationRepository,
+    private readonly _otpHasher: IOtpHasher,
   ) {}
 
   async execute(
@@ -34,7 +34,7 @@ export class VerifyOtpUseCase {
     }
 
     const otpVerification =
-      await this.otpRepository.findActiveByUserAndPurpose(
+      await this._otpRepository.findActiveByUserAndPurpose(
         userId,
         purpose,
       );
@@ -46,13 +46,13 @@ export class VerifyOtpUseCase {
       );
     }
 
-    const isValid = await this.otpHasher.compare(
+    const isValid = await this._otpHasher.compare(
       otp,
       otpVerification.codeHash,
     );
 
     if (!isValid) {
-      await this.otpRepository.incrementAttempts(
+      await this._otpRepository.incrementAttempts(
         otpVerification.id,
       );
 
@@ -62,7 +62,7 @@ export class VerifyOtpUseCase {
       );
     }
 
-    await this.otpRepository.markAsVerified(
+    await this._otpRepository.markAsVerified(
       otpVerification.id,
       new Date(),
     );

@@ -7,15 +7,15 @@ import {
 
 import { IGenerateOtpUseCase } from "../abstractions/use-cases/generate-otp.use-case.js";
 
-import { OtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
+import { IOtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
 
 import { IUserRepository } from "@/domain/repositories/user.repository";
 
-import { OtpGenerator } from "@/application/services/otp-generator";
+import { IOtpGenerator } from "@/application/services/otp-generator";
 
-import { OtpHasher } from "@/application/services/otp-hasher";
+import { IOtpHasher } from "@/application/services/otp-hasher";
 
-import { EmailSender } from "@/application/services/email-sender";
+import { IEmailSender } from "@/application/services/email-sender";
 
 import { AppError } from "@/shared/errors/app.error";
 
@@ -25,18 +25,18 @@ import { StatusCodes } from "http-status-codes";
 
 export class GenerateOtpUseCase implements IGenerateOtpUseCase  {
     constructor(
-        private readonly userRepository: IUserRepository,
-        private readonly otpRepository: OtpVerificationRepository,
-        private readonly otpGenerator: OtpGenerator,
-        private readonly otpHasher: OtpHasher,
-        private readonly emailSender: EmailSender,
+        private readonly _userRepository: IUserRepository,
+        private readonly _otpRepository: IOtpVerificationRepository,
+        private readonly _otpGenerator: IOtpGenerator,
+        private readonly _otpHasher: IOtpHasher,
+        private readonly _emailSender: IEmailSender,
     ) { }
 
     async execute(
         userId: string,
         purpose: OtpPurpose,
     ): Promise<string> {
-        const user = await this.userRepository.findById(userId);
+        const user = await this._userRepository.findById(userId);
 
         if (!user) {
             throw new AppError(
@@ -44,11 +44,11 @@ export class GenerateOtpUseCase implements IGenerateOtpUseCase  {
                 StatusCodes.NOT_FOUND,
             );
         }
-        await this.otpRepository.invalidateActiveOtp(userId, purpose);
+        await this._otpRepository.invalidateActiveOtp(userId, purpose);
 
-        const otp = this.otpGenerator.generate();
+        const otp = this._otpGenerator.generate();
 
-        const codeHash = await this.otpHasher.hash(otp);
+        const codeHash = await this._otpHasher.hash(otp);
 
         const otpVerification: OtpVerification = {
             id: randomUUID(),
@@ -62,11 +62,11 @@ export class GenerateOtpUseCase implements IGenerateOtpUseCase  {
             createdAt: new Date(),
         };
 
-        await this.otpRepository.create(otpVerification);
+        await this._otpRepository.create(otpVerification);
 
         console.log(otp)
 
-        await this.emailSender.sendOtp(
+        await this._emailSender.sendOtp(
             user.email,
             otp,
         );
