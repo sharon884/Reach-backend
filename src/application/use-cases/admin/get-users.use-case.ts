@@ -1,4 +1,4 @@
-import type { UserRepository } from "@/domain/repositories/user.repository";
+import type { IUserRepository } from "@/domain/repositories/user.repository";
 
 import type { GetUsersDto } from "@/application/dto/admin/get-users.dto";
 
@@ -8,7 +8,7 @@ import { mapUserToAdminResponse } from "@/application/mappers/admin/admin-user-r
 
 export class GetUsersUseCase {
     constructor(
-        private readonly userRepository: UserRepository,
+        private readonly _userRepository: IUserRepository,
     ) {}
 
     async execute(
@@ -17,7 +17,7 @@ export class GetUsersUseCase {
         const { page, limit } = data;
 
        const { users, total } =
-    await this.userRepository.getUsers(data);
+    await this._userRepository.getUsers(data);
 
         const totalPages = Math.ceil(total / limit);
 

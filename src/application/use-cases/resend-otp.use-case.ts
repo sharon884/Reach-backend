@@ -1,4 +1,4 @@
-import { UserRepository } from "@/domain/repositories/user.repository";
+import { IUserRepository } from "@/domain/repositories/user.repository";
 
 import { GenerateOtpUseCase } from "@/application/use-cases/generate-otp.use-case";
 
@@ -10,12 +10,12 @@ import { StatusCodes } from "http-status-codes";
 
 export class ResendOtpUseCase {
   constructor(
-    private readonly userRepository: UserRepository,
+    private readonly _userRepository: IUserRepository,
     private readonly generateOtpUseCase: GenerateOtpUseCase,
   ) {}
 
   async execute(userId: string): Promise<void> {
-    const user = await this.userRepository.findById(userId);
+    const user = await this._userRepository.findById(userId);
 
     if (!user) {
       throw new AppError(

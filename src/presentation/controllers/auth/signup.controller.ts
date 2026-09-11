@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import { StatusCodes } from "http-status-codes";
 
-import { SignupUseCase } from "@/application/use-cases/signup.use-case";
+import type { ISignupUseCase } from "@/application/abstractions/use-cases/signup.use-case";
 
 import type { ApiResponse } from "@/shared/types/api-response";
 
@@ -17,8 +17,8 @@ import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
 export class SignupController {
     constructor(
-        private readonly signupUseCase: SignupUseCase,
-    ) { }
+        private readonly _signupUseCase: ISignupUseCase,
+    ) {}
 
     async handle(
         req: Request,
@@ -28,7 +28,7 @@ export class SignupController {
         try {
             const data = req.body;
 
-            const user = await this.signupUseCase.execute(data);
+            const user = await this._signupUseCase.execute(data);
 
             const response: ApiResponse<SignupResponseDto> = {
 

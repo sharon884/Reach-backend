@@ -1,12 +1,12 @@
 import { randomUUID } from "node:crypto";
 
-import type { UserRepository } from "@/domain/repositories/user.repository";
+import type { IUserRepository } from "@/domain/repositories/user.repository";
 
 import type { UserSessionRepository } from "@/domain/repositories/user-session.repository";
 
 import type { LoginDto } from "@/application/dto/auth/login.dto";
 
-import type { PasswordHasher } from "@/application/services/password-hasher";
+import type { IPasswordHasher } from "@/application/services/password-hasher";
 
 import type { TokenService } from "@/application/services/token-service";
 
@@ -23,8 +23,8 @@ import { LoginResult } from "@/application/dto/auth/login-result.dto";
 export class LoginUseCase {
 
     constructor(
-        private readonly userRepository: UserRepository,
-        private readonly passwordHasher: PasswordHasher,
+        private readonly _userRepository: IUserRepository,
+        private readonly _passwordHasher: IPasswordHasher,
         private readonly tokenService: TokenService,
         private readonly userSessionRepository: UserSessionRepository,
         private readonly refreshTokenHasher: RefreshTokenHasher,
@@ -32,7 +32,7 @@ export class LoginUseCase {
 
     async execute(data: LoginDto): Promise<LoginResult> {
 
-        const user = await this.userRepository.findByEmail(data.email);
+        const user = await this._userRepository.findByEmail(data.email);
 
         if (!user) {
             throw new AppError(
@@ -41,7 +41,7 @@ export class LoginUseCase {
             );
         }
 
-        const isPasswordValid = await this.passwordHasher.compare(
+        const isPasswordValid = await this._passwordHasher.compare(
             data.password,
             user.passwordHash,
         );

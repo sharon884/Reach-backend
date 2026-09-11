@@ -2,7 +2,7 @@ import { OtpPurpose } from "@/domain/entities/otp-verification.entity";
 
 import { OtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
 
-import { UserRepository } from "@/domain/repositories/user.repository";
+import { IUserRepository } from "@/domain/repositories/user.repository";
 
 import { OtpHasher } from "@/application/services/otp-hasher";
 
@@ -14,7 +14,7 @@ import { StatusCodes } from "http-status-codes";
 
 export class VerifyOtpUseCase {
   constructor(
-    private readonly userRepository: UserRepository,
+    private readonly _userRepository: IUserRepository,
     private readonly otpRepository: OtpVerificationRepository,
     private readonly otpHasher: OtpHasher,
   ) {}
@@ -24,7 +24,7 @@ export class VerifyOtpUseCase {
     otp: string,
     purpose: OtpPurpose,
   ): Promise<void> {
-    const user = await this.userRepository.findById(userId);
+    const user = await this._userRepository.findById(userId);
 
     if (!user) {
       throw new AppError(
@@ -68,7 +68,7 @@ export class VerifyOtpUseCase {
     );
 
     if (purpose === "EMAIL_VERIFICATION") {
-      await this.userRepository.updateEmailVerification(
+      await this._userRepository.updateEmailVerification(
         userId,
         true,
       );

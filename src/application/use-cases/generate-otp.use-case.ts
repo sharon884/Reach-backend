@@ -5,9 +5,11 @@ import {
     OtpVerification,
 } from "@/domain/entities/otp-verification.entity";
 
+import { IGenerateOtpUseCase } from "../abstractions/use-cases/generate-otp.use-case.js";
+
 import { OtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
 
-import { UserRepository } from "@/domain/repositories/user.repository";
+import { IUserRepository } from "@/domain/repositories/user.repository";
 
 import { OtpGenerator } from "@/application/services/otp-generator";
 
@@ -21,9 +23,9 @@ import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
 import { StatusCodes } from "http-status-codes";
 
-export class GenerateOtpUseCase {
+export class GenerateOtpUseCase implements IGenerateOtpUseCase  {
     constructor(
-        private readonly userRepository: UserRepository,
+        private readonly userRepository: IUserRepository,
         private readonly otpRepository: OtpVerificationRepository,
         private readonly otpGenerator: OtpGenerator,
         private readonly otpHasher: OtpHasher,

@@ -1,26 +1,28 @@
 import { randomUUID } from "node:crypto";
 
+import type { ISignupUseCase } from "@/application/abstractions/use-cases/signup.use-case";
 import { SignupDto } from "@/application/dto/auth/signup.dto";
 import { User } from "@/domain/entities/user.entity";
-import { UserRepository } from "@/domain/repositories/user.repository";
-import { PasswordHasher } from "@/application/services/password-hasher";
-import { GenerateOtpUseCase } from "@/application/use-cases/generate-otp.use-case";
+import { IUserRepository } from "@/domain/repositories/user.repository";
+import { IPasswordHasher } from "@/application/services/password-hasher";
+import { IGenerateOtpUseCase } from "../abstractions/use-cases/generate-otp.use-case.js";
 import { mapSignupToUserData } from "@/application/mappers/auth/signup.mapper";
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 import { ConflictError } from "@/shared/errors/conflict.error";
 
-export class SignupUseCase {
+
+export class SignupUseCase implements ISignupUseCase {
     constructor(
-        private readonly userRepository: UserRepository,
-        private readonly passwordHasher: PasswordHasher,
-        private readonly generateOtpUseCase: GenerateOtpUseCase,
-    ) { }
+        private readonly _userRepository: IUserRepository,
+        private readonly _passwordHasher: IPasswordHasher,
+        private readonly _generateOtpUseCase: IGenerateOtpUseCase,
+    ) {}
 
     async execute(data: SignupDto): Promise<User> {
 
 
 
-        const existingUser = await this.userRepository.findByEmail(data.email);
+        const existingUser = await this._userRepository.findByEmail(data.email);
 
         if (existingUser) {
             throw new ConflictError(
@@ -30,7 +32,7 @@ export class SignupUseCase {
 
 
 
-        const passwordHash = await this.passwordHasher.hash(data.password);
+        const passwordHash = await this._passwordHasher.hash(data.password);
 
         const userData = mapSignupToUserData(data, passwordHash);
 
@@ -46,12 +48,12 @@ export class SignupUseCase {
             updatedAt: now,
         };
 
-        const createdUser = await this.userRepository.create(user);
+        const createdUser = await this._userRepository.create(user);
 
 
 
 
-        await this.generateOtpUseCase.execute(
+        await this._generateOtpUseCase.execute(
             createdUser.id,
             "EMAIL_VERIFICATION",
         );
