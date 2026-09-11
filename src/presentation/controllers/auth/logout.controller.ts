@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 
 import { LogoutUseCase } from "@/application/use-cases/logout.use-case";
 
-import type { TokenService } from "@/application/services/token-service";
+import type { ITokenService } from "@/application/services/token-service";
 
 import type { ApiResponse } from "@/shared/types/api-response";
 
@@ -12,7 +12,7 @@ export class LogoutController {
 
     constructor(
         private readonly logoutUseCase: LogoutUseCase,
-        private readonly tokenService: TokenService,
+        private readonly _tokenService: ITokenService,
     ) {}
 
     async handle(
@@ -25,7 +25,7 @@ export class LogoutController {
 
             if (refreshToken) {
                 const payload =
-                    this.tokenService.verifyRefreshToken(refreshToken);
+                    this._tokenService.verifyRefreshToken(refreshToken);
 
                 await this.logoutUseCase.execute(
                     payload.sessionId,

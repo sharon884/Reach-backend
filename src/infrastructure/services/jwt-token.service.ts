@@ -3,12 +3,12 @@ import jwt from "jsonwebtoken";
 import type {
     AccessTokenPayload,
     RefreshTokenPayload,
-    TokenService,
+    ITokenService,
 } from "@/application/services/token-service";
 
 import { env } from "@/config/env";
 
-export class JwtTokenService implements TokenService {
+export class JwtTokenService implements ITokenService {
 
     generateAccessToken(payload: AccessTokenPayload): string {
         return jwt.sign(

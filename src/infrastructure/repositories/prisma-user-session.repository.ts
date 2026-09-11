@@ -1,13 +1,13 @@
 import { PrismaClient } from "@/generated/prisma/client";
 
-import type { UserSessionRepository } from "@/domain/repositories/user-session.repository";
+import type { IUserSessionRepository } from "@/domain/repositories/user-session.repository";
 
 import type { UserSession } from "@/domain/entities/user-session.entity";
 
 
 
 
-export class PrismaUserSessionRepository implements UserSessionRepository {
+export class PrismaUserSessionRepository implements IUserSessionRepository {
 
      constructor( 
          private readonly prisma : PrismaClient,

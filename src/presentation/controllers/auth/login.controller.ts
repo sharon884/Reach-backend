@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import { StatusCodes } from "http-status-codes";
 
-import { LoginUseCase } from "@/application/use-cases/login.use-case";
+import type { ILoginUseCase } from "@/application/abstractions/use-cases/login.use-case";
 
 import { ApiResponse } from "@/shared/types/api-response";
 
@@ -17,7 +17,7 @@ import { AUTH_COOKIES } from "@/presentation/cookies/auth.cookies";
 
 export class LoginController {
     constructor(
-        private readonly loginUseCase: LoginUseCase,
+        private readonly _loginUseCase: ILoginUseCase,
     ) { }
 
 
@@ -31,7 +31,7 @@ export class LoginController {
 
             const data = req.body;
 
-            const result = await this.loginUseCase.execute(data);
+            const result = await this._loginUseCase.execute(data);
 
             res.cookie(
                 AUTH_COOKIES.accessToken.name,

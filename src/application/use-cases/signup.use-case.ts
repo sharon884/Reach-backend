@@ -1,13 +1,21 @@
 import { randomUUID } from "node:crypto";
 
 import type { ISignupUseCase } from "@/application/abstractions/use-cases/signup.use-case";
+
 import { SignupDto } from "@/application/dto/auth/signup.dto";
+
 import { User } from "@/domain/entities/user.entity";
+
 import { IUserRepository } from "@/domain/repositories/user.repository";
+
 import { IPasswordHasher } from "@/application/services/password-hasher";
+
 import { IGenerateOtpUseCase } from "../abstractions/use-cases/generate-otp.use-case.js";
+
 import { mapSignupToUserData } from "@/application/mappers/auth/signup.mapper";
+
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
+
 import { ConflictError } from "@/shared/errors/conflict.error";
 
 

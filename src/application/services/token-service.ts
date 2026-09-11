@@ -8,7 +8,7 @@ export interface RefreshTokenPayload {
     sessionId: string;
 }
 
-export interface TokenService {
+export interface ITokenService {
     generateAccessToken(payload: AccessTokenPayload): string;
 
     generateRefreshToken(payload: RefreshTokenPayload): string;

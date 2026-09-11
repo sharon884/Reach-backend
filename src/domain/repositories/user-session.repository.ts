@@ -1,6 +1,6 @@
 import type { UserSession } from "@/domain/entities/user-session.entity";
 
-export interface UserSessionRepository {
+export interface IUserSessionRepository {
 
     create(session: UserSession): Promise<UserSession>;
 

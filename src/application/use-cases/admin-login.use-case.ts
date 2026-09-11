@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 
 import type { IUserRepository } from "@/domain/repositories/user.repository";
 
-import type { UserSessionRepository } from "@/domain/repositories/user-session.repository";
+import type { IUserSessionRepository } from "@/domain/repositories/user-session.repository";
 
 import type { AdminLoginDto } from "@/application/dto/admin/admin-login.dto";
 
@@ -12,9 +12,9 @@ import { LoginResult } from "@/application/dto/auth/login-result.dto";
 
 import type { IPasswordHasher } from "@/application/services/password-hasher";
 
-import type { TokenService } from "@/application/services/token-service";
+import type { ITokenService } from "@/application/services/token-service";
 
-import type { RefreshTokenHasher } from "@/application/services/refresh-token-hasher";
+import type { IRefreshTokenHasher } from "@/application/services/refresh-token-hasher";
 
 import { AppError } from "@/shared/errors/app.error";
 
@@ -25,9 +25,9 @@ export class AdminLoginUseCase {
     constructor(
         private readonly _userRepository: IUserRepository,
         private readonly _passwordHasher: IPasswordHasher,
-        private readonly tokenService: TokenService,
-        private readonly userSessionRepository: UserSessionRepository,
-        private readonly refreshTokenHasher: RefreshTokenHasher,
+        private readonly _tokenService: ITokenService,
+        private readonly _userSessionRepository: IUserSessionRepository,
+        private readonly _refreshTokenHasher: IRefreshTokenHasher,
     ) {}
 
     async execute(data: AdminLoginDto): Promise<LoginResult> {
@@ -69,19 +69,19 @@ export class AdminLoginUseCase {
 
         const sessionId = randomUUID();
 
-        const refreshToken = this.tokenService.generateRefreshToken({
+        const refreshToken = this._tokenService.generateRefreshToken({
             userId: user.id,
             sessionId,
         });
 
         const refreshTokenHash =
-            await this.refreshTokenHasher.hash(refreshToken);
+            await this._refreshTokenHasher.hash(refreshToken);
 
         const expiresAt = new Date(
             Date.now() + 7 * 24 * 60 * 60 * 1000,
         );
 
-        await this.userSessionRepository.create({
+        await this._userSessionRepository.create({
             id: sessionId,
             userId: user.id,
             refreshTokenHash,
@@ -91,7 +91,7 @@ export class AdminLoginUseCase {
             updatedAt: new Date(),
         });
 
-        const accessToken = this.tokenService.generateAccessToken({
+        const accessToken = this._tokenService.generateAccessToken({
             userId: user.id,
             role: user.role,
         });
