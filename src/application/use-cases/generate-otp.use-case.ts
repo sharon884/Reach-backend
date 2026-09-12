@@ -19,6 +19,7 @@ import { AppError } from "@/shared/errors/app.error";
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
 import { StatusCodes } from "http-status-codes";
+import { logger } from "@/infrastructure/logger/index";
 
 export class GenerateOtpUseCase implements IGenerateOtpUseCase {
   constructor(
@@ -43,6 +44,8 @@ export class GenerateOtpUseCase implements IGenerateOtpUseCase {
     }
 
     const otp = this._otpGenerator.generate();
+     
+    logger.info(otp)
 
     const codeHash = await this._otpHasher.hash(otp);
 
