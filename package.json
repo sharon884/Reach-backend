@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "type": "module",
   "main": "index.js",
-"scripts": {
-  "dev": "tsx watch src/main.ts",
-  "build": "prisma generate && tsc && tsc-alias",
-  "start": "node dist/main.js",
-  "lint": "eslint ."
-},
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "build": "prisma generate && tsc && tsc-alias",
+    "start": "node dist/main.js",
+    "lint": "eslint ."
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -43,6 +43,7 @@
     "nodemailer": "^9.0.6",
     "pg": "^8.23.0",
     "prisma": "^7.10.0",
+    "redis": "^6.2.1",
     "zod": "^4.4.3"
   }
 }
