@@ -1,16 +1,18 @@
 import { randomUUID } from "node:crypto";
 
-import type { UserRepository } from "@/domain/repositories/user.repository";
+import type { ILoginUseCase } from "@/application/abstractions/use-cases/login.use-case";
 
-import type { UserSessionRepository } from "@/domain/repositories/user-session.repository";
+import type { IUserRepository } from "@/domain/repositories/user.repository";
+
+import type { IUserSessionRepository } from "@/domain/repositories/user-session.repository";
 
 import type { LoginDto } from "@/application/dto/auth/login.dto";
 
-import type { PasswordHasher } from "@/application/services/password-hasher";
+import type { IPasswordHasher } from "@/application/services/password-hasher";
 
-import type { TokenService } from "@/application/services/token-service";
+import type { ITokenService } from "@/application/services/token-service";
 
-import type { RefreshTokenHasher } from "@/application/services/refresh-token-hasher";
+import type { IRefreshTokenHasher } from "@/application/services/refresh-token-hasher";
 
 import { AppError } from "@/shared/errors/app.error";
 
@@ -20,19 +22,19 @@ import { StatusCodes } from "http-status-codes";
 
 import { LoginResult } from "@/application/dto/auth/login-result.dto";
 
-export class LoginUseCase {
+export class LoginUseCase implements ILoginUseCase {
 
     constructor(
-        private readonly userRepository: UserRepository,
-        private readonly passwordHasher: PasswordHasher,
-        private readonly tokenService: TokenService,
-        private readonly userSessionRepository: UserSessionRepository,
-        private readonly refreshTokenHasher: RefreshTokenHasher,
+        private readonly _userRepository: IUserRepository,
+        private readonly _passwordHasher: IPasswordHasher,
+        private readonly _tokenService: ITokenService,
+        private readonly _userSessionRepository: IUserSessionRepository,
+        private readonly _refreshTokenHasher: IRefreshTokenHasher,
     ) {}
 
     async execute(data: LoginDto): Promise<LoginResult> {
 
-        const user = await this.userRepository.findByEmail(data.email);
+        const user = await this._userRepository.findByEmail(data.email);
 
         if (!user) {
             throw new AppError(
@@ -41,7 +43,7 @@ export class LoginUseCase {
             );
         }
 
-        const isPasswordValid = await this.passwordHasher.compare(
+        const isPasswordValid = await this._passwordHasher.compare(
             data.password,
             user.passwordHash,
         );
@@ -62,19 +64,19 @@ export class LoginUseCase {
 
         const sessionId = randomUUID();
 
-        const refreshToken = this.tokenService.generateRefreshToken({
+        const refreshToken = this._tokenService.generateRefreshToken({
             userId: user.id,
             sessionId,
         });
 
         const refreshTokenHash =
-            await this.refreshTokenHasher.hash(refreshToken);
+            await this._refreshTokenHasher.hash(refreshToken);
 
         const expiresAt = new Date(
             Date.now() + 7 * 24 * 60 * 60 * 1000,
         );
 
-        await this.userSessionRepository.create({
+        await this._userSessionRepository.create({
             id: sessionId,
             userId: user.id,
             refreshTokenHash,
@@ -84,7 +86,7 @@ export class LoginUseCase {
             updatedAt: new Date(),
         });
 
-        const accessToken = this.tokenService.generateAccessToken({
+        const accessToken = this._tokenService.generateAccessToken({
             userId: user.id,
             role: user.role,
         });

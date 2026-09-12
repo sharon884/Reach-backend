@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 
-import type { RefreshTokenHasher } from "@/application/services/refresh-token-hasher";
+import type { IRefreshTokenHasher } from "@/application/services/refresh-token-hasher";
 
-export class BcryptRefreshTokenHasher implements RefreshTokenHasher {
+export class BcryptRefreshTokenHasher implements IRefreshTokenHasher {
 
     async hash(token: string): Promise<string> {
         return bcrypt.hash(token, 10);

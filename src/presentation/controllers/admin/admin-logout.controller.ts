@@ -2,17 +2,17 @@ import { Request, Response, NextFunction } from "express";
 
 import { StatusCodes } from "http-status-codes";
 
-import { AdminLogoutUseCase } from "@/application/use-cases/admin/admin-logout.use-case";
+import type { IAdminLogoutUseCase } from "@/application/abstractions/use-cases/admin/admin-logout.use-case";
 
-import type { TokenService } from "@/application/services/token-service";
+import type { ITokenService } from "@/application/services/token-service";
 
 import type { ApiResponse } from "@/shared/types/api-response";
 
 export class AdminLogoutController {
 
     constructor(
-        private readonly adminLogoutUseCase: AdminLogoutUseCase,
-        private readonly tokenService: TokenService,
+        private readonly _adminLogoutUseCase: IAdminLogoutUseCase,
+        private readonly _tokenService: ITokenService,
     ) {}
 
     async handle(
@@ -25,9 +25,9 @@ export class AdminLogoutController {
 
             if (refreshToken) {
                 const payload =
-                    this.tokenService.verifyRefreshToken(refreshToken);
+                    this._tokenService.verifyRefreshToken(refreshToken);
 
-                await this.adminLogoutUseCase.execute(
+                await this._adminLogoutUseCase.execute(
                     payload.sessionId,
                 );
             }

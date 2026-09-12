@@ -1,10 +1,10 @@
 import nodemailer, { Transporter } from "nodemailer";
 
-import { EmailSender } from "@/application/services/email-sender";
+import { IEmailSender } from "@/application/services/email-sender";
 
 import { env } from "@/config/env";
 
-export class NodemailerEmailSender implements EmailSender {
+export class NodemailerEmailSender implements IEmailSender {
   private readonly transporter: Transporter;
 
   constructor() {

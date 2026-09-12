@@ -1,4 +1,6 @@
-import type { UserRepository } from "@/domain/repositories/user.repository";
+import type { IGetUsersUseCase } from "@/application/abstractions/use-cases/admin/get-users.use-case";
+
+import type { IUserRepository } from "@/domain/repositories/user.repository";
 
 import type { GetUsersDto } from "@/application/dto/admin/get-users.dto";
 
@@ -6,9 +8,9 @@ import type { GetUsersResultDto } from "@/application/dto/admin/get-users-result
 
 import { mapUserToAdminResponse } from "@/application/mappers/admin/admin-user-response.mapper";
 
-export class GetUsersUseCase {
+export class GetUsersUseCase implements IGetUsersUseCase {
     constructor(
-        private readonly userRepository: UserRepository,
+        private readonly _userRepository: IUserRepository,
     ) {}
 
     async execute(
@@ -17,7 +19,7 @@ export class GetUsersUseCase {
         const { page, limit } = data;
 
        const { users, total } =
-    await this.userRepository.getUsers(data);
+    await this._userRepository.getUsers(data);
 
         const totalPages = Math.ceil(total / limit);
 

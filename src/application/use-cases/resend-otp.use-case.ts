@@ -1,6 +1,8 @@
-import { UserRepository } from "@/domain/repositories/user.repository";
+import { IUserRepository } from "@/domain/repositories/user.repository";
 
-import { GenerateOtpUseCase } from "@/application/use-cases/generate-otp.use-case";
+import type { IResendOtpUseCase } from "@/application/abstractions/use-cases/resend-otp.use-case";
+
+import type { IGenerateOtpUseCase } from "@/application/abstractions/use-cases/generate-otp.use-case";
 
 import { AppError } from "@/shared/errors/app.error";
 
@@ -8,14 +10,14 @@ import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
 import { StatusCodes } from "http-status-codes";
 
-export class ResendOtpUseCase {
+export class ResendOtpUseCase implements IResendOtpUseCase {
   constructor(
-    private readonly userRepository: UserRepository,
-    private readonly generateOtpUseCase: GenerateOtpUseCase,
+    private readonly _userRepository: IUserRepository,
+    private readonly _generateOtpUseCase: IGenerateOtpUseCase,
   ) {}
 
   async execute(userId: string): Promise<void> {
-    const user = await this.userRepository.findById(userId);
+    const user = await this._userRepository.findById(userId);
 
     if (!user) {
       throw new AppError(
@@ -31,7 +33,7 @@ export class ResendOtpUseCase {
       );
     }
 
-    await this.generateOtpUseCase.execute(
+    await this._generateOtpUseCase.execute(
       userId,
       "EMAIL_VERIFICATION",
     );

@@ -2,7 +2,7 @@ import { OtpPurpose } from "@/domain/entities/otp-verification.entity";
 
 import { OtpVerification } from "@/domain/entities/otp-verification.entity";
 
-export interface OtpVerificationRepository {
+export interface IOtpVerificationRepository {
   create(otp: OtpVerification): Promise<OtpVerification>;
 
   findActiveByUserAndPurpose(

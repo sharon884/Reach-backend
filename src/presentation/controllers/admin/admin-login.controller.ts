@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 
 import { StatusCodes } from "http-status-codes";
 
-import { AdminLoginUseCase } from "@/application/use-cases/admin-login.use-case";
+import type { IAdminLoginUseCase } from "@/application/abstractions/use-cases/admin/admin-login.use-case";
 
 import type { ApiResponse } from "@/shared/types/api-response";
 
@@ -17,7 +17,7 @@ import { AUTH_COOKIES } from "@/presentation/cookies/auth.cookies";
 export class AdminLoginController {
 
     constructor(
-        private readonly adminLoginUseCase: AdminLoginUseCase,
+        private readonly _adminLoginUseCase: IAdminLoginUseCase,
     ) {}
 
     async handle(
@@ -28,7 +28,7 @@ export class AdminLoginController {
         try {
             const data = req.body;
 
-            const result = await this.adminLoginUseCase.execute(data);
+            const result = await this._adminLoginUseCase.execute(data);
 
             res.cookie(
                 AUTH_COOKIES.accessToken.name,

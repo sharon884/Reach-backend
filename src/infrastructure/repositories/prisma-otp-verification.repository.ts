@@ -5,10 +5,10 @@ import {
     OtpVerification,
 } from "@/domain/entities/otp-verification.entity";
 
-import { OtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
+import { IOtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
 
 export class PrismaOtpVerificationRepository
-  implements OtpVerificationRepository
+  implements IOtpVerificationRepository
 {
   constructor(private readonly prisma: PrismaClient) {}
 

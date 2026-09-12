@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import type { TokenService } from "@/application/services/token-service";
+import type { ITokenService } from "@/application/services/token-service";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
@@ -11,7 +11,7 @@ import { AppError } from "@/shared/errors/app.error";
 export class AdminAuthMiddleware {
 
     constructor(
-        private readonly tokenService: TokenService,
+        private readonly _tokenService: ITokenService,
     ) { }
 
     handle(
@@ -29,7 +29,7 @@ export class AdminAuthMiddleware {
                 );
             }
 
-            const payload = this.tokenService.verifyAccessToken(accessToken);
+            const payload = this._tokenService.verifyAccessToken(accessToken);
 
             if (payload.role !== "ADMIN") {
                 throw new AppError(

@@ -1,10 +1,12 @@
 import { OtpPurpose } from "@/domain/entities/otp-verification.entity";
 
-import { OtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
+import type { IVerifyOtpUseCase } from "@/application/abstractions/use-cases/verify-otp.use-case";
 
-import { UserRepository } from "@/domain/repositories/user.repository";
+import { IOtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
 
-import { OtpHasher } from "@/application/services/otp-hasher";
+import { IUserRepository } from "@/domain/repositories/user.repository";
+
+import { IOtpHasher } from "@/application/services/otp-hasher";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
@@ -12,11 +14,11 @@ import { AppError } from "@/shared/errors/app.error";
 
 import { StatusCodes } from "http-status-codes";
 
-export class VerifyOtpUseCase {
+export class VerifyOtpUseCase implements IVerifyOtpUseCase {
   constructor(
-    private readonly userRepository: UserRepository,
-    private readonly otpRepository: OtpVerificationRepository,
-    private readonly otpHasher: OtpHasher,
+    private readonly _userRepository: IUserRepository,
+    private readonly _otpRepository: IOtpVerificationRepository,
+    private readonly _otpHasher: IOtpHasher,
   ) {}
 
   async execute(
@@ -24,7 +26,7 @@ export class VerifyOtpUseCase {
     otp: string,
     purpose: OtpPurpose,
   ): Promise<void> {
-    const user = await this.userRepository.findById(userId);
+    const user = await this._userRepository.findById(userId);
 
     if (!user) {
       throw new AppError(
@@ -34,7 +36,7 @@ export class VerifyOtpUseCase {
     }
 
     const otpVerification =
-      await this.otpRepository.findActiveByUserAndPurpose(
+      await this._otpRepository.findActiveByUserAndPurpose(
         userId,
         purpose,
       );
@@ -46,13 +48,13 @@ export class VerifyOtpUseCase {
       );
     }
 
-    const isValid = await this.otpHasher.compare(
+    const isValid = await this._otpHasher.compare(
       otp,
       otpVerification.codeHash,
     );
 
     if (!isValid) {
-      await this.otpRepository.incrementAttempts(
+      await this._otpRepository.incrementAttempts(
         otpVerification.id,
       );
 
@@ -62,13 +64,13 @@ export class VerifyOtpUseCase {
       );
     }
 
-    await this.otpRepository.markAsVerified(
+    await this._otpRepository.markAsVerified(
       otpVerification.id,
       new Date(),
     );
 
     if (purpose === "EMAIL_VERIFICATION") {
-      await this.userRepository.updateEmailVerification(
+      await this._userRepository.updateEmailVerification(
         userId,
         true,
       );

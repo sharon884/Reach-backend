@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import { VerifyOtpUseCase } from "@/application/use-cases/verify-otp.use-case";
+import type { IVerifyOtpUseCase } from "@/application/abstractions/use-cases/verify-otp.use-case";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
@@ -11,7 +11,7 @@ import { ApiResponse } from "@/shared/types/api-response";
 
 export class VerifyOtpController {
   constructor(
-    private readonly verifyOtpUseCase: VerifyOtpUseCase,
+    private readonly _verifyOtpUseCase: IVerifyOtpUseCase,
   ) {}
 
   async handle(
@@ -22,7 +22,7 @@ export class VerifyOtpController {
     try {
       const data = req.body
 
-      await this.verifyOtpUseCase.execute(
+      await this._verifyOtpUseCase.execute(
         data.userId,
         data.otp,
         "EMAIL_VERIFICATION",
