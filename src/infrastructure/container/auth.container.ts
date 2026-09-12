@@ -4,7 +4,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 
 import { PrismaUserRepository } from "@/infrastructure/repositories/prisma-user.repository";
 
-import { PrismaOtpVerificationRepository } from "@/infrastructure/repositories/prisma-otp-verification.repository";
+import { redisClient } from "@/infrastructure/redis/redis.client";
 
 import { BcryptPasswordHasher } from "@/infrastructure/services/bcrypt-password-hasher";
 
@@ -17,6 +17,8 @@ import { SignupUseCase } from "@/application/use-cases/signup.use-case";
 import { GenerateOtpUseCase } from "@/application/use-cases/generate-otp.use-case";
 
 import { VerifyOtpUseCase } from "@/application/use-cases/verify-otp.use-case";
+
+import { RedisOtpStore } from "@/infrastructure/services/redis-otp-store";
 
 import { VerifyOtpController } from "@/presentation/controllers/auth/verify-otp.controller";
 
@@ -75,7 +77,7 @@ const userRepository = new PrismaUserRepository(prisma);
 
 const passwordHasher = new BcryptPasswordHasher();
 
-const otpRepository = new PrismaOtpVerificationRepository(prisma);
+const otpStore = new RedisOtpStore(redisClient);
 
 const otpGenerator = new RandomOtpGenerator();
 
@@ -94,7 +96,7 @@ const logoutUseCase = new LogoutUseCase(userSessionRepository);
 
 const generateOtpUseCase = new GenerateOtpUseCase(
   userRepository,
-  otpRepository,
+  otpStore,
   otpGenerator,
   otpHasher,
   emailSender,
@@ -108,7 +110,7 @@ const resendOtpUseCase = new ResendOtpUseCase(
 
 const verifyOtpUseCase = new VerifyOtpUseCase(
   userRepository,
-  otpRepository,
+  otpStore,
   otpHasher,
 );
 

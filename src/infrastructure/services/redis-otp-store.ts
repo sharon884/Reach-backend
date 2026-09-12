@@ -1,21 +1,13 @@
-import { createClient, type RedisClientType } from "redis";
+import type { RedisClientType } from "redis";
 
 import type { IOtpStore } from "@/application/services/otp-store";
+
 import type { OtpPurpose } from "@/domain/entities/otp-verification.entity";
-import { env } from "@/config/env";
 
 export class RedisOtpStore implements IOtpStore {
-  private readonly _client: RedisClientType;
-
-  constructor() {
-    this._client = createClient({
-      url: env.REDIS_URL,
-    });
-
-    this._client.on("error", (error) => {
-      console.error("Redis Client Error:", error);
-    });
-  }
+  constructor(
+    private readonly _client: RedisClientType,
+  ) {}
 
   private _otpKey(
     userId: string,
@@ -29,12 +21,6 @@ export class RedisOtpStore implements IOtpStore {
     purpose: OtpPurpose,
   ): string {
     return `otp:attempts:${purpose}:${userId}`;
-  }
-
-  async connect(): Promise<void> {
-    if (!this._client.isOpen) {
-      await this._client.connect();
-    }
   }
 
   async save(
