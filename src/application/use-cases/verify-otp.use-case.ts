@@ -16,18 +16,22 @@ import { AppError } from "@/shared/errors/app.error";
 
 import { StatusCodes } from "http-status-codes";
 
+import { logger } from "@/infrastructure/logger/index";
+
 export class VerifyOtpUseCase implements IVerifyOtpUseCase {
   constructor(
     private readonly _userRepository: IUserRepository,
     private readonly _otpStore: IOtpStore,
     private readonly _otpHasher: IOtpHasher,
-  ) {}
+  ) { }
 
   async execute(
     userId: string,
     otp: string,
     purpose: OtpPurpose,
   ): Promise<void> {
+
+
     const user = await this._userRepository.findById(userId);
 
     if (!user) {
@@ -68,6 +72,11 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
       );
     }
 
+    logger.info("OTP verification attempted", {
+      userId,
+      purpose,
+    });
+
     const isValid = await this._otpHasher.compare(
       otp,
       codeHash,
@@ -93,6 +102,8 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
       );
     }
 
+
+
     await this._otpStore.delete(
       userId,
       purpose,
@@ -104,5 +115,12 @@ export class VerifyOtpUseCase implements IVerifyOtpUseCase {
         true,
       );
     }
+
+    logger.info("OTP verified successfully", {
+      userId,
+      purpose,
+    });
+
+
   }
 }

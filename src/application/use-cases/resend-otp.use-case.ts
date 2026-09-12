@@ -12,6 +12,8 @@ import { AppError } from "@/shared/errors/app.error";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
+import { logger } from "@/infrastructure/logger/index";
+
 import { StatusCodes } from "http-status-codes";
 
 export class ResendOtpUseCase implements IResendOtpUseCase {
@@ -19,7 +21,7 @@ export class ResendOtpUseCase implements IResendOtpUseCase {
     private readonly _userRepository: IUserRepository,
     private readonly _generateOtpUseCase: IGenerateOtpUseCase,
     private readonly _otpStore: IOtpStore,
-  ) {}
+  ) { }
 
   async execute(userId: string): Promise<void> {
     const user = await this._userRepository.findById(userId);
@@ -49,6 +51,12 @@ export class ResendOtpUseCase implements IResendOtpUseCase {
       );
 
     if (!isResendAllowed) {
+      logger.warn("OTP resend blocked by cooldown", {
+        userId,
+        purpose,
+      });
+
+
       throw new AppError(
         "Please wait before requesting another OTP.",
         StatusCodes.TOO_MANY_REQUESTS,
@@ -62,6 +70,13 @@ export class ResendOtpUseCase implements IResendOtpUseCase {
       );
 
     if (resendCount >= policy.maxResends) {
+
+      logger.warn("OTP resend limit reached", {
+        userId,
+        purpose,
+        resendCount,
+      });
+
       throw new AppError(
         "Maximum OTP resend limit reached.",
         StatusCodes.TOO_MANY_REQUESTS,
@@ -72,6 +87,11 @@ export class ResendOtpUseCase implements IResendOtpUseCase {
       userId,
       purpose,
     );
+
+    logger.info("OTP resent successfully", {
+      userId,
+      purpose,
+    });
 
     await this._otpStore.incrementResendCount(
       userId,

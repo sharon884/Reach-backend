@@ -12,6 +12,7 @@ export const OTP_POLICIES: Record<OtpPurpose, OtpPolicy> = {
     expiresInSeconds: 5 * 60,
     maxAttempts: 5,
     resendCooldownSeconds: 60,
+    
     maxResends: 5,
   },
 
