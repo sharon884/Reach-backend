@@ -121,20 +121,20 @@ const signupUseCase = new SignupUseCase(
 );
 
 const loginUseCase = new LoginUseCase(
-    userRepository,
-    passwordHasher,
-    tokenService,
-    userSessionRepository,
-    refreshTokenHasher,
+  userRepository,
+  passwordHasher,
+  tokenService,
+  userSessionRepository,
+  refreshTokenHasher,
 );
 
 
 const adminLoginUseCase = new AdminLoginUseCase(
-    userRepository,
-    passwordHasher,
-    tokenService,
-    userSessionRepository,
-    refreshTokenHasher,
+  userRepository,
+  passwordHasher,
+  tokenService,
+  userSessionRepository,
+  refreshTokenHasher,
 );
 
 
@@ -155,42 +155,42 @@ export const loginController = new LoginController(loginUseCase);
 
 
 export const adminLoginController = new AdminLoginController(
-    adminLoginUseCase,
+  adminLoginUseCase,
 );
 
 export const adminAuthMiddleware = new AdminAuthMiddleware(
-    tokenService,
+  tokenService,
 );
 
 export const getUsersUseCase = new GetUsersUseCase(
-    userRepository,
+  userRepository,
 );
 
 
 export const getUsersController = new GetUsersController(
-    getUsersUseCase,
+  getUsersUseCase,
 );
 
 export const updateUserStatusUseCase = new UpdateUserStatusUseCase(
-    userRepository,
+  userRepository,
 );
 
 
 export const updateUserStatusController = new UpdateUserStatusController(
-        updateUserStatusUseCase,
+  updateUserStatusUseCase,
 );
 
 export const adminLogoutUseCase = new AdminLogoutUseCase(
-    userSessionRepository,
+  userSessionRepository,
 );
 
 export const adminLogoutController = new AdminLogoutController(
-    adminLogoutUseCase,
-    tokenService,
+  adminLogoutUseCase,
+  tokenService,
 );
 
 
 export const logoutController = new LogoutController(
-    logoutUseCase,
-    tokenService,
+  logoutUseCase,
+  tokenService,
 );
