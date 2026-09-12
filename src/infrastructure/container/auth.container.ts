@@ -105,8 +105,8 @@ const generateOtpUseCase = new GenerateOtpUseCase(
 const resendOtpUseCase = new ResendOtpUseCase(
   userRepository,
   generateOtpUseCase,
+  otpStore,
 );
-
 
 const verifyOtpUseCase = new VerifyOtpUseCase(
   userRepository,
