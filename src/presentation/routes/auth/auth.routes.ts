@@ -19,7 +19,9 @@ import { verifyOtpSchema } from "@/application/dto/auth/verify-otp.dto";
 import { resendOtpSchema } from "@/application/dto/auth/resend-otp.dto";
 
 import { loginSchema } from "@/application/dto/auth/login.dto";
+
 import { forgotPasswordSchema } from "@/application/dto/auth/forgot-password.dto";
+
 import { verifyPasswordResetOtpSchema } from "@/application/dto/auth/verify-password-reset-otp.dto";
 
 
