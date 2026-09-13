@@ -15,6 +15,7 @@ export const AUTH_MESSAGES = {
   OTP_REQUIRED: "OTP is required",
   OTP_VERIFICATION_SUCCESS: "Email verified successfully",
   OTP_SENT_SUCCESSFULLY: "OTP sent successfully",
+  PASSWORD_RESET_OTP_SENT : "A password reset OTP has been sent to your registered email."
 
   
 } as const;
