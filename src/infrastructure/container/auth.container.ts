@@ -14,7 +14,7 @@ import { BcryptOtpHasher } from "@/infrastructure/services/bcrypt-otp-hasher";
 
 import { SignupUseCase } from "@/application/use-cases/user/signup.use-case";
 
-import { GenerateOtpUseCase } from "@/application/use-cases/generate-otp.use-case";
+import { GenerateOtpUseCase } from "@/application/use-cases/user/generate-otp.use-case";
 
 import { VerifyOtpUseCase } from "@/application/use-cases/user/verify-otp.use-case";
 
@@ -73,6 +73,10 @@ import { RedisPasswordResetStore } from "@/infrastructure/services/redis-passwor
 import { VerifyPasswordResetOtpUseCase } from "@/application/use-cases/user/verify-password-reset-otp.use-case";
 
 import { VerifyPasswordResetOtpController } from "@/presentation/controllers/auth/verify-password-reset-otp.controller";
+
+import { ResetPasswordController } from "@/presentation/controllers/auth/reset-password.controller";
+
+import { ResetPasswordUseCase } from "@/application/use-cases/user/reset-password.use-case";
 
 
 const adapter = new PrismaPg({
@@ -165,6 +169,14 @@ const verifyPasswordResetOtpUseCase = new VerifyPasswordResetOtpUseCase(
 );
 
 
+const resetPasswordUseCase = new ResetPasswordUseCase(
+    passwordResetStore,
+    passwordHasher,
+    userRepository,
+    userSessionRepository,
+);
+
+
 
 export const signupController = new SignupController(
   signupUseCase,
@@ -229,3 +241,7 @@ export const logoutController = new LogoutController(
 export const verifyPasswordResetOtpController = new VerifyPasswordResetOtpController(
   verifyPasswordResetOtpUseCase,
 );
+
+export const resetPasswordController = new ResetPasswordController(
+        resetPasswordUseCase,
+    );

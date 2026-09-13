@@ -1,13 +1,14 @@
 import { Router } from "express";
 
 import {
-    signupController,
-    verifyOtpController,
-    resendOtpController,
-    loginController,
-    logoutController,
-    forgotPasswordController,
-    verifyPasswordResetOtpController,
+  signupController,
+  verifyOtpController,
+  resendOtpController,
+  loginController,
+  logoutController,
+  forgotPasswordController,
+  verifyPasswordResetOtpController,
+  resetPasswordController,
 } from "@/infrastructure/container/auth.container";
 
 import { validationMiddleware } from "@/presentation/middlewares/validation.middleware";
@@ -24,20 +25,22 @@ import { forgotPasswordSchema } from "@/application/dto/auth/forgot-password.dto
 
 import { verifyPasswordResetOtpSchema } from "@/application/dto/auth/verify-password-reset-otp.dto";
 
+import { resetPasswordSchema } from "@/application/dto/auth/reset-password.dto";
+
 
 export const authRouter = Router();
 
 authRouter.post(
   "/signup",
-  validationMiddleware( signupSchema ),
+  validationMiddleware(signupSchema),
   signupController.handle.bind(signupController),
 );
 
 
 authRouter.post(
-    "/login",
-    validationMiddleware(loginSchema),
-    loginController.handle.bind(loginController),
+  "/login",
+  validationMiddleware(loginSchema),
+  loginController.handle.bind(loginController),
 );
 
 
@@ -55,20 +58,28 @@ authRouter.post(
 
 
 authRouter.post(
-    "/logout",
-    logoutController.handle.bind(logoutController),
+  "/logout",
+  logoutController.handle.bind(logoutController),
 );
 
 
 authRouter.post(
   "/forgot-password",
   validationMiddleware(forgotPasswordSchema),
-  forgotPasswordController.handle.bind(forgotPasswordController) 
+  forgotPasswordController.handle.bind(forgotPasswordController)
 );
 
 
 authRouter.post(
-   "/verify-password-reset-otp",
-   validationMiddleware(verifyPasswordResetOtpSchema),
-   verifyPasswordResetOtpController.handle.bind(verifyPasswordResetOtpController)
-)
+  "/verify-password-reset-otp",
+  validationMiddleware(verifyPasswordResetOtpSchema),
+  verifyPasswordResetOtpController.handle.bind(verifyPasswordResetOtpController)
+);
+
+authRouter.post(
+  "/reset-password",
+  validationMiddleware(resetPasswordSchema),
+  resetPasswordController.handle.bind(
+    resetPasswordController,
+  ),
+);
