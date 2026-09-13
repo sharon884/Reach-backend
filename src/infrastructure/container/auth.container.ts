@@ -64,9 +64,12 @@ import { LogoutUseCase } from "@/application/use-cases/logout.use-case";
 
 import { LogoutController } from "@/presentation/controllers/auth/logout.controller";
 
-import { ForgotPasswordUseCase,  } from "@/application/use-cases/forgot-password.use-case";
+import { ForgotPasswordUseCase, } from "@/application/use-cases/forgot-password.use-case";
 
 import { ForgotPasswordController } from "@/presentation/controllers/auth/forgot-password.controller";
+
+import { RedisPasswordResetStore } from "@/infrastructure/services/redis-password-reset-store";
+import { VerifyPasswordResetOtpUseCase } from "@/application/use-cases/verify-password-reset-otp.use-case";
 
 
 const adapter = new PrismaPg({
@@ -96,6 +99,10 @@ const tokenService = new JwtTokenService();
 const refreshTokenHasher = new BcryptRefreshTokenHasher();
 
 const logoutUseCase = new LogoutUseCase(userSessionRepository);
+
+const passwordResetStore = new RedisPasswordResetStore(
+  redisClient,
+);
 
 
 
@@ -148,6 +155,13 @@ const adminLoginUseCase = new AdminLoginUseCase(
 );
 
 
+const verifyPasswordResetOtpUseCase =  new VerifyPasswordResetOtpUseCase(
+        userRepository,
+        verifyOtpUseCase,
+        passwordResetStore,
+    );
+
+
 
 export const signupController = new SignupController(
   signupUseCase,
@@ -162,7 +176,7 @@ export const resendOtpController = new ResendOtpController(
 );
 
 export const forgotPasswordController = new ForgotPasswordController(
-     forgotPasswordUseCase,
+  forgotPasswordUseCase,
 );
 
 export const loginController = new LoginController(loginUseCase);
