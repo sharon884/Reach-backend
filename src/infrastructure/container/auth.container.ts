@@ -64,6 +64,8 @@ import { LogoutUseCase } from "@/application/use-cases/logout.use-case";
 
 import { LogoutController } from "@/presentation/controllers/auth/logout.controller";
 
+import { RedisPasswordResetStore } from "@/infrastructure/services/redis-password-reset-store";
+
 
 const adapter = new PrismaPg({
   connectionString: env.DATABASE_URL,
@@ -79,6 +81,8 @@ const passwordHasher = new BcryptPasswordHasher();
 
 const otpStore = new RedisOtpStore(redisClient);
 
+const passwordResetStore = new RedisPasswordResetStore(redisClient);
+
 const otpGenerator = new RandomOtpGenerator();
 
 const otpHasher = new BcryptOtpHasher();
@@ -92,6 +96,7 @@ const tokenService = new JwtTokenService();
 const refreshTokenHasher = new BcryptRefreshTokenHasher();
 
 const logoutUseCase = new LogoutUseCase(userSessionRepository);
+
 
 
 const generateOtpUseCase = new GenerateOtpUseCase(
