@@ -7,6 +7,7 @@ import {
     loginController,
     logoutController,
     forgotPasswordController,
+    verifyPasswordResetOtpController,
 } from "@/infrastructure/container/auth.container";
 
 import { validationMiddleware } from "@/presentation/middlewares/validation.middleware";
@@ -19,6 +20,7 @@ import { resendOtpSchema } from "@/application/dto/auth/resend-otp.dto";
 
 import { loginSchema } from "@/application/dto/auth/login.dto";
 import { forgotPasswordSchema } from "@/application/dto/auth/forgot-password.dto";
+import { verifyPasswordResetOtpSchema } from "@/application/dto/auth/verify-password-reset-otp.dto";
 
 
 export const authRouter = Router();
@@ -61,3 +63,10 @@ authRouter.post(
   validationMiddleware(forgotPasswordSchema),
   forgotPasswordController.handle.bind(forgotPasswordController) 
 );
+
+
+authRouter.post(
+   "/verify-password-reset-otp",
+   validationMiddleware(verifyPasswordResetOtpSchema),
+   verifyPasswordResetOtpController.handle.bind(verifyPasswordResetOtpController)
+)
