@@ -44,6 +44,22 @@ export class ResetPasswordUseCase implements  IResetPasswordUseCase {
      }
 
 
+     const passwordHash = await this._passwordHasher.hash(
+    data.newPassword,
+);
+
+
+ await this._userRepository.updatePassword(
+     userId,
+     passwordHash
+ );
+
+
+ await this._userSessionRepository.revokeAllByUserId(
+     userId,
+     new Date(),
+ );
+
 
 }
 
