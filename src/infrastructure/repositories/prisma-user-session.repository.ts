@@ -10,20 +10,20 @@ import type { UserSession } from "@/domain/entities/user-session.entity";
 export class PrismaUserSessionRepository implements IUserSessionRepository {
 
      constructor( 
-         private readonly prisma : PrismaClient,
+         private readonly _prisma : PrismaClient,
      ) {}
 
 
 
      async create ( session : UserSession ) : Promise<UserSession> {
-            return this.prisma.userSession.create({
+            return this._prisma.userSession.create({
                  data : session,
             });
      }
 
 
      async findById(id: string): Promise<UserSession | null> {
-         return this.prisma.userSession.findUnique({
+         return this._prisma.userSession.findUnique({
             where: {
                  id ,
             },
@@ -37,7 +37,7 @@ export class PrismaUserSessionRepository implements IUserSessionRepository {
         refreshTokenHash: string,
         expiresAt: Date,
     ): Promise<UserSession> {
-        return this.prisma.userSession.update({
+        return this._prisma.userSession.update({
             where: {
                 id,
             },
@@ -53,7 +53,7 @@ export class PrismaUserSessionRepository implements IUserSessionRepository {
         id: string,
         revokedAt: Date,
     ): Promise<void> {
-        await this.prisma.userSession.update({
+        await this._prisma.userSession.update({
             where: {
                 id,
             },
@@ -63,6 +63,22 @@ export class PrismaUserSessionRepository implements IUserSessionRepository {
             },
         });
      }
+
+
+     async revokeAllByUserId(
+    userId: string,
+    revokedAt: Date,
+): Promise<void> {
+    await this._prisma.userSession.updateMany({
+        where: {
+            userId,
+            revokedAt: null,
+        },
+        data: {
+            revokedAt,
+        },
+    });
+}
 
 
 }

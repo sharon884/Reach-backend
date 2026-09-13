@@ -14,10 +14,10 @@ import type { Prisma } from "@/generated/prisma/client";
 
 
 export class PrismaUserRepository implements IUserRepository {
-    constructor(private readonly prisma: PrismaClient) {}
+    constructor(private readonly _prisma: PrismaClient) { }
 
     async create(user: User): Promise<User> {
-        return this.prisma.user.create({
+        return this._prisma.user.create({
             data: {
                 id: user.id,
                 fullName: user.fullName,
@@ -33,7 +33,7 @@ export class PrismaUserRepository implements IUserRepository {
     }
 
     async findByEmail(email: string): Promise<User | null> {
-        return this.prisma.user.findUnique({
+        return this._prisma.user.findUnique({
             where: {
                 email,
             },
@@ -41,7 +41,7 @@ export class PrismaUserRepository implements IUserRepository {
     }
 
     async findById(id: string): Promise<User | null> {
-        return this.prisma.user.findUnique({
+        return this._prisma.user.findUnique({
             where: {
                 id,
             },
@@ -52,7 +52,7 @@ export class PrismaUserRepository implements IUserRepository {
         id: string,
         isEmailVerified: boolean,
     ): Promise<void> {
-        await this.prisma.user.update({
+        await this._prisma.user.update({
             where: { id },
             data: {
                 isEmailVerified,
@@ -61,83 +61,98 @@ export class PrismaUserRepository implements IUserRepository {
     }
 
     async delete(id: string): Promise<void> {
-        await this.prisma.user.delete({
+        await this._prisma.user.delete({
             where: { id },
         });
     }
 
-async getUsers(
-    query: GetUsersQuery,
-): Promise<PaginatedUsers> {
+    async getUsers(
+        query: GetUsersQuery,
+    ): Promise<PaginatedUsers> {
 
-    const {
-        page,
-        limit,
-        search,
-        sortBy,
-        sortOrder,
-    } = query;
+        const {
+            page,
+            limit,
+            search,
+            sortBy,
+            sortOrder,
+        } = query;
 
-    const skip = (page - 1) * limit;
+        const skip = (page - 1) * limit;
 
-    const where: Prisma.UserWhereInput | undefined = search
-        ? {
-              OR: [
-                  {
-                      fullName: {
-                          contains: search,
-                          mode: "insensitive",
-                      },
-                  },
-                  {
-                      email: {
-                          contains: search,
-                          mode: "insensitive",
-                      },
-                  },
-              ],
-          }
-        : undefined;
+        const where: Prisma.UserWhereInput | undefined = search
+            ? {
+                OR: [
+                    {
+                        fullName: {
+                            contains: search,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        email: {
+                            contains: search,
+                            mode: "insensitive",
+                        },
+                    },
+                ],
+            }
+            : undefined;
 
-    const orderBy = {
-        [sortBy]: sortOrder,
-    };
+        const orderBy = {
+            [sortBy]: sortOrder,
+        };
 
-    const [users, total] = await Promise.all([
-        this.prisma.user.findMany({
-            where,
-            skip,
-            take: limit,
-            orderBy,
-        }),
+        const [users, total] = await Promise.all([
+            this._prisma.user.findMany({
+                where,
+                skip,
+                take: limit,
+                orderBy,
+            }),
 
-        this.prisma.user.count({
-            where,
-        }),
-    ]);
+            this._prisma.user.count({
+                where,
+            }),
+        ]);
 
-    return {
-        users,
-        total,
-    };
-}
-
-
+        return {
+            users,
+            total,
+        };
+    }
 
 
-async updateStatus(
-    userId: string,
-    status: UserStatus,
-): Promise<User> {
-    return this.prisma.user.update({
-        where: {
-            id: userId,
-        },
-        data: {
-            status,
-        },
-    });
-}
+
+
+    async updateStatus(
+        userId: string,
+        status: UserStatus,
+    ): Promise<User> {
+        return this._prisma.user.update({
+            where: {
+                id: userId,
+            },
+            data: {
+                status,
+            },
+        });
+    }
+
+
+    async updatePassword(
+        userId: string,
+        passwordHash: string,
+    ): Promise<void> {
+        await this._prisma.user.update({
+            where: {
+                id: userId,
+            },
+            data: {
+                passwordHash,
+            },
+        });
+    }
 
 
 
