@@ -28,9 +28,12 @@ export interface IUserRepository extends BaseRepository<User> {
 
 
     updateStatus(
-    userId: string,
-    status: UserStatus,
-): Promise<User>;
+        userId: string,
+        status: UserStatus,
+    ): Promise<User>;
+
+
+    updatePassword(userId: string, passwordHash: string): Promise<void>;
 
 
 }

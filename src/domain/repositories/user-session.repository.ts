@@ -13,4 +13,6 @@ export interface IUserSessionRepository {
     ): Promise<UserSession>;
 
     revoke(id: string, revokedAt: Date): Promise<void>;
+
+    revokeAllByUserId(userId: string, revokedAt: Date): Promise<void>;
 }
