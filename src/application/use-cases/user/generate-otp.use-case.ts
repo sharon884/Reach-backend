@@ -1,6 +1,6 @@
 import type { OtpPurpose } from "@/domain/entities/otp-verification.entity";
 
-import { IGenerateOtpUseCase } from "../abstractions/use-cases/generate-otp.use-case.js";
+import { IGenerateOtpUseCase } from "@/application/abstractions/use-cases/generate-otp.use-case";
 
 import { IOtpStore } from "@/application/services/otp-store";
 

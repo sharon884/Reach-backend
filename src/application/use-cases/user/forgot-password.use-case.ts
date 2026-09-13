@@ -1,10 +1,10 @@
-import type { IForgotPasswordUseCase } from "../abstractions/use-cases/forgot-password.use-case.js";
+import type { IForgotPasswordUseCase } from "../../abstractions/use-cases/forgot-password.use-case.js";
 
-import type { ForgotPasswordDto } from "../dto/auth/forgot-password.dto.js";
+import type { ForgotPasswordDto } from "../../dto/auth/forgot-password.dto.js";
 
 import type { IUserRepository } from "@/domain/repositories/user.repository";
 
-import type { IGenerateOtpUseCase } from "../abstractions/use-cases/generate-otp.use-case.js";
+import type { IGenerateOtpUseCase } from "../../abstractions/use-cases/generate-otp.use-case.js";
 
 
 export class ForgotPasswordUseCase implements IForgotPasswordUseCase {
