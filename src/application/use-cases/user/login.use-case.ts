@@ -30,13 +30,20 @@ export class LoginUseCase implements ILoginUseCase {
         private readonly _tokenService: ITokenService,
         private readonly _userSessionRepository: IUserSessionRepository,
         private readonly _refreshTokenHasher: IRefreshTokenHasher,
-    ) {}
+    ) { }
 
     async execute(data: LoginDto): Promise<LoginResult> {
 
         const user = await this._userRepository.findByEmail(data.email);
 
         if (!user) {
+            throw new AppError(
+                AUTH_MESSAGES.INVALID_CREDENTIALS,
+                StatusCodes.UNAUTHORIZED,
+            );
+        }
+
+        if (!user.passwordHash) {
             throw new AppError(
                 AUTH_MESSAGES.INVALID_CREDENTIALS,
                 StatusCodes.UNAUTHORIZED,
