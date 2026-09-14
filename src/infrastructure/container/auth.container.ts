@@ -4,7 +4,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 
 import { PrismaUserRepository } from "@/infrastructure/repositories/prisma-user.repository";
 
-import { PrismaOtpVerificationRepository } from "@/infrastructure/repositories/prisma-otp-verification.repository";
+import { redisClient } from "@/infrastructure/redis/redis.client";
 
 import { BcryptPasswordHasher } from "@/infrastructure/services/bcrypt-password-hasher";
 
@@ -12,15 +12,17 @@ import { RandomOtpGenerator } from "@/infrastructure/services/random-otp-generat
 
 import { BcryptOtpHasher } from "@/infrastructure/services/bcrypt-otp-hasher";
 
-import { SignupUseCase } from "@/application/use-cases/signup.use-case";
+import { SignupUseCase } from "@/application/use-cases/user/signup.use-case";
 
-import { GenerateOtpUseCase } from "@/application/use-cases/generate-otp.use-case";
+import { GenerateOtpUseCase } from "@/application/use-cases/user/generate-otp.use-case";
 
-import { VerifyOtpUseCase } from "@/application/use-cases/verify-otp.use-case";
+import { VerifyOtpUseCase } from "@/application/use-cases/user/verify-otp.use-case";
+
+import { RedisOtpStore } from "@/infrastructure/services/redis-otp-store";
 
 import { VerifyOtpController } from "@/presentation/controllers/auth/verify-otp.controller";
 
-import { ResendOtpUseCase } from "@/application/use-cases/resend-otp.use-case";
+import { ResendOtpUseCase } from "@/application/use-cases/user/resend-otp.use-case";
 
 import { ResendOtpController } from "@/presentation/controllers/auth/resend-otp.controller";
 
@@ -36,11 +38,11 @@ import { JwtTokenService } from "@/infrastructure/services/jwt-token.service";
 
 import { BcryptRefreshTokenHasher } from "@/infrastructure/services/bcrypt-refresh-token-hasher";
 
-import { LoginUseCase } from "@/application/use-cases/login.use-case";
+import { LoginUseCase } from "@/application/use-cases/user/login.use-case";
 
 import { LoginController } from "@/presentation/controllers/auth/login.controller";
 
-import { AdminLoginUseCase } from "@/application/use-cases/admin-login.use-case";
+import { AdminLoginUseCase } from "@/application/use-cases/admin/admin-login.use-case";
 
 import { AdminLoginController } from "@/presentation/controllers/admin/admin-login.controller";
 
@@ -58,9 +60,33 @@ import { AdminLogoutUseCase } from "@/application/use-cases/admin/admin-logout.u
 
 import { AdminLogoutController } from "@/presentation/controllers/admin/admin-logout.controller";
 
-import { LogoutUseCase } from "@/application/use-cases/logout.use-case";
+import { LogoutUseCase } from "@/application/use-cases/user/logout.use-case";
 
 import { LogoutController } from "@/presentation/controllers/auth/logout.controller";
+
+import { ForgotPasswordUseCase, } from "@/application/use-cases/user/forgot-password.use-case";
+
+import { ForgotPasswordController } from "@/presentation/controllers/auth/forgot-password.controller";
+
+import { RedisPasswordResetStore } from "@/infrastructure/services/redis-password-reset-store";
+
+import { VerifyPasswordResetOtpUseCase } from "@/application/use-cases/user/verify-password-reset-otp.use-case";
+
+import { VerifyPasswordResetOtpController } from "@/presentation/controllers/auth/verify-password-reset-otp.controller";
+
+import { ResetPasswordController } from "@/presentation/controllers/auth/reset-password.controller";
+
+import { ResetPasswordUseCase } from "@/application/use-cases/user/reset-password.use-case";
+
+import { AuthenticationSessionService } from "@/application/services/authentication-session.service";
+
+import { GoogleAuthService } from "@/infrastructure/services/google-auth.service";
+
+import { PrismaUserAuthAccountRepository } from "@/infrastructure/repositories/prisma-user-auth-account.repository";
+
+import { GoogleAuthenticationUseCase } from "@/application/use-cases/google-authentication.use-case";
+
+import { GoogleAuthenticationController } from "@/presentation/controllers/auth/google-authentication.controller";
 
 
 const adapter = new PrismaPg({
@@ -75,7 +101,7 @@ const userRepository = new PrismaUserRepository(prisma);
 
 const passwordHasher = new BcryptPasswordHasher();
 
-const otpRepository = new PrismaOtpVerificationRepository(prisma);
+const otpStore = new RedisOtpStore(redisClient);
 
 const otpGenerator = new RandomOtpGenerator();
 
@@ -89,12 +115,30 @@ const tokenService = new JwtTokenService();
 
 const refreshTokenHasher = new BcryptRefreshTokenHasher();
 
+const authenticationSessionService = new AuthenticationSessionService(
+  tokenService,
+  refreshTokenHasher,
+  userSessionRepository,
+);
+
+const userAuthAccountRepository = new PrismaUserAuthAccountRepository(prisma);
+
+const googleAuthService = new GoogleAuthService();
+
+  
+
+
 const logoutUseCase = new LogoutUseCase(userSessionRepository);
+
+const passwordResetStore = new RedisPasswordResetStore(
+  redisClient,
+);
+
 
 
 const generateOtpUseCase = new GenerateOtpUseCase(
   userRepository,
-  otpRepository,
+  otpStore,
   otpGenerator,
   otpHasher,
   emailSender,
@@ -103,13 +147,18 @@ const generateOtpUseCase = new GenerateOtpUseCase(
 const resendOtpUseCase = new ResendOtpUseCase(
   userRepository,
   generateOtpUseCase,
+  otpStore,
 );
-
 
 const verifyOtpUseCase = new VerifyOtpUseCase(
   userRepository,
-  otpRepository,
+  otpStore,
   otpHasher,
+);
+
+const forgotPasswordUseCase = new ForgotPasswordUseCase(
+  userRepository,
+  generateOtpUseCase,
 );
 
 const signupUseCase = new SignupUseCase(
@@ -119,21 +168,43 @@ const signupUseCase = new SignupUseCase(
 );
 
 const loginUseCase = new LoginUseCase(
-    userRepository,
-    passwordHasher,
-    tokenService,
-    userSessionRepository,
-    refreshTokenHasher,
+  userRepository,
+  passwordHasher,
+  authenticationSessionService,
 );
 
 
 const adminLoginUseCase = new AdminLoginUseCase(
-    userRepository,
-    passwordHasher,
-    tokenService,
-    userSessionRepository,
-    refreshTokenHasher,
+  userRepository,
+  passwordHasher,
+  tokenService,
+  userSessionRepository,
+  refreshTokenHasher,
 );
+
+
+const verifyPasswordResetOtpUseCase = new VerifyPasswordResetOtpUseCase(
+  userRepository,
+  verifyOtpUseCase,
+  passwordResetStore,
+);
+
+
+const resetPasswordUseCase = new ResetPasswordUseCase(
+  passwordResetStore,
+  passwordHasher,
+  userRepository,
+  userSessionRepository,
+);
+
+
+
+const googleAuthenticationUseCase =  new GoogleAuthenticationUseCase(
+    googleAuthService,
+    userRepository,
+    userAuthAccountRepository,
+    authenticationSessionService,
+  );
 
 
 
@@ -149,46 +220,62 @@ export const resendOtpController = new ResendOtpController(
   resendOtpUseCase,
 );
 
+export const forgotPasswordController = new ForgotPasswordController(
+  forgotPasswordUseCase,
+);
+
 export const loginController = new LoginController(loginUseCase);
 
 
 export const adminLoginController = new AdminLoginController(
-    adminLoginUseCase,
+  adminLoginUseCase,
 );
 
 export const adminAuthMiddleware = new AdminAuthMiddleware(
-    tokenService,
+  tokenService,
 );
 
 export const getUsersUseCase = new GetUsersUseCase(
-    userRepository,
+  userRepository,
 );
 
 
 export const getUsersController = new GetUsersController(
-    getUsersUseCase,
+  getUsersUseCase,
 );
 
 export const updateUserStatusUseCase = new UpdateUserStatusUseCase(
-    userRepository,
+  userRepository,
 );
 
 
 export const updateUserStatusController = new UpdateUserStatusController(
-        updateUserStatusUseCase,
+  updateUserStatusUseCase,
 );
 
 export const adminLogoutUseCase = new AdminLogoutUseCase(
-    userSessionRepository,
+  userSessionRepository,
 );
 
 export const adminLogoutController = new AdminLogoutController(
-    adminLogoutUseCase,
-    tokenService,
+  adminLogoutUseCase,
+  tokenService,
 );
 
 
 export const logoutController = new LogoutController(
-    logoutUseCase,
-    tokenService,
+  logoutUseCase,
+  tokenService,
 );
+
+export const verifyPasswordResetOtpController = new VerifyPasswordResetOtpController(
+  verifyPasswordResetOtpUseCase,
+);
+
+export const resetPasswordController = new ResetPasswordController(
+  resetPasswordUseCase,
+);
+
+export const googleAuthenticationController = new GoogleAuthenticationController(
+  googleAuthenticationUseCase,
+  );

@@ -1,18 +1,12 @@
-import { randomUUID } from "node:crypto";
-
 import type { ILoginUseCase } from "@/application/abstractions/use-cases/login.use-case";
 
 import type { IUserRepository } from "@/domain/repositories/user.repository";
-
-import type { IUserSessionRepository } from "@/domain/repositories/user-session.repository";
 
 import type { LoginDto } from "@/application/dto/auth/login.dto";
 
 import type { IPasswordHasher } from "@/application/services/password-hasher";
 
-import type { ITokenService } from "@/application/services/token-service";
-
-import type { IRefreshTokenHasher } from "@/application/services/refresh-token-hasher";
+import type { IAuthenticationSessionService } from "@/application/services/authentication-session.service";
 
 import { AppError } from "@/shared/errors/app.error";
 
@@ -27,16 +21,21 @@ export class LoginUseCase implements ILoginUseCase {
     constructor(
         private readonly _userRepository: IUserRepository,
         private readonly _passwordHasher: IPasswordHasher,
-        private readonly _tokenService: ITokenService,
-        private readonly _userSessionRepository: IUserSessionRepository,
-        private readonly _refreshTokenHasher: IRefreshTokenHasher,
-    ) {}
+        private readonly _authenticationSessionService: IAuthenticationSessionService,
+    ) { }
 
     async execute(data: LoginDto): Promise<LoginResult> {
 
         const user = await this._userRepository.findByEmail(data.email);
 
         if (!user) {
+            throw new AppError(
+                AUTH_MESSAGES.INVALID_CREDENTIALS,
+                StatusCodes.UNAUTHORIZED,
+            );
+        }
+
+        if (!user.passwordHash) {
             throw new AppError(
                 AUTH_MESSAGES.INVALID_CREDENTIALS,
                 StatusCodes.UNAUTHORIZED,
@@ -62,39 +61,13 @@ export class LoginUseCase implements ILoginUseCase {
             );
         }
 
-        const sessionId = randomUUID();
-
-        const refreshToken = this._tokenService.generateRefreshToken({
-            userId: user.id,
-            sessionId,
-        });
-
-        const refreshTokenHash =
-            await this._refreshTokenHasher.hash(refreshToken);
-
-        const expiresAt = new Date(
-            Date.now() + 7 * 24 * 60 * 60 * 1000,
-        );
-
-        await this._userSessionRepository.create({
-            id: sessionId,
-            userId: user.id,
-            refreshTokenHash,
-            expiresAt,
-            revokedAt: null,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-        });
-
-        const accessToken = this._tokenService.generateAccessToken({
-            userId: user.id,
-            role: user.role,
-        });
+        const session =
+            await this._authenticationSessionService.createSession(user);
 
         return {
             user,
-            accessToken,
-            refreshToken,
+            accessToken: session.accessToken,
+            refreshToken: session.refreshToken,
         };
     }
 }

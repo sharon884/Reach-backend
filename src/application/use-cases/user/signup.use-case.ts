@@ -10,7 +10,7 @@ import { IUserRepository } from "@/domain/repositories/user.repository";
 
 import { IPasswordHasher } from "@/application/services/password-hasher";
 
-import { IGenerateOtpUseCase } from "../abstractions/use-cases/generate-otp.use-case.js";
+import { IGenerateOtpUseCase } from "../../abstractions/use-cases/generate-otp.use-case.js";
 
 import { mapSignupToUserData } from "@/application/mappers/auth/signup.mapper";
 

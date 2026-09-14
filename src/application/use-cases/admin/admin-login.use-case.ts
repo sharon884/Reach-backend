@@ -31,13 +31,20 @@ export class AdminLoginUseCase implements IAdminLoginUseCase {
         private readonly _tokenService: ITokenService,
         private readonly _userSessionRepository: IUserSessionRepository,
         private readonly _refreshTokenHasher: IRefreshTokenHasher,
-    ) {}
+    ) { }
 
     async execute(data: AdminLoginDto): Promise<LoginResult> {
 
         const user = await this._userRepository.findByEmail(data.email);
 
         if (!user) {
+            throw new AppError(
+                AUTH_MESSAGES.INVALID_CREDENTIALS,
+                StatusCodes.UNAUTHORIZED,
+            );
+        }
+
+        if (!user.passwordHash) {
             throw new AppError(
                 AUTH_MESSAGES.INVALID_CREDENTIALS,
                 StatusCodes.UNAUTHORIZED,

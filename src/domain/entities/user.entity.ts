@@ -6,7 +6,7 @@ export interface User {
   id: string;
   fullName: string;
   email: string;
-  passwordHash: string;
+  passwordHash: string | null;
   role: UserRole;
   status: UserStatus;
   isEmailVerified: boolean;

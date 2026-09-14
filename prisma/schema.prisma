@@ -24,11 +24,15 @@ enum OtpPurpose {
   PASSWORD_RESET
 }
 
+enum AuthProvider {
+  GOOGLE
+}
+
 model User {
   id              String     @id @default(uuid())
   fullName        String
   email           String     @unique
-  passwordHash    String
+  passwordHash    String?
   role            UserRole   @default(USER)
   status          UserStatus @default(ACTIVE)
   isEmailVerified Boolean    @default(false)
@@ -37,10 +41,26 @@ model User {
   updatedAt DateTime @updatedAt
 
   otpVerifications OtpVerification[]
-  userSessions UserSession[]
+  userSessions     UserSession[]
+  authAccounts     UserAuthAccount[]
 
   @@index([status])
   @@index([role])
+}
+
+model UserAuthAccount {
+  id                String       @id @default(uuid())
+  userId            String
+  provider          AuthProvider
+  providerAccountId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model OtpVerification {
@@ -59,8 +79,6 @@ model OtpVerification {
   @@index([userId, purpose])
   @@index([expiresAt])
 }
-
-
 
 model UserSession {
   id               String    @id @default(uuid())

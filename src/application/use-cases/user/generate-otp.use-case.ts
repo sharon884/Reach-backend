@@ -1,13 +1,10 @@
-import { randomUUID } from "node:crypto";
+import type { OtpPurpose } from "@/domain/entities/otp-verification.entity";
 
-import {
-    OtpPurpose,
-    OtpVerification,
-} from "@/domain/entities/otp-verification.entity";
+import { IGenerateOtpUseCase } from "@/application/abstractions/use-cases/generate-otp.use-case";
 
-import { IGenerateOtpUseCase } from "../abstractions/use-cases/generate-otp.use-case.js";
+import { IOtpStore } from "@/application/services/otp-store";
 
-import { IOtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
+import { OTP_POLICIES } from "@/application/services/otp-policy";
 
 import { IUserRepository } from "@/domain/repositories/user.repository";
 
@@ -23,10 +20,12 @@ import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
 import { StatusCodes } from "http-status-codes";
 
-export class GenerateOtpUseCase implements IGenerateOtpUseCase  {
+import { logger } from "@/infrastructure/logger/index";
+
+export class GenerateOtpUseCase implements IGenerateOtpUseCase {
     constructor(
         private readonly _userRepository: IUserRepository,
-        private readonly _otpRepository: IOtpVerificationRepository,
+        private readonly _otpStore: IOtpStore,
         private readonly _otpGenerator: IOtpGenerator,
         private readonly _otpHasher: IOtpHasher,
         private readonly _emailSender: IEmailSender,
@@ -44,27 +43,26 @@ export class GenerateOtpUseCase implements IGenerateOtpUseCase  {
                 StatusCodes.NOT_FOUND,
             );
         }
-        await this._otpRepository.invalidateActiveOtp(userId, purpose);
 
         const otp = this._otpGenerator.generate();
 
+        logger.info(otp)
+
         const codeHash = await this._otpHasher.hash(otp);
 
-        const otpVerification: OtpVerification = {
-            id: randomUUID(),
+        const policy = OTP_POLICIES[purpose];
+
+        await this._otpStore.save(
             userId,
-            codeHash,
             purpose,
-            expiresAt:  new Date(Date.now() + 5 * 60 * 1000),
-            attempts: 0,
-            resendCount: 0,
-            verifiedAt: null,
-            createdAt: new Date(),
-        };
+            codeHash,
+            policy.expiresInSeconds,
+        );
 
-        await this._otpRepository.create(otpVerification);
-
-        console.log(otp)
+        logger.info("OTP generated and stored", {
+            userId,
+            purpose,
+        });
 
         await this._emailSender.sendOtp(
             user.email,
