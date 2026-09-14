@@ -19,6 +19,8 @@ const envSchema = z.object({
   SMTP_FROM: z.string().email(),
 
   JWT_SECRET: z.string().min(32),
+
+  GOOGLE_CLIENT_ID: z.string().min(1),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
