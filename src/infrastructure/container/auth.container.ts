@@ -78,6 +78,8 @@ import { ResetPasswordController } from "@/presentation/controllers/auth/reset-p
 
 import { ResetPasswordUseCase } from "@/application/use-cases/user/reset-password.use-case";
 
+import { AuthenticationSessionService } from "@/application/services/authentication-session.service";
+
 
 const adapter = new PrismaPg({
   connectionString: env.DATABASE_URL,
@@ -104,6 +106,13 @@ const userSessionRepository = new PrismaUserSessionRepository(prisma);
 const tokenService = new JwtTokenService();
 
 const refreshTokenHasher = new BcryptRefreshTokenHasher();
+
+const authenticationSessionService = new AuthenticationSessionService(
+  tokenService,
+  refreshTokenHasher,
+  userSessionRepository,
+);
+
 
 const logoutUseCase = new LogoutUseCase(userSessionRepository);
 
@@ -147,9 +156,7 @@ const signupUseCase = new SignupUseCase(
 const loginUseCase = new LoginUseCase(
   userRepository,
   passwordHasher,
-  tokenService,
-  userSessionRepository,
-  refreshTokenHasher,
+  authenticationSessionService,
 );
 
 
@@ -170,10 +177,10 @@ const verifyPasswordResetOtpUseCase = new VerifyPasswordResetOtpUseCase(
 
 
 const resetPasswordUseCase = new ResetPasswordUseCase(
-    passwordResetStore,
-    passwordHasher,
-    userRepository,
-    userSessionRepository,
+  passwordResetStore,
+  passwordHasher,
+  userRepository,
+  userSessionRepository,
 );
 
 
@@ -243,5 +250,5 @@ export const verifyPasswordResetOtpController = new VerifyPasswordResetOtpContro
 );
 
 export const resetPasswordController = new ResetPasswordController(
-        resetPasswordUseCase,
-    );
+  resetPasswordUseCase,
+);
