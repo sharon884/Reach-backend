@@ -9,6 +9,7 @@ import {
   forgotPasswordController,
   verifyPasswordResetOtpController,
   resetPasswordController,
+  googleAuthenticationController,
 } from "@/infrastructure/container/auth.container";
 
 import { validationMiddleware } from "@/presentation/middlewares/validation.middleware";
@@ -26,6 +27,8 @@ import { forgotPasswordSchema } from "@/application/dto/auth/forgot-password.dto
 import { verifyPasswordResetOtpSchema } from "@/application/dto/auth/verify-password-reset-otp.dto";
 
 import { resetPasswordSchema } from "@/application/dto/auth/reset-password.dto";
+
+import { googleAuthenticationSchema } from "@/application/dto/auth/google-authentication.dto";
 
 
 export const authRouter = Router();
@@ -82,4 +85,13 @@ authRouter.post(
   resetPasswordController.handle.bind(
     resetPasswordController,
   ),
+);
+
+
+authRouter.post(
+    "/google",
+    validationMiddleware(googleAuthenticationSchema),
+    googleAuthenticationController.handle.bind(
+        googleAuthenticationController,
+    ),
 );

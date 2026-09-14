@@ -80,6 +80,14 @@ import { ResetPasswordUseCase } from "@/application/use-cases/user/reset-passwor
 
 import { AuthenticationSessionService } from "@/application/services/authentication-session.service";
 
+import { GoogleAuthService } from "@/infrastructure/services/google-auth.service";
+
+import { PrismaUserAuthAccountRepository } from "@/infrastructure/repositories/prisma-user-auth-account.repository";
+
+import { GoogleAuthenticationUseCase } from "@/application/use-cases/google-authentication.use-case";
+
+import { GoogleAuthenticationController } from "@/presentation/controllers/auth/google-authentication.controller";
+
 
 const adapter = new PrismaPg({
   connectionString: env.DATABASE_URL,
@@ -112,6 +120,12 @@ const authenticationSessionService = new AuthenticationSessionService(
   refreshTokenHasher,
   userSessionRepository,
 );
+
+const userAuthAccountRepository = new PrismaUserAuthAccountRepository(prisma);
+
+const googleAuthService = new GoogleAuthService();
+
+  
 
 
 const logoutUseCase = new LogoutUseCase(userSessionRepository);
@@ -185,6 +199,15 @@ const resetPasswordUseCase = new ResetPasswordUseCase(
 
 
 
+const googleAuthenticationUseCase =  new GoogleAuthenticationUseCase(
+    googleAuthService,
+    userRepository,
+    userAuthAccountRepository,
+    authenticationSessionService,
+  );
+
+
+
 export const signupController = new SignupController(
   signupUseCase,
 );
@@ -252,3 +275,7 @@ export const verifyPasswordResetOtpController = new VerifyPasswordResetOtpContro
 export const resetPasswordController = new ResetPasswordController(
   resetPasswordUseCase,
 );
+
+export const googleAuthenticationController = new GoogleAuthenticationController(
+  googleAuthenticationUseCase,
+  );
