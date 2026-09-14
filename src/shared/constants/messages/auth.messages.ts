@@ -31,5 +31,8 @@ export const AUTH_MESSAGES = {
   PASSWORD_RESET_OTP_SENT : "A password reset OTP has been sent to your registered email.",
 
    PASSWORD_RESET_SUCCESS: "Your password has been successfully reset. You can now log in with your new password.",
+
+   INVALID_GOOGLE_TOKEN: "Invalid Google authentication token",
   
 } as const;
+
