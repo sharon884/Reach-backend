@@ -8,10 +8,6 @@ export interface IPropertyDefinitionRepository
         slug: string,
     ): Promise<PropertyDefinition | null>;
 
-    findByName(
-        name: string,
-    ): Promise<PropertyDefinition | null>;
-
     findAllActive(): Promise<PropertyDefinition[]>;
 
     updateStatus(
