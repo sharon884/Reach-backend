@@ -9,7 +9,7 @@ export interface Category {
 
      slug : string;
 
-     description : string;
+     description : string | null ;
 
      parentId : string | null;
 

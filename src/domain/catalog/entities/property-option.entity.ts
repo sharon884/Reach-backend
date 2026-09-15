@@ -8,7 +8,7 @@ export interface PropertyOption {
 
      value : string;
 
-     displayOrder : string;
+     displayOrder : number;
 
      isActive : boolean;
 

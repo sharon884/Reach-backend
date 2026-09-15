@@ -1,4 +1,4 @@
-export type CoreFieldKey = |"TEXT" | "DESCRIPTION" | "IMAGES" | "LOCATION" | "QUANTITY" | "EXPIRY";
+export type CoreFieldKey = |"TITLE" | "DESCRIPTION" | "IMAGES" | "LOCATION" | "QUANTITY" | "EXPIRY";
 
 
 export interface CategoryField {
@@ -13,7 +13,7 @@ export interface CategoryField {
 
      isEnabled : boolean;
 
-     displayOrder : boolean;
+     displayOrder: number;
 
      createdAt : Date;
 

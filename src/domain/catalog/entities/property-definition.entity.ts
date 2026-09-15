@@ -10,6 +10,8 @@ export interface PropertyDefinition {
 
      name : string;
 
+     slug : string;
+
      description : string | null;
 
      dataType : PropertyDataType;
