@@ -2,13 +2,13 @@ import { Request, Response, NextFunction } from "express";
 
 import { StatusCodes } from "http-status-codes";
 
-import type { IVerifyPasswordResetOtpUseCase } from "@/application/abstractions/use-cases/verify-password-reset-otp.use-case";
+import type { IVerifyPasswordResetOtpUseCase } from "@/application/auth/use-cases/verify-password-reset-otp/verify-password-reset-otp.use-case.interface";
 
-import { VerifyPasswordResetOtpDto } from "@/application/dto/auth/verify-password-reset-otp.dto";
+import { VerifyPasswordResetOtpDto } from "@/application/auth/dto/otp/verify-password-reset-otp.dto";
 
 import { ApiResponse } from "@/shared/types/api-response";
 
-import { VerifyPasswordResetOtpResponseDto } from "@/application/dto/auth/verify-password-reset-otp-response.dto";
+import { VerifyPasswordResetOtpResponseDto } from "@/application/auth/dto/otp/verify-password-reset-otp-response.dto";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 

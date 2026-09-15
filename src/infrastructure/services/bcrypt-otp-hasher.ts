@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-import { IOtpHasher } from "@/application/services/otp-hasher";
+import { IOtpHasher } from "@/application/auth/services/otp/otp-hasher";
 
 export class BcryptOtpHasher implements IOtpHasher {
   async hash(otp: string): Promise<string> {

@@ -6,9 +6,9 @@ import type {
 
 import { StatusCodes } from "http-status-codes";
 
-import type { IGoogleAuthenticationUseCase } from "@/application/abstractions/use-cases/google-authentication.use-case";
+import type { IGoogleAuthenticationUseCase } from "@/application/auth/use-cases/google-authentication/google-authentication.use-case.interface";
 
-import type { LoginResponseDto } from "@/application/dto/auth/login-response.dto";
+import type { LoginResponseDto } from "@/application/auth/dto/login/login-response.dto";
 
 import { ApiResponse } from "@/shared/types/api-response";
 
@@ -16,7 +16,7 @@ import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
 import { AUTH_COOKIES } from "@/presentation/cookies/auth.cookies";
 
-import { mapLoginToResponse } from "@/application/mappers/auth/login-response.mapper";
+import { mapLoginToResponse } from "@/application/auth/mappers/login/login-response.mapper";
 
 export class GoogleAuthenticationController {
 

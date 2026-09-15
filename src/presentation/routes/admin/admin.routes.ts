@@ -10,13 +10,13 @@ import {
 
 import {
     adminLoginSchema,
-} from "@/application/dto/admin/admin-login.dto";
+} from "@/application/admin/dto/login/admin-login.dto";
 
-import { getUsersSchema } from "@/application/dto/admin/get-users.dto";
+import { getUsersSchema } from "@/application/admin/dto/users/get-users.dto";
 
 import { validationMiddleware } from "@/presentation/middlewares/validation.middleware";
 
-import { updateUserStatusSchema } from "@/application/dto/admin/update-user-status.dto";
+import { updateUserStatusSchema } from "@/application/admin/dto/user-status/update-user-status.dto";
 
 
 const adminRouter = Router();

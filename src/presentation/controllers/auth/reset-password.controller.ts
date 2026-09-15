@@ -2,9 +2,9 @@ import type { Request, Response, NextFunction } from "express";
 
 import { StatusCodes } from "http-status-codes";
 
-import type { IResetPasswordUseCase } from "@/application/abstractions/use-cases/reset-password.use-case";
+import type { IResetPasswordUseCase } from "@/application/auth/use-cases/reset-password/reset-password.use-case.interface";
 
-import type { ResetPasswordDto } from "@/application/dto/auth/reset-password.dto";
+import type { ResetPasswordDto } from "@/application/auth/dto/password/reset-password.dto";
 
 import type { ApiResponse } from "@/shared/types/api-response";
 

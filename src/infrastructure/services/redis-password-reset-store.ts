@@ -2,7 +2,7 @@ import { createHash, randomBytes } from "node:crypto";
 
 import type { RedisClientType } from "redis";
 
-import type { IPasswordResetStore } from "@/application/services/password-reset-store";
+import type { IPasswordResetStore } from "@/application/auth/services/password/password-reset-store";
 
 
 export class RedisPasswordResetStore implements IPasswordResetStore {

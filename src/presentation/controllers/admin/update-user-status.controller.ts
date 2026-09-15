@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 
-import type { IUpdateUserStatusUseCase } from "@/application/abstractions/use-cases/admin/update-user-status.use-case";
+import type { IUpdateUserStatusUseCase } from "@/application/admin/use-cases/update-user-status/update-user-status.use-case.interface";
 
-import { UpdateUserStatusDto } from "@/application/dto/admin/update-user-status.dto";
+import { UpdateUserStatusDto } from "@/application/admin/dto/user-status/update-user-status.dto";
 
-import { mapUserToAdminResponse } from "@/application/mappers/admin/admin-user-response.mapper";
+import { mapUserToAdminResponse } from "@/application/admin/mappers/users/admin-user-response.mapper";
 
 
 

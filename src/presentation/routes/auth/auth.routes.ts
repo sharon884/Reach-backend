@@ -14,21 +14,21 @@ import {
 
 import { validationMiddleware } from "@/presentation/middlewares/validation.middleware";
 
-import { signupSchema } from "@/application/dto/auth/signup.dto";
+import { signupSchema } from "@/application/auth/dto/signup/signup.dto";
 
-import { verifyOtpSchema } from "@/application/dto/auth/verify-otp.dto";
+import { verifyOtpSchema } from "@/application/auth/dto/otp/verify-otp.dto";
 
-import { resendOtpSchema } from "@/application/dto/auth/resend-otp.dto";
+import { resendOtpSchema } from "@/application/auth/dto/otp/resend-otp.dto";
 
-import { loginSchema } from "@/application/dto/auth/login.dto";
+import { loginSchema } from "@/application/auth/dto/login/login.dto";
 
-import { forgotPasswordSchema } from "@/application/dto/auth/forgot-password.dto";
+import { forgotPasswordSchema } from "@/application/auth/dto/password/forgot-password.dto";
 
-import { verifyPasswordResetOtpSchema } from "@/application/dto/auth/verify-password-reset-otp.dto";
+import { verifyPasswordResetOtpSchema } from "@/application/auth/dto/otp/verify-password-reset-otp.dto";
 
-import { resetPasswordSchema } from "@/application/dto/auth/reset-password.dto";
+import { resetPasswordSchema } from "@/application/auth/dto/password/reset-password.dto";
 
-import { googleAuthenticationSchema } from "@/application/dto/auth/google-authentication.dto";
+import { googleAuthenticationSchema } from "@/application/auth/dto/google-authentication/google-authentication.dto";
 
 
 export const authRouter = Router();

@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-import type { IRefreshTokenHasher } from "@/application/services/refresh-token-hasher";
+import type { IRefreshTokenHasher } from "@/application/auth/services/token/refresh-token-hasher";
 
 export class BcryptRefreshTokenHasher implements IRefreshTokenHasher {
 

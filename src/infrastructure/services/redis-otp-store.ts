@@ -1,6 +1,6 @@
 import type { RedisClientType } from "redis";
 
-import type { IOtpStore } from "@/application/services/otp-store"
+import type { IOtpStore } from "@/application/auth/services/otp/otp-store"
 
 import type { OtpPurpose } from "@/domain/auth/entities/otp-verification.entity";
 

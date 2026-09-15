@@ -1,6 +1,6 @@
 import nodemailer, { Transporter } from "nodemailer";
 
-import { IEmailSender } from "@/application/services/email-sender";
+import { IEmailSender } from "@/application/auth/services/email/email-sender";
 
 import { env } from "@/config/env";
 

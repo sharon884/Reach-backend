@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from "express";
 
 import { StatusCodes } from "http-status-codes";
 
-import type { IAdminLogoutUseCase } from "@/application/abstractions/use-cases/admin/admin-logout.use-case";
+import type { IAdminLogoutUseCase } from "@/application/admin/use-cases/logout/admin-logout.use-case.interface";
 
-import type { ITokenService } from "@/application/services/token-service";
+import type { ITokenService } from "@/application/auth/services/token/token-service";
 
 import type { ApiResponse } from "@/shared/types/api-response";
 

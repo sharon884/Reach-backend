@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 
-import type { IForgotPasswordUseCase } from "@/application/abstractions/use-cases/forgot-password.use-case";
+import type { IForgotPasswordUseCase } from "@/application/auth/use-cases/forgot-password/forgot-password.use-case.interface";
 
-import type { ForgotPasswordDto } from "@/application/dto/auth/forgot-password.dto";
+import type { ForgotPasswordDto } from "@/application/auth/dto/password/forgot-password.dto";
 
 
 import type { ApiResponse } from "@/shared/types/api-response";

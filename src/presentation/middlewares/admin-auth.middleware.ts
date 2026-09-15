@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import type { ITokenService } from "@/application/services/token-service";
+import type { ITokenService } from "@/application/auth/services/token/token-service";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 

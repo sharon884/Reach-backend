@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import type { IVerifyOtpUseCase } from "@/application/abstractions/use-cases/verify-otp.use-case";
+import type { IVerifyOtpUseCase } from "@/application/auth/use-cases/verify-otp/verify-otp.use-case.interface";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 

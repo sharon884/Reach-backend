@@ -1,6 +1,6 @@
 import { OAuth2Client } from "google-auth-library";
 
-import type { IGoogleAuthService } from "@/application/services/google-auth";
+import type { IGoogleAuthService } from "@/application/auth/services/google/google-auth";
 import { env } from "@/config/env";
 import { AppError } from "@/shared/errors/app.error";
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";

@@ -2,11 +2,11 @@ import { Request, Response, NextFunction } from "express";
 
 import { StatusCodes } from "http-status-codes";
 
-import type { IGetUsersUseCase } from "@/application/abstractions/use-cases/admin/get-users.use-case";
+import type { IGetUsersUseCase } from "@/application/admin/use-cases/get-users/get-users.use-case.interface";
 
-import type { GetUsersDto } from "@/application/dto/admin/get-users.dto";
+import type { GetUsersDto } from "@/application/admin/dto/users/get-users.dto";
 
-import type { GetUsersResultDto } from "@/application/dto/admin/get-users-result.dto";
+import type { GetUsersResultDto } from "@/application/admin/dto/users/get-users-result.dto";
 
 import type { ApiResponse } from "@/shared/types/api-response";
 

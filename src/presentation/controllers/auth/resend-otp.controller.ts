@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import type { IResendOtpUseCase } from "@/application/abstractions/use-cases/resend-otp.use-case";
+import type { IResendOtpUseCase } from "@/application/auth/use-cases/resend-otp/resend-otp.use-case.interface";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 

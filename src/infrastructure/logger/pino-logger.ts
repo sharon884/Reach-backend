@@ -1,6 +1,6 @@
 import pino, { type Logger } from "pino";
 
-import type { ILogger } from "@/application/services/logger";
+import type { ILogger } from "@/application/shared/services/logger";
 
 export class PinoLogger implements ILogger {
   private readonly _logger: Logger;

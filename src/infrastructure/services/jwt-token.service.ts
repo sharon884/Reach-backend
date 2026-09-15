@@ -4,7 +4,7 @@ import type {
     AccessTokenPayload,
     RefreshTokenPayload,
     ITokenService,
-} from "@/application/services/token-service";
+} from "@/application/auth/services/token/token-service";
 
 import { env } from "@/config/env";
 

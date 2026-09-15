@@ -2,13 +2,13 @@ import { Request, Response, NextFunction } from "express";
 
 import { StatusCodes } from "http-status-codes";
 
-import type { ISignupUseCase } from "@/application/abstractions/use-cases/signup.use-case";
+import type { ISignupUseCase } from "@/application/auth/use-cases/signup/signup.use-case.interface";
 
 import type { ApiResponse } from "@/shared/types/api-response";
 
-import type { SignupResponseDto } from "@/application/dto/auth/signup-response.dto";
+import type { SignupResponseDto } from "@/application/auth/dto/signup/signup-response.dto";
 
-import { mapSignupToResponse } from "@/application/mappers/auth/signup-response.mapper";
+import { mapSignupToResponse } from "@/application/auth/mappers/signup/signup-response.mapper";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
