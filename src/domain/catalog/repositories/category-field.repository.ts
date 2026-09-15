@@ -1,5 +1,5 @@
  import { BaseRepository } from "@/domain/shared/repositories/base.repository";
-import { CategoryField } from "../entities/category-field.entity.js";
+import { CategoryField , CoreFieldKey } from "@/domain/catalog/entities/category-field.entity";
 
 export interface ICategoryFieldRepository
     extends BaseRepository<CategoryField> {
@@ -9,9 +9,9 @@ export interface ICategoryFieldRepository
     ): Promise<CategoryField[]>;
 
     findByCategoryAndField(
-        categoryId: string,
-        fieldKey: string,
-    ): Promise<CategoryField | null>;
+    categoryId: string,
+    fieldKey: CoreFieldKey,
+): Promise<CategoryField | null>;
 
     updateConfiguration(
         id: string,
