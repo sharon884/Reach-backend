@@ -1,5 +1,5 @@
 import { BaseRepository } from "@/domain/shared/repositories/base.repository";
-import { Category } from "../entities/category.entity.js";
+import { Category, CategoryStatus } from "@/domain/catalog/entities/category.entity";
 
 export interface ICategoryRepository
     extends BaseRepository<Category> {
@@ -19,7 +19,7 @@ export interface ICategoryRepository
 
     updateStatus(
         id: string,
-        status: "ACTIVE" | "INACTIVE",
+        status: CategoryStatus,
     ): Promise<Category>;
 
     updateDisplayOrder(
