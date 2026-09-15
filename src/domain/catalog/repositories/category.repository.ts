@@ -1,29 +1,29 @@
 import { BaseRepository } from "@/domain/shared/repositories/base.repository";
-import { CategoryProperty } from "@/domain/catalog/entities/category-property.entity";
+import { Category } from "../entities/category.entity.js";
 
+export interface ICategoryRepository
+    extends BaseRepository<Category> {
 
-export interface ICategoryPropertyRepository
-    extends BaseRepository<CategoryProperty> {
+    findBySlug(
+        slug: string,
+    ): Promise<Category | null>;
 
-    findByCategoryId(
-        categoryId: string,
-    ): Promise<CategoryProperty[]>;
+    findByParentId(
+        parentId: string | null,
+    ): Promise<Category[]>;
 
-    findByCategoryAndProperty(
-        categoryId: string,
-        propertyId: string,
-    ): Promise<CategoryProperty | null>;
+    findByNameAndParent(
+        name: string,
+        parentId: string | null,
+    ): Promise<Category | null>;
 
-    updateConfiguration(
+    updateStatus(
         id: string,
-        configuration: {
-            required?: boolean;
-            filterable?: boolean;
-            sortable?: boolean;
-            displayOrder?: number;
-        },
-    ): Promise<CategoryProperty>;
+        status: "ACTIVE" | "INACTIVE",
+    ): Promise<Category>;
+
+    updateDisplayOrder(
+        id: string,
+        displayOrder: number,
+    ): Promise<void>;
 }
-
-
-
