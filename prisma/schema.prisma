@@ -28,6 +28,35 @@ enum AuthProvider {
   GOOGLE
 }
 
+enum CategoryStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum PropertyDataType {
+  TEXT
+  LONG_TEXT
+  NUMBER
+  BOOLEAN
+  DATE
+  SELECT
+  MULTI_SELECT
+}
+
+enum CoreFieldKey {
+  TITLE
+  DESCRIPTION
+  IMAGES
+  LOCATION
+  QUANTITY
+  EXPIRY
+}
+
+enum PropertyDefinitionStatus {
+  ACTIVE
+  INACTIVE
+}
+
 model User {
   id              String     @id @default(uuid())
   fullName        String
@@ -93,4 +122,105 @@ model UserSession {
 
   @@index([userId])
   @@index([expiresAt])
+}
+
+model Category {
+  id           String         @id @default(uuid())
+  name         String
+  slug         String         @unique
+  description  String?
+  parentId     String?
+  status       CategoryStatus @default(ACTIVE)
+  displayOrder Int            @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  children Category[] @relation("CategoryHierarchy")
+
+  fields     CategoryField[]
+  properties CategoryProperty[]
+
+  @@index([parentId])
+  @@index([status])
+  @@index([parentId, displayOrder])
+}
+
+model PropertyDefinition {
+  id               String                   @id @default(uuid())
+  name             String
+  slug             String                   @unique
+  description      String?
+  dataType         PropertyDataType
+  validationConfig Json?
+  status           PropertyDefinitionStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  options    PropertyOption[]
+  categories CategoryProperty[]
+
+  @@index([status])
+  @@index([dataType])
+}
+
+model PropertyOption {
+  id         String @id @default(uuid())
+  propertyId String
+
+  label        String
+  value        String
+  displayOrder Int     @default(0)
+  isActive     Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  property PropertyDefinition @relation(fields: [propertyId], references: [id], onDelete: Restrict)
+
+  @@unique([propertyId, value])
+  @@index([propertyId])
+  @@index([propertyId, displayOrder])
+}
+
+model CategoryProperty {
+  id         String @id @default(uuid())
+  categoryId String
+  propertyId String
+
+  required     Boolean @default(false)
+  filterable   Boolean @default(false)
+  sortable     Boolean @default(false)
+  displayOrder Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category Category           @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  property PropertyDefinition @relation(fields: [propertyId], references: [id], onDelete: Restrict)
+
+  @@unique([categoryId, propertyId])
+  @@index([categoryId, displayOrder])
+  @@index([propertyId])
+}
+
+model CategoryField {
+  id         String       @id @default(uuid())
+  categoryId String
+  fieldKey   CoreFieldKey
+
+  required     Boolean @default(false)
+  isEnabled    Boolean @default(true)
+  displayOrder Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  @@unique([categoryId, fieldKey])
+  @@index([categoryId, displayOrder])
+  @@index([fieldKey])
 }
