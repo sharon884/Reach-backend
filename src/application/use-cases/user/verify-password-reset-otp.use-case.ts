@@ -2,7 +2,7 @@ import type { IVerifyPasswordResetOtpUseCase } from "@/application/abstractions/
 
 import type { VerifyPasswordResetOtpDto } from "@/application/dto/auth/verify-password-reset-otp.dto";
 
-import type { IUserRepository } from "@/domain/repositories/user.repository";
+import type { IUserRepository } from "@/domain/auth/repositories/user.repository";
 
 import type { IVerifyOtpUseCase } from "@/application/abstractions/use-cases/verify-otp.use-case";
 

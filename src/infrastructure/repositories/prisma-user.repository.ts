@@ -1,13 +1,13 @@
 import { PrismaClient } from "@/generated/prisma/client";
 
-import { IUserRepository } from "@/domain/repositories/user.repository";
+import { IUserRepository } from "@/domain/auth/repositories/user.repository";
 
-import { User, UserStatus } from "@/domain/entities/user.entity";
+import { User, UserStatus } from "@/domain/auth/entities/user.entity";
 
 import type {
     PaginatedUsers,
     GetUsersQuery,
-} from "@/domain/repositories/user.repository";
+} from "@/domain/auth/repositories/user.repository";
 
 import type { Prisma } from "@/generated/prisma/client";
 

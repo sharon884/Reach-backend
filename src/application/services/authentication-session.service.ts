@@ -1,6 +1,6 @@
-import type { User } from "@/domain/entities/user.entity";
+import type { User } from "@/domain/auth/entities/user.entity";
 
-import type { IUserSessionRepository } from "@/domain/repositories/user-session.repository";
+import type { IUserSessionRepository } from "@/domain/auth/repositories/user-session.repository";
 
 import type { IRefreshTokenHasher } from "@/application/services/refresh-token-hasher";
 import type { ITokenService } from "@/application/services/token-service";

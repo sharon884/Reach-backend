@@ -1,4 +1,4 @@
-import type { User } from "../../../domain/entities/user.entity.js";
+import type { User } from "../../../domain/auth/entities/user.entity.js";
 import type { LoginResponseDto } from "../../dto/auth/login-response.dto.js";
 
 export function mapLoginToResponse(

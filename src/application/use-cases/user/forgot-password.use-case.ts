@@ -2,7 +2,7 @@ import type { IForgotPasswordUseCase } from "../../abstractions/use-cases/forgot
 
 import type { ForgotPasswordDto } from "../../dto/auth/forgot-password.dto.js";
 
-import type { IUserRepository } from "@/domain/repositories/user.repository";
+import type { IUserRepository } from "@/domain/auth/repositories/user.repository";
 
 import type { IGenerateOtpUseCase } from "../../abstractions/use-cases/generate-otp.use-case.js";
 

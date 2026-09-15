@@ -1,4 +1,4 @@
-import type { IUserSessionRepository } from "@/domain/repositories/user-session.repository";
+import type { IUserSessionRepository } from "@/domain/auth/repositories/user-session.repository";
 
 import type { IAdminLogoutUseCase } from "@/application/abstractions/use-cases/admin/admin-logout.use-case";
 

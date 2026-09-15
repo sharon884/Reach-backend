@@ -1,6 +1,6 @@
 import type { IUpdateUserStatusUseCase } from "@/application/abstractions/use-cases/admin/update-user-status.use-case";
 
-import { IUserRepository } from "@/domain/repositories/user.repository";
+import { IUserRepository } from "@/domain/auth/repositories/user.repository";
 
 import { UpdateUserStatusDto } from "@/application/dto/admin/update-user-status.dto";
 

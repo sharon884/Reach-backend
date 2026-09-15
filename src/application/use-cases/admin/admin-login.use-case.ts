@@ -5,9 +5,9 @@ import { StatusCodes } from "http-status-codes";
 import type { IAdminLoginUseCase } from "@/application/abstractions/use-cases/admin/admin-login.use-case";
 
 
-import type { IUserRepository } from "@/domain/repositories/user.repository";
+import type { IUserRepository } from "@/domain/auth/repositories/user.repository";
 
-import type { IUserSessionRepository } from "@/domain/repositories/user-session.repository";
+import type { IUserSessionRepository } from "@/domain/auth/repositories/user-session.repository";
 
 import type { AdminLoginDto } from "@/application/dto/admin/admin-login.dto";
 

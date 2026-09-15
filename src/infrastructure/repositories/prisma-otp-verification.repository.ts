@@ -3,9 +3,9 @@ import { PrismaClient } from "@/generated/prisma/client";
 import {
     OtpPurpose,
     OtpVerification,
-} from "@/domain/entities/otp-verification.entity";
+} from "@/domain/auth/entities/otp-verification.entity";
 
-import { IOtpVerificationRepository } from "@/domain/repositories/otp-verification.repository";
+import { IOtpVerificationRepository } from "@/domain/auth/repositories/otp-verification.repository";
 
 export class PrismaOtpVerificationRepository
   implements IOtpVerificationRepository

@@ -1,4 +1,4 @@
-import type { User } from "@/domain/entities/user.entity";
+import type { User } from "@/domain/auth/entities/user.entity";
 
 import type { AdminUserResponseDto } from "@/application/dto/admin/admin-user-response.dto";
 

@@ -1,5 +1,5 @@
-import type { UserAuthAccount } from "@/domain/entities/user-auth-account.entity";
-import type { IUserAuthAccountRepository } from "@/domain/repositories/user-auth-account.repository";
+import type { UserAuthAccount } from "@/domain/auth/entities/user-auth-account.entity";
+import type { IUserAuthAccountRepository } from "@/domain/auth/repositories/user-auth-account.repository";
 import type { PrismaClient } from "@/generated/prisma/client";
 
 export class PrismaUserAuthAccountRepository

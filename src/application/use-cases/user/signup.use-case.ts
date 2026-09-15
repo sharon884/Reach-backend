@@ -4,9 +4,9 @@ import type { ISignupUseCase } from "@/application/abstractions/use-cases/signup
 
 import { SignupDto } from "@/application/dto/auth/signup.dto";
 
-import { User } from "@/domain/entities/user.entity";
+import { User } from "@/domain/auth/entities/user.entity";
 
-import { IUserRepository } from "@/domain/repositories/user.repository";
+import { IUserRepository } from "@/domain/auth/repositories/user.repository";
 
 import { IPasswordHasher } from "@/application/services/password-hasher";
 

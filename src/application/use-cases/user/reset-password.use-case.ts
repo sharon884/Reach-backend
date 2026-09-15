@@ -6,9 +6,9 @@ import { IPasswordHasher } from "@/application/services/password-hasher";
 
 import { IPasswordResetStore } from "@/application/services/password-reset-store";
 
-import { IUserSessionRepository } from "@/domain/repositories/user-session.repository";
+import { IUserSessionRepository } from "@/domain/auth/repositories/user-session.repository";
 
-import { IUserRepository } from "@/domain/repositories/user.repository";
+import { IUserRepository } from "@/domain/auth/repositories/user.repository";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 

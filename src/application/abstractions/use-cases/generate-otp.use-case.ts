@@ -1,4 +1,4 @@
-import type { OtpPurpose } from "@/domain/entities/otp-verification.entity";
+import type { OtpPurpose } from "@/domain/auth/entities/otp-verification.entity";
 
 export interface IGenerateOtpUseCase {
     execute(

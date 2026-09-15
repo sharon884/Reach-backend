@@ -1,6 +1,6 @@
 import type { ILoginUseCase } from "@/application/abstractions/use-cases/login.use-case";
 
-import type { IUserRepository } from "@/domain/repositories/user.repository";
+import type { IUserRepository } from "@/domain/auth/repositories/user.repository";
 
 import type { LoginDto } from "@/application/dto/auth/login.dto";
 

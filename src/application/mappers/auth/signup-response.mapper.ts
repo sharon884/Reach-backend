@@ -1,4 +1,4 @@
-import type { User } from "../../../domain/entities/user.entity.js";
+import type { User } from "../../../domain/auth/entities/user.entity.js";
 import type { SignupResponseDto } from "../../dto/auth/signup-response.dto.js";
 
 

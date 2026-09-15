@@ -2,7 +2,7 @@ import type { IResendOtpUseCase } from "@/application/abstractions/use-cases/res
 
 import type { IGenerateOtpUseCase } from "@/application/abstractions/use-cases/generate-otp.use-case";
 
-import type { IUserRepository } from "@/domain/repositories/user.repository";
+import type { IUserRepository } from "@/domain/auth/repositories/user.repository";
 
 import type { IOtpStore } from "@/application/services/otp-store";
 

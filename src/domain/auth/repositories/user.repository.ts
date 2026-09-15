@@ -1,5 +1,5 @@
 import { User, UserStatus } from "../entities/user.entity.js";
-import { BaseRepository } from "./base.repository.js";
+import { BaseRepository } from "../../shared/repositories/base.repository.js";
 
 export interface PaginatedUsers {
     users: User[];

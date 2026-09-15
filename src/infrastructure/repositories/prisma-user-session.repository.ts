@@ -1,8 +1,8 @@
 import { PrismaClient } from "@/generated/prisma/client";
 
-import type { IUserSessionRepository } from "@/domain/repositories/user-session.repository";
+import type { IUserSessionRepository } from "@/domain/auth/repositories/user-session.repository";
 
-import type { UserSession } from "@/domain/entities/user-session.entity";
+import type { UserSession } from "@/domain/auth/entities/user-session.entity";
 
 
 

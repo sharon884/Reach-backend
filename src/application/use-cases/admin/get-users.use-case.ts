@@ -1,6 +1,6 @@
 import type { IGetUsersUseCase } from "@/application/abstractions/use-cases/admin/get-users.use-case";
 
-import type { IUserRepository } from "@/domain/repositories/user.repository";
+import type { IUserRepository } from "@/domain/auth/repositories/user.repository";
 
 import type { GetUsersDto } from "@/application/dto/admin/get-users.dto";
 

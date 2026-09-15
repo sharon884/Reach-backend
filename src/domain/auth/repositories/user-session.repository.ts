@@ -1,4 +1,4 @@
-import type { UserSession } from "@/domain/entities/user-session.entity";
+import type { UserSession } from "@/domain/auth/entities/user-session.entity";
 
 export interface IUserSessionRepository {
 

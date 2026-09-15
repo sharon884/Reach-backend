@@ -5,8 +5,8 @@ import type { IGoogleAuthenticationUseCase } from "@/application/abstractions/us
 import type { GoogleAuthenticationDto } from "@/application/dto/auth/google-authentication.dto";
 import type { LoginResult } from "@/application/dto/auth/login-result.dto";
 
-import type { IUserRepository } from "@/domain/repositories/user.repository";
-import type { IUserAuthAccountRepository } from "@/domain/repositories/user-auth-account.repository";
+import type { IUserRepository } from "@/domain/auth/repositories/user.repository";
+import type { IUserAuthAccountRepository } from "@/domain/auth/repositories/user-auth-account.repository";
 
 import type { IGoogleAuthService } from "@/application/services/google-auth";
 import type { IAuthenticationSessionService } from "@/application/services/authentication-session.service";

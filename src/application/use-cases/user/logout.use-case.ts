@@ -1,4 +1,4 @@
-import type { IUserSessionRepository } from "@/domain/repositories/user-session.repository"
+import type { IUserSessionRepository } from "@/domain/auth/repositories/user-session.repository"
 import type { ILogoutUseCase } from "@/application/abstractions/use-cases/logout.use-case";
 
 export class LogoutUseCase implements ILogoutUseCase {

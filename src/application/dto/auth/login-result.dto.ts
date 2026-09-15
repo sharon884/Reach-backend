@@ -1,4 +1,4 @@
-import type { User } from "@/domain/entities/user.entity";
+import type { User } from "@/domain/auth/entities/user.entity";
 
 export interface LoginResult {
     user: User;

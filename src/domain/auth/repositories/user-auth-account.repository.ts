@@ -1,4 +1,4 @@
-import type { UserAuthAccount } from "@/domain/entities/user-auth-account.entity";
+import type { UserAuthAccount } from "@/domain/auth/entities/user-auth-account.entity";
 
 export interface IUserAuthAccountRepository {
     findByProviderAccountId(

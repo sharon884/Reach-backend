@@ -1,4 +1,4 @@
-import type { OtpPurpose } from "@/domain/entities/otp-verification.entity";
+import type { OtpPurpose } from "@/domain/auth/entities/otp-verification.entity";
 
 import { IGenerateOtpUseCase } from "@/application/abstractions/use-cases/generate-otp.use-case";
 
@@ -6,7 +6,7 @@ import { IOtpStore } from "@/application/services/otp-store";
 
 import { OTP_POLICIES } from "@/application/services/otp-policy";
 
-import { IUserRepository } from "@/domain/repositories/user.repository";
+import { IUserRepository } from "@/domain/auth/repositories/user.repository";
 
 import { IOtpGenerator } from "@/application/services/otp-generator";
 
