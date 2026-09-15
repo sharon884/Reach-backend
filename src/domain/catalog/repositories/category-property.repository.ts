@@ -1,7 +1,6 @@
 import { BaseRepository } from "@/domain/shared/repositories/base.repository";
 import { CategoryProperty } from "@/domain/catalog/entities/category-property.entity";
 
-
 export interface ICategoryPropertyRepository
     extends BaseRepository<CategoryProperty> {
 
@@ -24,6 +23,3 @@ export interface ICategoryPropertyRepository
         },
     ): Promise<CategoryProperty>;
 }
-
-
-
