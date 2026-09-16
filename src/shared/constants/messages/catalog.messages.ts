@@ -4,8 +4,9 @@ export const CATALOG_MESSAGES = {
         
 
     CATEGORY_CONFIGURATION_DRAFT_NOT_FOUND:"Category configuration draft not found",
-       
 
+    CATEGORY_CONFIGURATION_DRAFT_UPDATED: "Category configuration draft updated successfully",
+       
     CATEGORY_CREATED:"Category created successfully",
         
 

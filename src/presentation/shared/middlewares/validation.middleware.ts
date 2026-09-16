@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
 
-type ValidationSource = "body" | "query";
+type ValidationSource = "body" | "query" | "params";
 
 export function validationMiddleware(
     schema: z.ZodType,
