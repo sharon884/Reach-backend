@@ -2,15 +2,15 @@ import { PrismaClient } from "@/generated/prisma/client";
 
 import { PrismaPg } from "@prisma/adapter-pg";
 
-import { PrismaUserRepository } from "@/infrastructure/repositories/prisma-user.repository";
+import { PrismaUserRepository } from "@/infrastructure/auth/repositories/prisma-user.repository";
 
-import { redisClient } from "@/infrastructure/redis/redis.client";
+import { redisClient } from "@/infrastructure/shared/redis/redis.client";
 
-import { BcryptPasswordHasher } from "@/infrastructure/services/bcrypt-password-hasher";
+import { BcryptPasswordHasher } from "@/infrastructure/auth/services/bcrypt-password-hasher";
 
-import { RandomOtpGenerator } from "@/infrastructure/services/random-otp-generator";
+import { RandomOtpGenerator } from "@/infrastructure/auth/services/random-otp-generator";
 
-import { BcryptOtpHasher } from "@/infrastructure/services/bcrypt-otp-hasher";
+import { BcryptOtpHasher } from "@/infrastructure/auth/services/bcrypt-otp-hasher";
 
 import { SignupUseCase } from "@/application/auth/use-cases/signup/signup.use-case";
 
@@ -18,7 +18,7 @@ import { GenerateOtpUseCase } from "@/application/auth/use-cases/generate-otp/ge
 
 import { VerifyOtpUseCase } from "@/application/auth/use-cases/verify-otp/verify-otp.use-case";
 
-import { RedisOtpStore } from "@/infrastructure/services/redis-otp-store";
+import { RedisOtpStore } from "@/infrastructure/auth/services/redis-otp-store";
 
 import { VerifyOtpController } from "@/presentation/controllers/auth/verify-otp.controller";
 
@@ -28,15 +28,15 @@ import { ResendOtpController } from "@/presentation/controllers/auth/resend-otp.
 
 import { SignupController } from "@/presentation/controllers/auth/signup.controller";
 
-import { NodemailerEmailSender } from "@/infrastructure/services/nodemailer-email-sender";
+import { NodemailerEmailSender } from "@/infrastructure/auth/services/nodemailer-email-sender";
 
 import { env } from "@/config/env";
 
-import { PrismaUserSessionRepository } from "@/infrastructure/repositories/prisma-user-session.repository";
+import { PrismaUserSessionRepository } from "@/infrastructure/auth/repositories/prisma-user-session.repository";
 
-import { JwtTokenService } from "@/infrastructure/services/jwt-token.service";
+import { JwtTokenService } from "@/infrastructure/auth/services/jwt-token.service";
 
-import { BcryptRefreshTokenHasher } from "@/infrastructure/services/bcrypt-refresh-token-hasher";
+import { BcryptRefreshTokenHasher } from "@/infrastructure/auth/services/bcrypt-refresh-token-hasher";
 
 import { LoginUseCase } from "@/application/auth/use-cases/login/login.use-case";
 
@@ -68,7 +68,7 @@ import { ForgotPasswordUseCase, } from "@/application/auth/use-cases/forgot-pass
 
 import { ForgotPasswordController } from "@/presentation/controllers/auth/forgot-password.controller";
 
-import { RedisPasswordResetStore } from "@/infrastructure/services/redis-password-reset-store";
+import { RedisPasswordResetStore } from "@/infrastructure/auth/services/redis-password-reset-store";
 
 import { VerifyPasswordResetOtpUseCase } from "@/application/auth/use-cases/verify-password-reset-otp/verify-password-reset-otp.use-case";
 
@@ -80,9 +80,9 @@ import { ResetPasswordUseCase } from "@/application/auth/use-cases/reset-passwor
 
 import { AuthenticationSessionService } from "@/application/auth/services/authentication/authentication-session.service";
 
-import { GoogleAuthService } from "@/infrastructure/services/google-auth.service";
+import { GoogleAuthService } from "@/infrastructure/auth/services/google-auth.service";
 
-import { PrismaUserAuthAccountRepository } from "@/infrastructure/repositories/prisma-user-auth-account.repository";
+import { PrismaUserAuthAccountRepository } from "@/infrastructure/auth/repositories/prisma-user-auth-account.repository";
 
 import { GoogleAuthenticationUseCase } from "@/application/auth/use-cases/google-authentication/google-authentication.use-case";
 
