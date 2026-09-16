@@ -20,7 +20,7 @@ import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
 import { StatusCodes } from "http-status-codes";
 
-import { logger } from "@/infrastructure/logger/index";
+import { logger } from "@/infrastructure/shared/logger/index";
 
 export class GenerateOtpUseCase implements IGenerateOtpUseCase {
     constructor(

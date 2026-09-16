@@ -1,16 +1,17 @@
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import type { CreateCategoryConfigurationDraftUseCase } from "@/application/catalog/use-cases/create-category-configuration-draft/create-category-configuration-draft.use-case.interface";
+import type { ICreateCategoryConfigurationDraftUseCase } from "@/application/catalog/use-cases/create-category-configuration-draft/create-category-configuration-draft.use-case.interface";
 
 import type { ApiResponse } from "@/shared/types/api-response";
 
 import type { CategoryConfigurationDraftDto } from "@/application/catalog/dto/category-configuration/category-configuration-draft.dto";
+
 import { CATALOG_MESSAGES } from "@/shared/constants/messages/catalog.messages";
 
 export class CreateCategoryConfigurationDraftController {
     constructor(
-        private readonly _createCategoryConfigurationDraftUseCase: CreateCategoryConfigurationDraftUseCase,
+        private readonly _createCategoryConfigurationDraftUseCase: ICreateCategoryConfigurationDraftUseCase,
     ) { }
 
     async handle(

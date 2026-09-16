@@ -12,7 +12,7 @@ import { AppError } from "@/shared/errors/app.error";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
-import { logger } from "@/infrastructure/logger/index";
+import { logger } from "@/infrastructure/shared/logger/index";
 
 import { StatusCodes } from "http-status-codes";
 

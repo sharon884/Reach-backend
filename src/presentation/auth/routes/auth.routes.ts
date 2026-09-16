@@ -10,9 +10,9 @@ import {
   verifyPasswordResetOtpController,
   resetPasswordController,
   googleAuthenticationController,
-} from "@/infrastructure/container/auth.container";
+} from "@/infrastructure/auth/container/auth.container";
 
-import { validationMiddleware } from "@/presentation/middlewares/validation.middleware";
+import { validationMiddleware } from "@/presentation/shared/middlewares/validation.middleware";
 
 import { signupSchema } from "@/application/auth/dto/signup/signup.dto";
 

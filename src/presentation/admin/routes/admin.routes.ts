@@ -6,7 +6,7 @@ import {
     adminAuthMiddleware,
     getUsersController,
     updateUserStatusController,
-} from "@/infrastructure/container/auth.container";
+} from "@/infrastructure/auth/container/auth.container";
 
 import {
     adminLoginSchema,

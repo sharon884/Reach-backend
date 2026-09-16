@@ -12,7 +12,7 @@ import { mapLoginToResponse } from "@/application/auth/mappers/login/login-respo
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
-import { AUTH_COOKIES } from "@/presentation/cookies/auth.cookies";
+import { AUTH_COOKIES } from "@/presentation/shared/cookies/auth.cookies";
 
 
 export class LoginController {

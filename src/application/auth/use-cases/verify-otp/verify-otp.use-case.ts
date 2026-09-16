@@ -16,7 +16,7 @@ import { AppError } from "@/shared/errors/app.error";
 
 import { StatusCodes } from "http-status-codes";
 
-import { logger } from "@/infrastructure/logger/index";
+import { logger } from "@/infrastructure/shared/logger/index";
 
 export class VerifyOtpUseCase implements IVerifyOtpUseCase {
   constructor(

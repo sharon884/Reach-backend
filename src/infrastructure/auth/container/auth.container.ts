@@ -20,13 +20,13 @@ import { VerifyOtpUseCase } from "@/application/auth/use-cases/verify-otp/verify
 
 import { RedisOtpStore } from "@/infrastructure/auth/services/redis-otp-store";
 
-import { VerifyOtpController } from "@/presentation/controllers/auth/verify-otp.controller";
+import { VerifyOtpController } from "@/presentation/auth/controllers/verify-otp.controller";
 
 import { ResendOtpUseCase } from "@/application/auth/use-cases/resend-otp/resend-otp.use-case";
 
-import { ResendOtpController } from "@/presentation/controllers/auth/resend-otp.controller";
+import { ResendOtpController } from "@/presentation/auth/controllers/resend-otp.controller";
 
-import { SignupController } from "@/presentation/controllers/auth/signup.controller";
+import { SignupController } from "@/presentation/auth/controllers/signup.controller";
 
 import { NodemailerEmailSender } from "@/infrastructure/auth/services/nodemailer-email-sender";
 
@@ -40,41 +40,41 @@ import { BcryptRefreshTokenHasher } from "@/infrastructure/auth/services/bcrypt-
 
 import { LoginUseCase } from "@/application/auth/use-cases/login/login.use-case";
 
-import { LoginController } from "@/presentation/controllers/auth/login.controller";
+import { LoginController } from "@/presentation/auth/controllers/login.controller";
 
 import { AdminLoginUseCase } from "@/application/admin/use-cases/login/admin-login.use-case";
 
-import { AdminLoginController } from "@/presentation/controllers/admin/admin-login.controller";
+import { AdminLoginController } from "@/presentation/admin/controllers/admin-login.controller";
 
-import { AdminAuthMiddleware } from "@/presentation/middlewares/admin-auth.middleware";
+import { AdminAuthMiddleware } from "@/presentation/admin/middlewares/admin-auth.middleware";
 
-import { GetUsersController } from "@/presentation/controllers/admin/get-users.controller";
+import { GetUsersController } from "@/presentation/admin/controllers/get-users.controller";
 
 import { GetUsersUseCase } from "@/application/admin/use-cases/get-users/get-users.use-case";
 
 import { UpdateUserStatusUseCase } from "@/application/admin/use-cases/update-user-status/update-user-status.use-case";
 
-import { UpdateUserStatusController } from "@/presentation/controllers/admin/update-user-status.controller";
+import { UpdateUserStatusController } from "@/presentation/admin/controllers/update-user-status.controller";
 
 import { AdminLogoutUseCase } from "@/application/admin/use-cases/logout/admin-logout.use-case";
 
-import { AdminLogoutController } from "@/presentation/controllers/admin/admin-logout.controller";
+import { AdminLogoutController } from "@/presentation/admin/controllers/admin-logout.controller";
 
 import { LogoutUseCase } from "@/application/auth/use-cases/logout/logout.use-case";
 
-import { LogoutController } from "@/presentation/controllers/auth/logout.controller";
+import { LogoutController } from "@/presentation/auth/controllers/logout.controller";
 
 import { ForgotPasswordUseCase, } from "@/application/auth/use-cases/forgot-password/forgot-password.use-case";
 
-import { ForgotPasswordController } from "@/presentation/controllers/auth/forgot-password.controller";
+import { ForgotPasswordController } from "@/presentation/auth/controllers/forgot-password.controller";
 
 import { RedisPasswordResetStore } from "@/infrastructure/auth/services/redis-password-reset-store";
 
 import { VerifyPasswordResetOtpUseCase } from "@/application/auth/use-cases/verify-password-reset-otp/verify-password-reset-otp.use-case";
 
-import { VerifyPasswordResetOtpController } from "@/presentation/controllers/auth/verify-password-reset-otp.controller";
+import { VerifyPasswordResetOtpController } from "@/presentation/auth/controllers/verify-password-reset-otp.controller";
 
-import { ResetPasswordController } from "@/presentation/controllers/auth/reset-password.controller";
+import { ResetPasswordController } from "@/presentation/auth/controllers/reset-password.controller";
 
 import { ResetPasswordUseCase } from "@/application/auth/use-cases/reset-password/reset-password.use-case";
 
@@ -86,7 +86,7 @@ import { PrismaUserAuthAccountRepository } from "@/infrastructure/auth/repositor
 
 import { GoogleAuthenticationUseCase } from "@/application/auth/use-cases/google-authentication/google-authentication.use-case";
 
-import { GoogleAuthenticationController } from "@/presentation/controllers/auth/google-authentication.controller";
+import { GoogleAuthenticationController } from "@/presentation/auth/controllers/google-authentication.controller";
 
 
 const adapter = new PrismaPg({

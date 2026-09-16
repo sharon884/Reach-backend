@@ -1,10 +1,12 @@
 import express from "express";
 
-import { authRouter } from "@/presentation/routes/auth/auth.routes";
+import { authRouter } from "@/presentation/auth/routes/auth.routes";
 
-import { adminRouter } from "@/presentation/routes/admin/admin.routes";
+import { adminRouter } from "@/presentation/admin/routes/admin.routes";
 
-import { errorMiddleware } from "@/presentation/middlewares/error.middleware";
+import  { catalogRouter } from "./presentation/catalog/routes/catalog.routes.js";
+
+import { errorMiddleware } from "@/presentation/shared/middlewares/error.middleware";
 
 import cookieParser from "cookie-parser";
 
@@ -27,6 +29,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/admin", adminRouter);
+app.use("/api/v1/admin/catalog", catalogRouter);
 app.use(errorMiddleware);
 
 export default app;

@@ -14,7 +14,7 @@ import { ApiResponse } from "@/shared/types/api-response";
 
 import { AUTH_MESSAGES } from "@/shared/constants/messages/auth.messages";
 
-import { AUTH_COOKIES } from "@/presentation/cookies/auth.cookies";
+import { AUTH_COOKIES } from "@/presentation/shared/cookies/auth.cookies";
 
 import { mapLoginToResponse } from "@/application/auth/mappers/login/login-response.mapper";
 
