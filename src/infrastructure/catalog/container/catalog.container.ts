@@ -17,9 +17,13 @@ import { ConfigureDynamicPropertiesUseCase } from "@/application/catalog/use-cas
 
 import { ConfigureDynamicPropertiesController } from "@/presentation/catalog/controllers/configure-dynamic-properties.controller";
 
+import { DynamicPropertyConfigurationValidator } from "@/presentation/catalog/validators/dynamic-property-configuration.validator";
+
+
 
 const categoryConfigurationDraftRepository = new RedisCategoryConfigurationDraftRepository();
 
+const dynamicPropertyConfigurationValidator =  new DynamicPropertyConfigurationValidator();
 
 
 const createCategoryConfigurationDraftUseCase = new CreateCategoryConfigurationDraftUseCase(
@@ -36,9 +40,12 @@ const configureCoreFieldsUseCase = new ConfigureCoreFieldsUseCase(
     categoryConfigurationDraftRepository,
 );
 
+   
+
 
 const configureDynamicPropertiesUseCase = new ConfigureDynamicPropertiesUseCase(
     categoryConfigurationDraftRepository,
+    dynamicPropertyConfigurationValidator,
 );
 
 

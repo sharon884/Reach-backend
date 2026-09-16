@@ -4,6 +4,8 @@ import type { ConfigureDynamicPropertiesDto } from "@/application/catalog/dto/ca
 import type { CategoryConfigurationDraftDto } from "@/application/catalog/dto/category-configuration/category-configuration-draft.dto";
 import type { ICategoryConfigurationDraftRepository } from "@/domain/catalog/repositories/category-configuration-draft.repository";
 
+import { DynamicPropertyConfigurationValidator } from "@/presentation/catalog/validators/dynamic-property-configuration.validator";
+
 import { AppError } from "@/shared/errors/app.error";
 import { CATALOG_MESSAGES } from "@/shared/constants/messages/catalog.messages";
 
@@ -14,14 +16,13 @@ export class ConfigureDynamicPropertiesUseCase
 {
     constructor(
         private readonly _draftRepository: ICategoryConfigurationDraftRepository,
+        private readonly _validator: DynamicPropertyConfigurationValidator,
     ) {}
 
     async execute(
         draftId: string,
         data: ConfigureDynamicPropertiesDto,
     ): Promise<CategoryConfigurationDraftDto> {
-
-        
         const draft = await this._draftRepository.findById(draftId);
 
         if (!draft) {
@@ -30,6 +31,8 @@ export class ConfigureDynamicPropertiesUseCase
                 StatusCodes.NOT_FOUND,
             );
         }
+
+        this._validator.validate(data.properties);
 
         draft.properties = data.properties;
 
