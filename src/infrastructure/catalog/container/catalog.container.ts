@@ -13,6 +13,9 @@ import { ConfigureCoreFieldsUseCase } from "@/application/catalog/use-cases/conf
 
 import { ConfigureCoreFieldsController } from "@/presentation/catalog/controllers/configure-core-fields.controller";
 
+import { ConfigureDynamicPropertiesUseCase } from "@/application/catalog/use-cases/configure-dynamic-properties/configure-dynamic-properties.use-case";
+
+import { ConfigureDynamicPropertiesController } from "@/presentation/catalog/controllers/configure-dynamic-properties.controller";
 
 
 const categoryConfigurationDraftRepository = new RedisCategoryConfigurationDraftRepository();
@@ -34,6 +37,11 @@ const configureCoreFieldsUseCase = new ConfigureCoreFieldsUseCase(
 );
 
 
+const configureDynamicPropertiesUseCase = new ConfigureDynamicPropertiesUseCase(
+    categoryConfigurationDraftRepository,
+);
+
+
 
 export const createCategoryConfigurationDraftController = new CreateCategoryConfigurationDraftController(
     createCategoryConfigurationDraftUseCase,
@@ -47,4 +55,9 @@ export const updateCategoryDraftController = new UpdateCategoryDraftController(
 
 export const configureCoreFieldsController = new ConfigureCoreFieldsController(
     configureCoreFieldsUseCase,
+);
+
+
+export const configureDynamicPropertiesController = new ConfigureDynamicPropertiesController(
+    configureDynamicPropertiesUseCase,
 );
