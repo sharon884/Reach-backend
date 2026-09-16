@@ -14,7 +14,7 @@ import {
 
 import { getUsersSchema } from "@/application/admin/dto/users/get-users.dto";
 
-import { validationMiddleware } from "@/presentation/middlewares/validation.middleware";
+import { validationMiddleware } from "@/presentation/shared/middlewares/validation.middleware";
 
 import { updateUserStatusSchema } from "@/application/admin/dto/user-status/update-user-status.dto";
 

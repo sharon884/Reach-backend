@@ -8,7 +8,7 @@ import { AppError } from "@/shared/errors/app.error";
 
 import type { ErrorResponse } from "@/shared/types/error-response";
 
-import { logger } from "@/infrastructure/logger/logger";
+import { logger } from "@/infrastructure/shared/logger/logger";
 
 export const errorMiddleware = (
   error: unknown,
