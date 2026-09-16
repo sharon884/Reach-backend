@@ -11,5 +11,7 @@ export const CATALOG_MESSAGES = {
         
 
     PROPERTY_CREATED:"Property created successfully",
+
+    CATEGORY_CONFIGURATION_DRAFT_ID_INVALID : "Category configuration draft Id is not valid!"
         
 } as const;

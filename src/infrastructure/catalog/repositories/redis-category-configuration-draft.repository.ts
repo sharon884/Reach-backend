@@ -14,6 +14,8 @@ export class RedisCategoryConfigurationDraftRepository
     ): Promise<void> {
         const key = this._buildKey(draft.draftId);
 
+        console.log("hitting before save ")
+
         await redisClient.set(
             key,
             JSON.stringify(draft),
@@ -21,6 +23,8 @@ export class RedisCategoryConfigurationDraftRepository
                 EX: ttlSeconds,
             },
         );
+
+        console.log("hitting after save")
     }
 
     async findById(
