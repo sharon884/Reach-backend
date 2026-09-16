@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
     createCategoryConfigurationDraftController,
     updateCategoryDraftController,
+    configureCoreFieldsController,
 } from "@/infrastructure/catalog/container/catalog.container";
 
 import { adminAuthMiddleware } from "@/infrastructure/auth/container/auth.container";
@@ -13,6 +14,7 @@ import { updateCategoryDraftParamsSchema } from "../validators/update-category-d
 
 import { updateCategoryDraftBodySchema } from "../validators/update-category-draft.validator.js";
 
+import { configureCoreFieldsBodySchema, configureCoreFieldsParamsSchema  } from "../validators/configure-core-fields.validator.js";
 
 
 export const catalogRouter = Router();
@@ -47,5 +49,26 @@ catalogRouter.patch(
 
     updateCategoryDraftController.handle.bind(
         updateCategoryDraftController,
+    ),
+);
+
+
+catalogRouter.patch(
+    "/category-configurations/drafts/:draftId/core-fields",
+
+    adminAuthMiddleware.handle.bind(adminAuthMiddleware),
+
+    validationMiddleware(
+        configureCoreFieldsParamsSchema,
+        "params",
+    ),
+
+    validationMiddleware(
+        configureCoreFieldsBodySchema,
+        "body",
+    ),
+
+    configureCoreFieldsController.handle.bind(
+        configureCoreFieldsController,
     ),
 );
