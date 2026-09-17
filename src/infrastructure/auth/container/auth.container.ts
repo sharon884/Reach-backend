@@ -1,6 +1,4 @@
-import { PrismaClient } from "@/generated/prisma/client";
-
-import { PrismaPg } from "@prisma/adapter-pg";
+import { prisma } from "@/infrastructure/shared/database/prisma.client";
 
 import { PrismaUserRepository } from "@/infrastructure/auth/repositories/prisma-user.repository";
 
@@ -89,13 +87,7 @@ import { GoogleAuthenticationUseCase } from "@/application/auth/use-cases/google
 import { GoogleAuthenticationController } from "@/presentation/auth/controllers/google-authentication.controller";
 
 
-const adapter = new PrismaPg({
-  connectionString: env.DATABASE_URL,
-});
 
-const prisma = new PrismaClient({
-  adapter,
-});
 
 const userRepository = new PrismaUserRepository(prisma);
 
