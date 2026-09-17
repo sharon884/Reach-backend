@@ -1,23 +1,25 @@
 import { StatusCodes } from "http-status-codes";
 
 import type { CategoryConfigurationDraftDto } from "@/application/catalog/dto/category-configuration/category-configuration-draft.dto";
-
 import type { IPublishCategoryConfigurationRepository } from "@/domain/catalog/repositories/publish-category-configuration.repository";
 
-import { prisma } from "@/infrastructure/shared/database/prisma.client";
-
+import { PublishedCategorySchemaMapper } from "@/application/catalog/mappers/category-configuration/published-category-schema.mapper";
+import type { PublishedCategorySchemaDto } from "@/application/catalog/dto/category-configuration/published-category-schema.dto";
+import type { PrismaClient } from "@/generated/prisma/client";
 import { AppError } from "@/shared/errors/app.error";
 
-import { CATALOG_MESSAGES } from "@/shared/constants/messages/catalog.messages";
 
 
 export class PrismaPublishCategoryConfigurationRepository
-    implements IPublishCategoryConfigurationRepository
-{
+    implements IPublishCategoryConfigurationRepository {
+    constructor(
+        private readonly _prisma: PrismaClient,
+    ) { }
+
     async publish(
         draft: CategoryConfigurationDraftDto,
-    ): Promise<void> {
-        await prisma.$transaction(async (tx) => {
+    ): Promise<PublishedCategorySchemaDto> {
+        return this._prisma.$transaction(async (tx) => {
             const category = await tx.category.create({
                 data: {
                     name: draft.category.name,
@@ -120,6 +122,26 @@ export class PrismaPublishCategoryConfigurationRepository
                     });
                 }
             }
+
+            const publishedCategory = await tx.category.findUniqueOrThrow({
+                where: {
+                    id: category.id,
+                },
+                include: {
+                    fields: true,
+                    properties: {
+                        include: {
+                            property: {
+                                include: {
+                                    options: true,
+                                },
+                            },
+                        },
+                    },
+                },
+            });
+
+            return PublishedCategorySchemaMapper.toDto(publishedCategory);
         });
     }
 }

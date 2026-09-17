@@ -21,6 +21,9 @@ export const CATALOG_MESSAGES = {
     DUPLICATE_PROPERTY:"Duplicate property configuration",
         
     DUPLICATE_PROPERTY_OPTION: "Duplicate property option value",
+
+     CATEGORY_CONFIGURATION_PUBLISHED:"Category configuration published successfully",
+        
        
         
 } as const;

@@ -28,8 +28,6 @@ import { SignupController } from "@/presentation/auth/controllers/signup.control
 
 import { NodemailerEmailSender } from "@/infrastructure/auth/services/nodemailer-email-sender";
 
-import { env } from "@/config/env";
-
 import { PrismaUserSessionRepository } from "@/infrastructure/auth/repositories/prisma-user-session.repository";
 
 import { JwtTokenService } from "@/infrastructure/auth/services/jwt-token.service";

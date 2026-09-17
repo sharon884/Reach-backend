@@ -1,3 +1,9 @@
+import { prisma } from "@/infrastructure/shared/database/prisma.client";
+
+import { PrismaPublishCategoryConfigurationRepository } from "@/infrastructure/catalog/repositories/prisma-publish-category-configuration.repository";
+
+import { PublishCategoryConfigurationUseCase } from "@/application/catalog/use-cases/publish-category-configuration/publish-category-configuration.use-case";
+
 import { CreateCategoryConfigurationDraftUseCase } from "@/application/catalog/use-cases/create-category-configuration-draft/create-category-configuration-draft.use-case";
 
 import { UpdateCategoryDraftUseCase } from "@/application/catalog/use-cases/update-category-draft/update-category-draft.use-case";
@@ -8,6 +14,9 @@ import { CreateCategoryConfigurationDraftController } from "@/presentation/catal
 
 import { UpdateCategoryDraftController } from "@/presentation/catalog/controllers/update-category-draft.controller";
 
+import { PublishCategoryConfigurationController } from "@/presentation/catalog/controllers/publish-category-configuration.controller";
+
+import { RedisPublishedCategorySchemaRepository } from "@/infrastructure/catalog/repositories/redis-published-category-schema.repository";
 
 import { ConfigureCoreFieldsUseCase } from "@/application/catalog/use-cases/configure-core-fields/configure-core-fields.use-case";
 
@@ -23,7 +32,13 @@ import { DynamicPropertyConfigurationValidator } from "@/presentation/catalog/va
 
 const categoryConfigurationDraftRepository = new RedisCategoryConfigurationDraftRepository();
 
-const dynamicPropertyConfigurationValidator =  new DynamicPropertyConfigurationValidator();
+const dynamicPropertyConfigurationValidator = new DynamicPropertyConfigurationValidator();
+
+const publishCategoryConfigurationRepository = new PrismaPublishCategoryConfigurationRepository(prisma);
+
+const publishedCategorySchemaCacheRepository = new RedisPublishedCategorySchemaRepository();
+    
+
 
 
 const createCategoryConfigurationDraftUseCase = new CreateCategoryConfigurationDraftUseCase(
@@ -40,7 +55,7 @@ const configureCoreFieldsUseCase = new ConfigureCoreFieldsUseCase(
     categoryConfigurationDraftRepository,
 );
 
-   
+
 
 
 const configureDynamicPropertiesUseCase = new ConfigureDynamicPropertiesUseCase(
@@ -48,6 +63,12 @@ const configureDynamicPropertiesUseCase = new ConfigureDynamicPropertiesUseCase(
     dynamicPropertyConfigurationValidator,
 );
 
+
+const publishCategoryConfigurationUseCase = new PublishCategoryConfigurationUseCase(
+    categoryConfigurationDraftRepository,
+    publishCategoryConfigurationRepository,
+    publishedCategorySchemaCacheRepository,
+);
 
 
 export const createCategoryConfigurationDraftController = new CreateCategoryConfigurationDraftController(
@@ -67,4 +88,9 @@ export const configureCoreFieldsController = new ConfigureCoreFieldsController(
 
 export const configureDynamicPropertiesController = new ConfigureDynamicPropertiesController(
     configureDynamicPropertiesUseCase,
+);
+
+
+export const publishCategoryConfigurationController = new PublishCategoryConfigurationController(
+    publishCategoryConfigurationUseCase,
 );

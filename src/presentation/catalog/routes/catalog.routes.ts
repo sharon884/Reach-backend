@@ -5,6 +5,7 @@ import {
     updateCategoryDraftController,
     configureCoreFieldsController,
     configureDynamicPropertiesController,
+    publishCategoryConfigurationController,
 } from "@/infrastructure/catalog/container/catalog.container";
 
 import { adminAuthMiddleware } from "@/infrastructure/auth/container/auth.container";
@@ -18,6 +19,8 @@ import { updateCategoryDraftBodySchema } from "../validators/update-category-dra
 import { configureCoreFieldsBodySchema, configureCoreFieldsParamsSchema } from "@/presentation/catalog/validators/configure-core-fields.validator";
 
 import { configureDynamicPropertiesBodySchema, configureDynamicPropertiesParamsSchema, } from "@/presentation/catalog/validators/configure-dynamic-properties.validator";
+
+import { publishCategoryConfigurationParamsSchema } from "@/presentation/catalog/validators/publish-category-configuration.validator";
 
 export const catalogRouter = Router();
 
@@ -94,5 +97,19 @@ catalogRouter.patch(
 
     configureDynamicPropertiesController.handle.bind(
         configureDynamicPropertiesController,
+    ),
+);
+
+
+
+catalogRouter.post(
+    "/category-configurations/drafts/:draftId/publish",
+    adminAuthMiddleware.handle.bind(adminAuthMiddleware),
+    validationMiddleware(
+        publishCategoryConfigurationParamsSchema,
+        "params",
+    ),
+    publishCategoryConfigurationController.handle.bind(
+        publishCategoryConfigurationController,
     ),
 );
