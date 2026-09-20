@@ -6,12 +6,16 @@ import {
     configureCoreFieldsController,
     configureDynamicPropertiesController,
     publishCategoryConfigurationController,
+    getCategoryConfigurationDraftController,
+    getCategoriesController,
 } from "@/infrastructure/catalog/container/catalog.container";
 
 import { adminAuthMiddleware } from "@/infrastructure/auth/container/auth.container";
 
 import { validationMiddleware } from "@/presentation/shared/middlewares/validation.middleware";
 
+import { getCategoryConfigurationDraftParamsSchema } from "@/presentation/catalog/validators/get-category-configuration-draft.validator";
+ 
 import { updateCategoryDraftParamsSchema } from "../validators/update-category-draft.validator.js";
 
 import { updateCategoryDraftBodySchema } from "../validators/update-category-draft.validator.js";
@@ -21,6 +25,8 @@ import { configureCoreFieldsBodySchema, configureCoreFieldsParamsSchema } from "
 import { configureDynamicPropertiesBodySchema, configureDynamicPropertiesParamsSchema, } from "@/presentation/catalog/validators/configure-dynamic-properties.validator";
 
 import { publishCategoryConfigurationParamsSchema } from "@/presentation/catalog/validators/publish-category-configuration.validator";
+
+
 
 export const catalogRouter = Router();
 
@@ -111,5 +117,33 @@ catalogRouter.post(
     ),
     publishCategoryConfigurationController.handle.bind(
         publishCategoryConfigurationController,
+    ),
+);
+
+
+
+catalogRouter.get(
+    "/category-configurations/drafts/:draftId",
+
+    adminAuthMiddleware.handle.bind(adminAuthMiddleware),
+
+    validationMiddleware(
+        getCategoryConfigurationDraftParamsSchema,
+        "params",
+    ),
+
+    getCategoryConfigurationDraftController.handle.bind(
+        getCategoryConfigurationDraftController,
+    ),
+);
+
+
+catalogRouter.get(
+    "/categories",
+
+    adminAuthMiddleware.handle.bind(adminAuthMiddleware),
+
+    getCategoriesController.handle.bind(
+        getCategoriesController,
     ),
 );

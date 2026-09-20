@@ -24,7 +24,7 @@ export class RedisCategoryConfigurationDraftRepository
             },
         );
 
-        console.log("hitting after save")
+       
     }
 
     async findById(

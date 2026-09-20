@@ -1,5 +1,9 @@
 import { prisma } from "@/infrastructure/shared/database/prisma.client";
 
+import { GetCategoryConfigurationDraftUseCase } from "@/application/catalog/use-cases/get-category-configuration-draft/get-category-configuration-draft.use-case";
+
+import { GetCategoryConfigurationDraftController } from "@/presentation/catalog/controllers/get-category-configuration-draft.controller";
+
 import { PrismaPublishCategoryConfigurationRepository } from "@/infrastructure/catalog/repositories/prisma-publish-category-configuration.repository";
 
 import { PublishCategoryConfigurationUseCase } from "@/application/catalog/use-cases/publish-category-configuration/publish-category-configuration.use-case";
@@ -28,6 +32,13 @@ import { ConfigureDynamicPropertiesController } from "@/presentation/catalog/con
 
 import { DynamicPropertyConfigurationValidator } from "@/presentation/catalog/validators/dynamic-property-configuration.validator";
 
+import { PrismaCategoryRepository } from "@/infrastructure/catalog/repositories/prisma-category.repository";
+
+import { GetCategoriesUseCase } from "@/application/catalog/use-cases/get-categories/get-categories.use-case";
+
+import { GetCategoriesController } from "@/presentation/catalog/controllers/get-categories.controller";
+
+
 
 
 const categoryConfigurationDraftRepository = new RedisCategoryConfigurationDraftRepository();
@@ -37,8 +48,17 @@ const dynamicPropertyConfigurationValidator = new DynamicPropertyConfigurationVa
 const publishCategoryConfigurationRepository = new PrismaPublishCategoryConfigurationRepository(prisma);
 
 const publishedCategorySchemaCacheRepository = new RedisPublishedCategorySchemaRepository();
+
+const categoryRepository = new PrismaCategoryRepository();
+
+
+const getCategoriesUseCase = new GetCategoriesUseCase(categoryRepository);
     
 
+
+const getCategoryConfigurationDraftUseCase = new GetCategoryConfigurationDraftUseCase(
+    categoryConfigurationDraftRepository,
+);
 
 
 const createCategoryConfigurationDraftUseCase = new CreateCategoryConfigurationDraftUseCase(
@@ -68,6 +88,14 @@ const publishCategoryConfigurationUseCase = new PublishCategoryConfigurationUseC
     categoryConfigurationDraftRepository,
     publishCategoryConfigurationRepository,
     publishedCategorySchemaCacheRepository,
+);
+
+
+export const getCategoriesController = new GetCategoriesController(getCategoriesUseCase);
+     
+
+export const getCategoryConfigurationDraftController = new GetCategoryConfigurationDraftController(
+    getCategoryConfigurationDraftUseCase,
 );
 
 

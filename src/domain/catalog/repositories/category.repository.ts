@@ -4,6 +4,10 @@ import { Category, CategoryStatus } from "@/domain/catalog/entities/category.ent
 export interface ICategoryRepository
     extends BaseRepository<Category> {
 
+    findAll(): Promise<Category[]>;
+
+    findAllActive(): Promise<Category[]>;
+
     findBySlug(
         slug: string,
     ): Promise<Category | null>;
