@@ -22,6 +22,8 @@ export class CreateCategoryConfigurationDraftController {
 
         try {
 
+         
+
             const draft =
                 await this._createCategoryConfigurationDraftUseCase.execute();
 
