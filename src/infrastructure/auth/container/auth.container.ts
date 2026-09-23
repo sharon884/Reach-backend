@@ -18,6 +18,10 @@ import { VerifyOtpUseCase } from "@/application/auth/use-cases/verify-otp/verify
 
 import { RedisOtpStore } from "@/infrastructure/auth/services/redis-otp-store";
 
+import { RefreshTokenController } from "@/presentation/auth/controllers/RefreshTokenController";
+
+import { RefreshTokenUseCase } from "@/application/auth/use-cases/refresh-token/refresh-token.use-case";
+
 import { VerifyOtpController } from "@/presentation/auth/controllers/verify-otp.controller";
 
 import { ResendOtpUseCase } from "@/application/auth/use-cases/resend-otp/resend-otp.use-case";
@@ -115,7 +119,7 @@ const userAuthAccountRepository = new PrismaUserAuthAccountRepository(prisma);
 
 const googleAuthService = new GoogleAuthService();
 
-  
+
 
 
 const logoutUseCase = new LogoutUseCase(userSessionRepository);
@@ -163,6 +167,14 @@ const loginUseCase = new LoginUseCase(
   authenticationSessionService,
 );
 
+const refreshTokenUseCase = new RefreshTokenUseCase(
+  tokenService,
+  refreshTokenHasher,
+  userSessionRepository,
+  userRepository,
+);
+
+
 
 const adminLoginUseCase = new AdminLoginUseCase(
   userRepository,
@@ -189,12 +201,12 @@ const resetPasswordUseCase = new ResetPasswordUseCase(
 
 
 
-const googleAuthenticationUseCase =  new GoogleAuthenticationUseCase(
-    googleAuthService,
-    userRepository,
-    userAuthAccountRepository,
-    authenticationSessionService,
-  );
+const googleAuthenticationUseCase = new GoogleAuthenticationUseCase(
+  googleAuthService,
+  userRepository,
+  userAuthAccountRepository,
+  authenticationSessionService,
+);
 
 
 
@@ -214,7 +226,13 @@ export const forgotPasswordController = new ForgotPasswordController(
   forgotPasswordUseCase,
 );
 
-export const loginController = new LoginController(loginUseCase);
+export const loginController = new LoginController(
+  loginUseCase
+);
+
+export const refreshTokenController = new RefreshTokenController(
+  refreshTokenUseCase,
+);
 
 
 export const adminLoginController = new AdminLoginController(
@@ -268,4 +286,4 @@ export const resetPasswordController = new ResetPasswordController(
 
 export const googleAuthenticationController = new GoogleAuthenticationController(
   googleAuthenticationUseCase,
-  );
+);

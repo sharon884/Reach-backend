@@ -10,6 +10,7 @@ import {
   verifyPasswordResetOtpController,
   resetPasswordController,
   googleAuthenticationController,
+  refreshTokenController,
 } from "@/infrastructure/auth/container/auth.container";
 
 import { validationMiddleware } from "@/presentation/shared/middlewares/validation.middleware";
@@ -46,6 +47,11 @@ authRouter.post(
   loginController.handle.bind(loginController),
 );
 
+
+authRouter.post(
+  "/refresh",
+  refreshTokenController.handle.bind(refreshTokenController),
+);
 
 authRouter.post(
   "/verify-otp",
@@ -89,9 +95,9 @@ authRouter.post(
 
 
 authRouter.post(
-    "/google",
-    validationMiddleware(googleAuthenticationSchema),
-    googleAuthenticationController.handle.bind(
-        googleAuthenticationController,
-    ),
+  "/google",
+  validationMiddleware(googleAuthenticationSchema),
+  googleAuthenticationController.handle.bind(
+    googleAuthenticationController,
+  ),
 );

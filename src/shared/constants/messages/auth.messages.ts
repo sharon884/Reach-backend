@@ -12,9 +12,9 @@ export const AUTH_MESSAGES = {
 
   USER_NOT_FOUND: "User not found",
 
-  ACCOUNT_NOT_ACTIVE : "Account not active",
+  ACCOUNT_NOT_ACTIVE: "Account not active",
 
-  LOGIN_SUCCESS : "Success! Logged in successfully. Welcome back to your community.",
+  LOGIN_SUCCESS: "Success! Logged in successfully. Welcome back to your community.",
 
   UNAUTHORIZED: "Unauthorized access",
 
@@ -28,13 +28,19 @@ export const AUTH_MESSAGES = {
 
   OTP_SENT_SUCCESSFULLY: "OTP sent successfully",
 
-  PASSWORD_RESET_OTP_SENT : "A password reset OTP has been sent to your registered email.",
+  PASSWORD_RESET_OTP_SENT: "A password reset OTP has been sent to your registered email.",
 
-   PASSWORD_RESET_SUCCESS: "Your password has been successfully reset. You can now log in with your new password.",
+  PASSWORD_RESET_SUCCESS: "Your password has been successfully reset. You can now log in with your new password.",
 
-   INVALID_GOOGLE_TOKEN: "Invalid Google authentication token",
+  INVALID_GOOGLE_TOKEN: "Invalid Google authentication token",
 
-   GOOGLE_LOGIN_SUCCESS: "Successfully logged in with Google.",
-  
+  GOOGLE_LOGIN_SUCCESS: "Successfully logged in with Google.",
+
+  REFRESH_TOKEN_REQUIRED: "Refresh token is required",
+
+  INVALID_REFRESH_TOKEN: "Invalid refresh token",
+
+  REFRESH_TOKEN_SUCCESS: "Token refreshed successfully",
+
 } as const;
 
