@@ -10,45 +10,54 @@ import {
     getCategoriesController,
 } from "@/infrastructure/catalog/container/catalog.container";
 
-import { adminAuthMiddleware, authMiddleware } from "@/infrastructure/auth/container/auth.container";
+import {
+    adminAuthMiddleware,
+    authMiddleware,
+} from "@/infrastructure/auth/container/auth.container";
 
 import { validationMiddleware } from "@/presentation/shared/middlewares/validation.middleware";
 
 import { getCategoryConfigurationDraftParamsSchema } from "@/presentation/catalog/validators/get-category-configuration-draft.validator";
- 
-import { updateCategoryDraftParamsSchema } from "../validators/update-category-draft.validator.js";
 
-import { updateCategoryDraftBodySchema } from "../validators/update-category-draft.validator.js";
+import {
+    updateCategoryDraftParamsSchema,
+    updateCategoryDraftBodySchema,
+} from "@/presentation/catalog/validators/update-category-draft.validator";
 
-import { configureCoreFieldsBodySchema, configureCoreFieldsParamsSchema } from "@/presentation/catalog/validators/configure-core-fields.validator";
+import {
+    configureCoreFieldsBodySchema,
+    configureCoreFieldsParamsSchema,
+} from "@/presentation/catalog/validators/configure-core-fields.validator";
 
-import { configureDynamicPropertiesBodySchema, configureDynamicPropertiesParamsSchema, } from "@/presentation/catalog/validators/configure-dynamic-properties.validator";
+import {
+    configureDynamicPropertiesBodySchema,
+    configureDynamicPropertiesParamsSchema,
+} from "@/presentation/catalog/validators/configure-dynamic-properties.validator";
 
 import { publishCategoryConfigurationParamsSchema } from "@/presentation/catalog/validators/publish-category-configuration.validator";
 
+import { API_ROUTES } from "@/shared/constants/routes/api.routes";
 
 
 export const catalogRouter = Router();
 
+
 catalogRouter.post(
-    "/category-configurations/drafts",
- 
+    API_ROUTES.CATALOG.CATEGORY_CONFIGURATION_DRAFTS,
+
     authMiddleware.handle.bind(authMiddleware),
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
     createCategoryConfigurationDraftController.handle.bind(
-
         createCategoryConfigurationDraftController,
     ),
 );
 
 
-
 catalogRouter.patch(
-    "/category-configurations/drafts/:draftId/category",
+    API_ROUTES.CATALOG.CATEGORY_CONFIGURATION_CATEGORY,
 
-     authMiddleware.handle.bind(authMiddleware),
-
+    authMiddleware.handle.bind(authMiddleware),
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
     validationMiddleware(
@@ -67,11 +76,11 @@ catalogRouter.patch(
 );
 
 
+
 catalogRouter.patch(
-    "/category-configurations/drafts/:draftId/core-fields",
+    API_ROUTES.CATALOG.CATEGORY_CONFIGURATION_CORE_FIELDS,
 
-     authMiddleware.handle.bind(authMiddleware),
-
+    authMiddleware.handle.bind(authMiddleware),
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
     validationMiddleware(
@@ -92,10 +101,9 @@ catalogRouter.patch(
 
 
 catalogRouter.patch(
-    "/category-configurations/drafts/:draftId/properties",
+    API_ROUTES.CATALOG.CATEGORY_CONFIGURATION_PROPERTIES,
 
-     authMiddleware.handle.bind(authMiddleware),
-
+    authMiddleware.handle.bind(authMiddleware),
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
     validationMiddleware(
@@ -116,15 +124,16 @@ catalogRouter.patch(
 
 
 catalogRouter.post(
-    "/category-configurations/drafts/:draftId/publish",
+    API_ROUTES.CATALOG.CATEGORY_CONFIGURATION_PUBLISH,
 
-     authMiddleware.handle.bind(authMiddleware),
-
+    authMiddleware.handle.bind(authMiddleware),
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
+
     validationMiddleware(
         publishCategoryConfigurationParamsSchema,
         "params",
     ),
+
     publishCategoryConfigurationController.handle.bind(
         publishCategoryConfigurationController,
     ),
@@ -132,11 +141,11 @@ catalogRouter.post(
 
 
 
+
 catalogRouter.get(
-    "/category-configurations/drafts/:draftId",
+    API_ROUTES.CATALOG.CATEGORY_CONFIGURATION_DRAFT,
 
-     authMiddleware.handle.bind(authMiddleware),
-
+    authMiddleware.handle.bind(authMiddleware),
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
     validationMiddleware(
@@ -150,14 +159,15 @@ catalogRouter.get(
 );
 
 
+
 catalogRouter.get(
-    "/categories",
+    API_ROUTES.CATALOG.CATEGORIES,
 
-     authMiddleware.handle.bind(authMiddleware),
-
+    authMiddleware.handle.bind(authMiddleware),
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
     getCategoriesController.handle.bind(
         getCategoriesController,
     ),
 );
+
