@@ -88,7 +88,7 @@ import { GoogleAuthenticationUseCase } from "@/application/auth/use-cases/google
 
 import { GoogleAuthenticationController } from "@/presentation/auth/controllers/google-authentication.controller";
 
-
+import { AuthMiddleware } from "@/presentation/shared/middlewares/AuthMiddleware";
 
 
 const userRepository = new PrismaUserRepository(prisma);
@@ -128,7 +128,9 @@ const passwordResetStore = new RedisPasswordResetStore(
   redisClient,
 );
 
-
+export const authMiddleware = new AuthMiddleware(
+  tokenService,
+);
 
 const generateOtpUseCase = new GenerateOtpUseCase(
   userRepository,

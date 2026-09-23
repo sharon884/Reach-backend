@@ -10,7 +10,7 @@ import {
     getCategoriesController,
 } from "@/infrastructure/catalog/container/catalog.container";
 
-import { adminAuthMiddleware } from "@/infrastructure/auth/container/auth.container";
+import { adminAuthMiddleware, authMiddleware } from "@/infrastructure/auth/container/auth.container";
 
 import { validationMiddleware } from "@/presentation/shared/middlewares/validation.middleware";
 
@@ -32,7 +32,8 @@ export const catalogRouter = Router();
 
 catalogRouter.post(
     "/category-configurations/drafts",
-
+ 
+    authMiddleware.handle.bind(authMiddleware),
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
     createCategoryConfigurationDraftController.handle.bind(
@@ -45,6 +46,8 @@ catalogRouter.post(
 
 catalogRouter.patch(
     "/category-configurations/drafts/:draftId/category",
+
+     authMiddleware.handle.bind(authMiddleware),
 
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
@@ -66,6 +69,8 @@ catalogRouter.patch(
 
 catalogRouter.patch(
     "/category-configurations/drafts/:draftId/core-fields",
+
+     authMiddleware.handle.bind(authMiddleware),
 
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
@@ -89,6 +94,8 @@ catalogRouter.patch(
 catalogRouter.patch(
     "/category-configurations/drafts/:draftId/properties",
 
+     authMiddleware.handle.bind(authMiddleware),
+
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
     validationMiddleware(
@@ -110,6 +117,9 @@ catalogRouter.patch(
 
 catalogRouter.post(
     "/category-configurations/drafts/:draftId/publish",
+
+     authMiddleware.handle.bind(authMiddleware),
+
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
     validationMiddleware(
         publishCategoryConfigurationParamsSchema,
@@ -124,6 +134,8 @@ catalogRouter.post(
 
 catalogRouter.get(
     "/category-configurations/drafts/:draftId",
+
+     authMiddleware.handle.bind(authMiddleware),
 
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
@@ -140,6 +152,8 @@ catalogRouter.get(
 
 catalogRouter.get(
     "/categories",
+
+     authMiddleware.handle.bind(authMiddleware),
 
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
 
