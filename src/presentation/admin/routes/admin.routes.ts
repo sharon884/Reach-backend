@@ -16,36 +16,36 @@ import { getUsersSchema } from "@/application/admin/dto/users/get-users.dto";
 
 import { validationMiddleware } from "@/presentation/shared/middlewares/validation.middleware";
 
-import { updateUserStatusSchema } from "@/application/admin/dto/user-status/update-user-status.dto";
+import {
+    updateUserStatusSchema,
+} from "@/application/admin/dto/user-status/update-user-status.dto";
 
+import { API_ROUTES } from "@/shared/constants/routes/api.routes";
 
 const adminRouter = Router();
 
 adminRouter.post(
-    "/login",
+    API_ROUTES.ADMIN.LOGIN,
     validationMiddleware(adminLoginSchema),
     adminLoginController.handle.bind(adminLoginController),
 );
 
 adminRouter.get(
-    "/users",
+    API_ROUTES.ADMIN.USERS,
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
     validationMiddleware(getUsersSchema, "query"),
     getUsersController.handle.bind(getUsersController),
 );
 
-
-
 adminRouter.patch(
-    "/users/:userId/status",
+    API_ROUTES.ADMIN.USER_STATUS,
     adminAuthMiddleware.handle.bind(adminAuthMiddleware),
     validationMiddleware(updateUserStatusSchema),
     updateUserStatusController.handle.bind(updateUserStatusController),
 );
 
-
 adminRouter.post(
-    "/logout",
+    API_ROUTES.ADMIN.LOGOUT,
     adminLogoutController.handle.bind(adminLogoutController),
 );
 

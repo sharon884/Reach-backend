@@ -31,71 +31,79 @@ import { resetPasswordSchema } from "@/application/auth/dto/password/reset-passw
 
 import { googleAuthenticationSchema } from "@/application/auth/dto/google-authentication/google-authentication.dto";
 
+import { API_ROUTES } from "@/shared/constants/routes/api.routes"
+
+
 
 export const authRouter = Router();
 
+
+
 authRouter.post(
-  "/signup",
+  API_ROUTES.AUTH.SIGNUP,
   validationMiddleware(signupSchema),
   signupController.handle.bind(signupController),
 );
 
 
 authRouter.post(
-  "/login",
+  API_ROUTES.AUTH.LOGIN,
   validationMiddleware(loginSchema),
   loginController.handle.bind(loginController),
 );
 
 
 authRouter.post(
-  "/refresh",
+  API_ROUTES.AUTH.REFRESH,
   refreshTokenController.handle.bind(refreshTokenController),
 );
 
+
 authRouter.post(
-  "/verify-otp",
+  API_ROUTES.AUTH.VERIFY_OTP,
   validationMiddleware(verifyOtpSchema),
   verifyOtpController.handle.bind(verifyOtpController),
 );
 
+
 authRouter.post(
-  "/resend-otp",
+  API_ROUTES.AUTH.RESEND_OTP,
   validationMiddleware(resendOtpSchema),
   resendOtpController.handle.bind(resendOtpController),
 );
 
 
 authRouter.post(
-  "/logout",
+  API_ROUTES.AUTH.LOGOUT,
   logoutController.handle.bind(logoutController),
 );
 
 
 authRouter.post(
-  "/forgot-password",
+  API_ROUTES.AUTH.FORGOT_PASSWORD,
   validationMiddleware(forgotPasswordSchema),
-  forgotPasswordController.handle.bind(forgotPasswordController)
+  forgotPasswordController.handle.bind(forgotPasswordController),
 );
 
 
 authRouter.post(
-  "/verify-password-reset-otp",
+  API_ROUTES.AUTH.VERIFY_PASSWORD_RESET_OTP,
   validationMiddleware(verifyPasswordResetOtpSchema),
-  verifyPasswordResetOtpController.handle.bind(verifyPasswordResetOtpController)
-);
-
-authRouter.post(
-  "/reset-password",
-  validationMiddleware(resetPasswordSchema),
-  resetPasswordController.handle.bind(
-    resetPasswordController,
+  verifyPasswordResetOtpController.handle.bind(
+    verifyPasswordResetOtpController,
   ),
 );
 
 
 authRouter.post(
-  "/google",
+  API_ROUTES.AUTH.RESET_PASSWORD,
+  validationMiddleware(resetPasswordSchema),
+  resetPasswordController.handle.bind(resetPasswordController),
+);
+
+
+authRouter.post(
+  API_ROUTES.AUTH.GOOGLE,
   validationMiddleware(googleAuthenticationSchema),
   googleAuthenticationController.handle.bind(
     googleAuthenticationController,
